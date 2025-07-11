@@ -1,32 +1,89 @@
-<<<<<<< HEAD
-test
-
-
-=======
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>PNK Dashboard</title>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PNK Dashboard</title>
   <style>
-    body { font-family: sans-serif; padding: 2rem; background: #f0f0f0; }
-    h1 { font-size: 2rem; }
-    ul { list-style: none; padding-left: 0; }
-    li { margin: 1rem 0; }
-    a { font-size: 1.2rem; color: #007acc; text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    /* Reset & base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f5f7; color: #333; line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* The layout */
+    header { background: #006d77; color: #fff; padding: 1rem 0; text-align: center; }
+    header h1 { font-size: 2rem; }
+    main { max-width: 960px; margin: 2rem auto; padding: 0 1rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+
+    /* card styling */
+    .card {
+      background: #fff;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-align: center;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .card-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .card-title { font-size: 1.2rem; margin-bottom: 0.5rem; color: #006d77; }
+    .card-desc { font-size: 0.9rem; color: #555; margin-bottom: 1rem; }
+    .card a {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.4rem 0.8rem;
+      background: #006d77;
+      color: #fff;
+      border-radius: 0.3rem;
+      transition: background 0.2s;
+    }
+    .card a:hover { background: #005f66; }
   </style>
 </head>
 <body>
-  <h1>PNK Dashboard</h1>
-  <ul>
-    <li><a href="http://localhost:9001" target="_blank">Etherpad – Notes</a></li>
-    <li><a href="http://localhost:8080" target="_blank">Kiwix – Offline Wiki</a></li>
-    <li><a href="http://localhost:8081" target="_blank">FileBrowser – Shared Files</a></li>
-    <li><a href="https://localhost:8443" target="_blank">UniFi Controller – Network Manager</a></li>
-    <li><a href="http://localhost:8082" target="_blank">Kolibri – Offline Learning Hub</a></li>
-  </ul>
+  <header>
+    <h1>📡 Portable Network Kit</h1>
+  </header>
+  <main>
+    <div class="grid">
+      <div class="card">
+        <div class="card-icon">📝</div>
+        <div class="card-title">Etherpad</div>
+        <div class="card-desc">Collaborative real-time notes and agendas.</div>
+        <a href="http://localhost:9001" target="_blank">Open Etherpad</a>
+      </div>
+      <div class="card">
+        <div class="card-icon">📁</div>
+        <div class="card-title">FileBrowser</div>
+        <div class="card-desc">Upload, download, and manage shared files.</div>
+        <a href="http://localhost:8081" target="_blank">Open FileBrowser</a>
+      </div>
+      <div class="card">
+        <div class="card-icon">📘</div>
+        <div class="card-title">Kolibri</div>
+        <div class="card-desc">Offline learning platform and resources.</div>
+        <a href="http://localhost:8082" target="_blank">Open Kolibri</a>
+      </div>
+      <div class="card">
+        <div class="card-icon">📡</div>
+        <div class="card-title">UniFi Controller</div>
+        <div class="card-desc">Manage Ubiquiti devices and network settings.</div>
+        <a href="https://localhost:8443" target="_blank">Open UniFi</a>
+      </div>
+      <div class="card">
+        <div class="card-icon">💬</div>
+        <div class="card-title">Element Chat</div>
+        <div class="card-desc">Secure local messaging with Matrix.</div>
+        <a href="http://localhost:8083" target="_blank">Open Chat</a>
+      </div>
+    </div>
+  </main>
 </body>
 </html>
->>>>>>> d09cc97cdfe7281332e7cb2604f5d4fd31dc25ab
+
