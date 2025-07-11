@@ -770,3 +770,12 @@
 2025-07-11T18:41:05.227+0000 I NETWORK  [conn27] end connection 127.0.0.1:39386 (6 connections now open)
 2025-07-11T18:41:05.227+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:40868 #32 (7 connections now open)
 2025-07-11T18:41:05.227+0000 I NETWORK  [conn32] received client metadata from 127.0.0.1:40868 conn32: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-11T18:42:05.227+0000 I NETWORK  [conn28] end connection 127.0.0.1:60122 (6 connections now open)
+2025-07-11T18:42:05.227+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:36128 #33 (7 connections now open)
+2025-07-11T18:42:05.228+0000 I NETWORK  [conn33] received client metadata from 127.0.0.1:36128 conn33: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-11T18:43:05.227+0000 I NETWORK  [conn29] end connection 127.0.0.1:60704 (6 connections now open)
+2025-07-11T18:43:05.227+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:33566 #34 (7 connections now open)
+2025-07-11T18:43:05.227+0000 I NETWORK  [conn34] received client metadata from 127.0.0.1:33566 conn34: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-11T18:46:05.227+0000 I NETWORK  [conn30] end connection 127.0.0.1:52986 (6 connections now open)
+2025-07-11T18:46:05.228+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:42202 #35 (7 connections now open)
+2025-07-11T18:46:05.228+0000 I NETWORK  [conn35] received client metadata from 127.0.0.1:42202 conn35: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
