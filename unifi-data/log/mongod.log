@@ -767,3 +767,6 @@
 2025-07-11T18:36:05.227+0000 I NETWORK  [conn26] end connection 127.0.0.1:44430 (6 connections now open)
 2025-07-11T18:36:05.227+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:58120 #31 (7 connections now open)
 2025-07-11T18:36:05.228+0000 I NETWORK  [conn31] received client metadata from 127.0.0.1:58120 conn31: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-11T18:41:05.227+0000 I NETWORK  [conn27] end connection 127.0.0.1:39386 (6 connections now open)
+2025-07-11T18:41:05.227+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:40868 #32 (7 connections now open)
+2025-07-11T18:41:05.227+0000 I NETWORK  [conn32] received client metadata from 127.0.0.1:40868 conn32: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }

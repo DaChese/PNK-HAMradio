@@ -5618,3 +5618,81 @@
 [2025-07-11T18:40:53,670Z] <device-connect-incidents> DEBUG tasks  - Finished task[device-connect-incidents] in 0 ms
 [2025-07-11T18:40:53,818Z] <duplicate-ip-service> DEBUG tasks  - Started task[duplicate-ip-service]
 [2025-07-11T18:40:53,820Z] <duplicate-ip-service> DEBUG tasks  - Finished task[duplicate-ip-service] in 2 ms
+[2025-07-11T18:40:54,446Z] <autolink-registry-flush> DEBUG tasks  - Started task[autolink-registry-flush]
+[2025-07-11T18:40:54,446Z] <autolink-registry-flush> DEBUG tasks  - Finished task[autolink-registry-flush] in 0 ms
+[2025-07-11T18:40:54,450Z] <cache-cleanup> DEBUG tasks  - Started task[cache-cleanup]
+[2025-07-11T18:40:54,450Z] <cache-cleanup> DEBUG tasks  - Finished task[cache-cleanup] in 0 ms
+[2025-07-11T18:40:54,452Z] <trigger-throttling-cache-flush> DEBUG tasks  - Started task[trigger-throttling-cache-flush]
+[2025-07-11T18:40:54,452Z] <trigger-throttling-cache-flush> DEBUG tasks  - Finished task[trigger-throttling-cache-flush] in 0 ms
+[2025-07-11T18:40:54,466Z] <live-performance-analytics> DEBUG tasks  - Started task[live-performance-analytics]
+[2025-07-11T18:40:54,466Z] <live-performance-analytics> DEBUG tasks  - Finished task[live-performance-analytics] in 0 ms
+[2025-07-11T18:40:54,583Z] <check-network-interfaces> DEBUG tasks  - Started task[check-network-interfaces]
+[2025-07-11T18:40:54,583Z] <check-network-interfaces> DEBUG tasks  - Finished task[check-network-interfaces] in 0 ms
+[2025-07-11T18:40:54,738Z] <ble_state_check> DEBUG tasks  - Started task[ble_state_check]
+[2025-07-11T18:40:54,738Z] <ble_state_check> DEBUG tasks  - Finished task[ble_state_check] in 0 ms
+[2025-07-11T18:40:55,631Z] <tracer> DEBUG tasks  - Started task[tracer]
+[2025-07-11T18:40:55,631Z] <tracer> DEBUG tasks  - Finished task[tracer] in 0 ms
+[2025-07-11T18:40:59,739Z] <ble_state_check> DEBUG tasks  - Started task[ble_state_check]
+[2025-07-11T18:40:59,739Z] <ble_state_check> DEBUG tasks  - Finished task[ble_state_check] in 1 ms
+[2025-07-11T18:41:00,631Z] <tracer> DEBUG tasks  - Started task[tracer]
+[2025-07-11T18:41:00,631Z] <tracer> DEBUG tasks  - Finished task[tracer] in 0 ms
+[2025-07-11T18:41:01,432Z] <wifi-connection-events-flush> DEBUG tasks  - Started task[wifi-connection-events-flush]
+[2025-07-11T18:41:01,433Z] <wifi-connection-events-flush> DEBUG tasks  - Finished task[wifi-connection-events-flush] in 1 ms
+[2025-07-11T18:41:03,602Z] <device-state-check> DEBUG tasks  - Started task[device-state-check]
+[2025-07-11T18:41:03,605Z] <device-state-check> DEBUG tasks  - Finished task[device-state-check] in 3 ms
+[2025-07-11T18:41:04,547Z] <wss-connection> DEBUG tasks  - Started task[wss-connection]
+[2025-07-11T18:41:04,547Z] <wss-connection> DEBUG tasks  - Finished task[wss-connection] in 0 ms
+[2025-07-11T18:41:04,575Z] <stamgr> DEBUG tasks  - Started task[stamgr]
+[2025-07-11T18:41:04,575Z] <stamgr> DEBUG tasks  - Finished task[stamgr] in 0 ms
+[2025-07-11T18:41:04,739Z] <ble_state_check> DEBUG tasks  - Started task[ble_state_check]
+[2025-07-11T18:41:04,739Z] <ble_state_check> DEBUG tasks  - Finished task[ble_state_check] in 0 ms
+[2025-07-11T18:41:04,759Z] <webrtc-connection> DEBUG tasks  - Started task[webrtc-connection]
+[2025-07-11T18:41:04,759Z] <webrtc-connection> DEBUG tasks  - Finished task[webrtc-connection] in 1 ms
+[2025-07-11T18:41:05,631Z] <tracer> DEBUG tasks  - Started task[tracer]
+[2025-07-11T18:41:05,631Z] <tracer> DEBUG tasks  - Finished task[tracer] in 0 ms
+[2025-07-11T18:41:09,556Z] <ips-alert-caching> DEBUG tasks  - Started task[ips-alert-caching]
+[2025-07-11T18:41:09,557Z] <ips-alert-caching> DEBUG tasks  - Finished task[ips-alert-caching] in 1 ms
+[2025-07-11T18:41:09,739Z] <ble_state_check> DEBUG tasks  - Started task[ble_state_check]
+[2025-07-11T18:41:09,739Z] <ble_state_check> DEBUG tasks  - Finished task[ble_state_check] in 0 ms
+[2025-07-11T18:41:10,631Z] <tracer> DEBUG tasks  - Started task[tracer]
+[2025-07-11T18:41:10,631Z] <tracer> DEBUG tasks  - Finished task[tracer] in 0 ms
+[2025-07-11T18:41:14,739Z] <ble_state_check> DEBUG tasks  - Started task[ble_state_check]
+[2025-07-11T18:41:14,739Z] <ble_state_check> DEBUG tasks  - Finished task[ble_state_check] in 0 ms
+[2025-07-11T18:41:15,632Z] <tracer> DEBUG tasks  - Started task[tracer]
+[2025-07-11T18:41:15,632Z] <tracer> DEBUG tasks  - Finished task[tracer] in 0 ms
+[2025-07-11T18:41:19,740Z] <ble_state_check> DEBUG tasks  - Started task[ble_state_check]
+[2025-07-11T18:41:19,740Z] <ble_state_check> DEBUG tasks  - Finished task[ble_state_check] in 1 ms
+[2025-07-11T18:41:20,632Z] <tracer> DEBUG tasks  - Started task[tracer]
+[2025-07-11T18:41:20,632Z] <tracer> DEBUG tasks  - Finished task[tracer] in 0 ms
+[2025-07-11T18:41:23,670Z] <device-connect-incidents> DEBUG tasks  - Started task[device-connect-incidents]
+[2025-07-11T18:41:23,670Z] <device-connect-incidents> DEBUG tasks  - Finished task[device-connect-incidents] in 0 ms
+[2025-07-11T18:41:24,456Z] <traffic-flows-throughput> DEBUG tasks  - Started task[traffic-flows-throughput]
+[2025-07-11T18:41:24,456Z] <traffic-flows-throughput> INFO  tasks  - Traffic Flows throughput: 0 incoming flow events in last 60000ms. (0.0/fps)
+[2025-07-11T18:41:24,456Z] <traffic-flows-throughput> DEBUG tasks  - Finished task[traffic-flows-throughput] in 0 ms
+[2025-07-11T18:41:24,548Z] <lte-device-license-check> DEBUG tasks  - Started task[lte-device-license-check]
+[2025-07-11T18:41:24,548Z] <lte-device-license-check> DEBUG tasks  - Finished task[lte-device-license-check] in 0 ms
+[2025-07-11T18:41:24,569Z] <tomcat-monitor> DEBUG tasks  - Started task[tomcat-monitor]
+[2025-07-11T18:41:24,569Z] <tomcat-monitor> INFO  tasks  - connector[API] executor - working=0/200, peak=6, waiting=0/1000, completed=1008
+[2025-07-11T18:41:24,569Z] <tomcat-monitor> INFO  tasks  - connector[INFORM] executor - working=0/200, peak=1, waiting=0/200, completed=4
+[2025-07-11T18:41:24,569Z] <tomcat-monitor> INFO  tasks  - connector[PORTAL] executor - working=0/200, peak=4, waiting=0/1000, completed=34
+[2025-07-11T18:41:24,569Z] <tomcat-monitor> DEBUG tasks  - Finished task[tomcat-monitor] in 0 ms
+[2025-07-11T18:41:24,740Z] <ble_state_check> DEBUG tasks  - Started task[ble_state_check]
+[2025-07-11T18:41:24,740Z] <ble_state_check> DEBUG tasks  - Finished task[ble_state_check] in 0 ms
+[2025-07-11T18:41:25,632Z] <tracer> DEBUG tasks  - Started task[tracer]
+[2025-07-11T18:41:25,632Z] <tracer> DEBUG tasks  - Finished task[tracer] in 0 ms
+[2025-07-11T18:41:29,740Z] <ble_state_check> DEBUG tasks  - Started task[ble_state_check]
+[2025-07-11T18:41:29,740Z] <ble_state_check> DEBUG tasks  - Finished task[ble_state_check] in 0 ms
+[2025-07-11T18:41:30,632Z] <tracer> DEBUG tasks  - Started task[tracer]
+[2025-07-11T18:41:30,632Z] <tracer> DEBUG tasks  - Finished task[tracer] in 0 ms
+[2025-07-11T18:41:34,740Z] <ble_state_check> DEBUG tasks  - Started task[ble_state_check]
+[2025-07-11T18:41:34,740Z] <ble_state_check> DEBUG tasks  - Finished task[ble_state_check] in 0 ms
+[2025-07-11T18:41:35,633Z] <tracer> DEBUG tasks  - Started task[tracer]
+[2025-07-11T18:41:35,633Z] <tracer> DEBUG tasks  - Finished task[tracer] in 0 ms
+[2025-07-11T18:41:39,741Z] <ble_state_check> DEBUG tasks  - Started task[ble_state_check]
+[2025-07-11T18:41:39,741Z] <ble_state_check> DEBUG tasks  - Finished task[ble_state_check] in 1 ms
+[2025-07-11T18:41:40,633Z] <tracer> DEBUG tasks  - Started task[tracer]
+[2025-07-11T18:41:40,633Z] <tracer> DEBUG tasks  - Finished task[tracer] in 0 ms
+[2025-07-11T18:41:44,741Z] <ble_state_check> DEBUG tasks  - Started task[ble_state_check]
+[2025-07-11T18:41:44,741Z] <ble_state_check> DEBUG tasks  - Finished task[ble_state_check] in 0 ms
+[2025-07-11T18:41:45,633Z] <tracer> DEBUG tasks  - Started task[tracer]
+[2025-07-11T18:41:45,633Z] <tracer> DEBUG tasks  - Finished task[tracer] in 0 ms
