@@ -1,0 +1,9 @@
+[2025-07-11T17:29:56,959Z] <launcher> INFO  startup - Initiating startup
+[2025-07-11T17:29:59,449Z] <launcher> WARN  startup -   component[systemService] initialization took 104ms
+[2025-07-11T17:30:05,359Z] <launcher> WARN  startup -   component[mongoRuntimeService] initialization took 5604ms
+[2025-07-11T17:30:11,754Z] <launcher> WARN  startup -   component[configDbService] initialization took 5676ms
+[2025-07-11T17:30:12,131Z] <launcher> WARN  startup -   component[statDbService] initialization took 374ms
+[2025-07-11T17:30:52,802Z] <launcher> INFO  startup - Context ready
+[2025-07-11T17:30:53,479Z] <launcher> INFO  startup - Calling context ready handlers
+[2025-07-11T17:30:54,702Z] <launcher> INFO  startup - Done with context ready handlers
+[2025-07-11T17:30:54,705Z] <launcher> INFO  startup - Startup complete

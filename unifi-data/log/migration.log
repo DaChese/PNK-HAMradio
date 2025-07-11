@@ -1,0 +1,5 @@
+[2025-07-11T17:30:52,805Z] <launcher> INFO  migration - Certificate has been re-generated, attempting to start migration
+[2025-07-11T17:30:53,394Z] <launcher> INFO  migration - DB migration initialized
+[2025-07-11T17:30:53,402Z] <launcher> INFO  migration - DB migration itself took: 2ms
+[2025-07-11T17:30:53,403Z] <launcher> INFO  migration - DB migration closed
+[2025-07-11T17:30:53,404Z] <launcher> INFO  migration - DB migration took 598ms in total

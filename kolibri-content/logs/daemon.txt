@@ -1,0 +1,11 @@
+[37mINFO     Attempting a ping.[0m
+[37mINFO     Sqlite database Vacuum finished.[0m
+[37mINFO     Next Vacuum at 3AM local server time (in 569 minutes).[0m
+[37mINFO     Started new JOBCHECKER thread ID#2db779feb8f94f7ba6bf96b84b89f201[0m
+[37mINFO     Updating num_coach_content on existing channels[0m
+[37mINFO     Starting Kolibri 0.12.8[0m
+[37mINFO     Ping succeeded! (response: {u'messages': [], u'id': 10867703})[0m
+[37mINFO     Sleeping for 1440.0 minutes.[0m
+[37mINFO     ENGINE Bus STARTING[0m
+[37mINFO     ENGINE Serving on http://0.0.0.0:8080[0m
+[37mINFO     ENGINE Bus STARTED[0m
