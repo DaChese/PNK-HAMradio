@@ -1,24 +1,17 @@
-INFO 2025-07-11 17:30:07,827 apps Running Kolibri with the following settings: kolibri.deployment.default.settings.base
-INFO 2025-07-11 17:30:09,732 cli Kolibri running for the first time.
-INFO 2025-07-11 17:30:09,733 cli We don't yet use pre-migrated database seeds, so you're going to have to wait a bit while we create a blank database...
+INFO 2025-07-15 16:54:39,663 apps Running Kolibri with the following settings: kolibri.deployment.default.settings.base
+INFO 2025-07-15 16:54:40,747 vacuumsqlite Sqlite database Vacuum finished.
+INFO 2025-07-15 16:54:40,776 cli Running 'kolibri start' as daemon (system service)
+INFO 2025-07-15 16:54:40,808 cli Kolibri running on:
 
-
-INFO 2025-07-11 17:30:33,015 cli Automatically enabling applications.
-INFO 2025-07-11 17:30:33,015 cli Running update routines for new version...
-INFO 2025-07-11 17:30:35,292 annotation Updating num_coach_content on existing channels
-INFO 2025-07-11 17:30:35,364 vacuumsqlite Sqlite database Vacuum finished.
-INFO 2025-07-11 17:30:35,372 cli Running 'kolibri start' as daemon (system service)
-INFO 2025-07-11 17:30:35,392 cli Kolibri running on:
-
-INFO 2025-07-11 17:30:35,393 cli Going to daemon mode, logging to /root/.kolibri/logs/kolibri.txt
-INFO 2025-07-11 17:30:35,607 ping Attempting a ping.
-INFO 2025-07-11 17:30:35,773 vacuumsqlite Sqlite database Vacuum finished.
-INFO 2025-07-11 17:30:35,774 vacuumsqlite Next Vacuum at 3AM local server time (in 569 minutes).
-INFO 2025-07-11 17:30:36,359 utils Started new JOBCHECKER thread ID#2db779feb8f94f7ba6bf96b84b89f201
-INFO 2025-07-11 17:30:36,366 annotation Updating num_coach_content on existing channels
-INFO 2025-07-11 17:30:36,371 server Starting Kolibri 0.12.8
-INFO 2025-07-11 17:30:36,507 ping Ping succeeded! (response: {u'messages': [], u'id': 10867703})
-INFO 2025-07-11 17:30:36,944 ping Sleeping for 1440.0 minutes.
-INFO 2025-07-11 17:30:37,390 cherrypy.error ENGINE Bus STARTING
-INFO 2025-07-11 17:30:37,498 cherrypy.error ENGINE Serving on http://0.0.0.0:8080
-INFO 2025-07-11 17:30:37,498 cherrypy.error ENGINE Bus STARTED
+INFO 2025-07-15 16:54:40,814 cli Going to daemon mode, logging to /root/.kolibri/logs/kolibri.txt
+INFO 2025-07-15 16:54:41,161 ping Attempting a ping.
+INFO 2025-07-15 16:54:41,443 vacuumsqlite Sqlite database Vacuum finished.
+INFO 2025-07-15 16:54:41,446 vacuumsqlite Next Vacuum at 3AM local server time (in 605 minutes).
+INFO 2025-07-15 16:54:41,708 utils Started new JOBCHECKER thread ID#6764506da33945d4bb9b94f66a0256f4
+INFO 2025-07-15 16:54:42,439 annotation Updating num_coach_content on existing channels
+INFO 2025-07-15 16:54:42,448 server Starting Kolibri 0.12.8
+INFO 2025-07-15 16:54:42,485 ping Ping succeeded! (response: {u'messages': [], u'id': 10950955})
+INFO 2025-07-15 16:54:42,897 ping Sleeping for 1440.0 minutes.
+INFO 2025-07-15 16:54:42,973 cherrypy.error ENGINE Bus STARTING
+INFO 2025-07-15 16:54:43,092 cherrypy.error ENGINE Serving on http://0.0.0.0:8080
+INFO 2025-07-15 16:54:43,094 cherrypy.error ENGINE Bus STARTED

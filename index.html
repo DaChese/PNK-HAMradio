@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,80 +9,125 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f5f7; color: #333; line-height: 1.6; }
     a { text-decoration: none; color: inherit; }
-    ul { list-style: none; }
 
-    /* The layout */
-    header { background: #006d77; color: #fff; padding: 1rem 0; text-align: center; }
-    header h1 { font-size: 2rem; }
+    /* Layout */
+    header { background: #006d77; color: #fff; padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
+    header h1 { font-size: 1.5rem; }
+    header select { padding: 0.3rem; border-radius: 0.3rem; }
+
     main { max-width: 960px; margin: 2rem auto; padding: 0 1rem; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+    .goals { margin-bottom: 2rem; }
+    .goals h2 { font-size: 1.5rem; color: #023e8a; text-align: center; margin-bottom: 1rem; }
+    .goals-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; }
+    .goals-list div { background: #fff; border-radius: 0.5rem; padding: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-align: center; }
+    .goals-list div span { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
 
-    /* card styling */
-    .card {
-      background: #fff;
-      border-radius: 0.5rem;
-      padding: 1.5rem;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      transition: transform 0.2s, box-shadow 0.2s;
-      text-align: center;
-    }
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-    }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+    .card { background: #fff; border-radius: 0.5rem; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.2s; text-align: center; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
     .card-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
-    .card-title { font-size: 1.2rem; margin-bottom: 0.5rem; color: #006d77; }
-    .card-desc { font-size: 0.9rem; color: #555; margin-bottom: 1rem; }
-    .card a {
-      display: inline-block;
-      margin-top: 0.5rem;
-      padding: 0.4rem 0.8rem;
-      background: #006d77;
-      color: #fff;
-      border-radius: 0.3rem;
-      transition: background 0.2s;
-    }
+    .card-title { font-size: 1.2rem; color: #006d77; margin-bottom: 0.5rem; }
+    .card-desc { color: #555; font-size: 0.9rem; margin-bottom: 1rem; }
+    .card a { display: inline-block; padding: 0.4rem 0.8rem; background: #006d77; color: #fff; border-radius: 0.3rem; transition: background 0.2s; }
     .card a:hover { background: #005f66; }
   </style>
 </head>
 <body>
   <header>
-    <h1>📡 Portable Network Kit</h1>
+    <h1 data-key="title">📡 Portable Network Kit</h1>
+    <select id="lang-select">
+      <!-- Placeholder option -->
+      <option value="" disabled selected>Select Language</option>
+    </select>
   </header>
   <main>
+    <!-- Goals Section -->
+    <section class="goals">
+      <h2 data-key="goals_title">🎯 PNK Goals</h2>
+      <div class="goals-list">
+        <div><span>🆘</span><div data-key="goal1">Emergency Preparedness</div></div>
+        <div><span>🏘️</span><div data-key="goal2">Neighborhood Sustainability</div></div>
+        <div><span>💪</span><div data-key="goal3">Resiliency Strategies</div></div>
+        <div><span>🧭</span><div data-key="goal4">Deportation & Family Unification</div></div>
+        <div><span>🔓</span><div data-key="goal5">Access & Inclusion</div></div>
+        <div><span>🧱</span><div data-key="goal6">Community Spaces</div></div>
+        <div><span>🌡️</span><div data-key="goal7">Climate Crisis</div></div>
+        <div><span>🤝</span><div data-key="goal8">Humanitarian Response</div></div>
+      </div>
+    </section>
+
+    <!-- Service Cards -->
     <div class="grid">
       <div class="card">
         <div class="card-icon">📝</div>
-        <div class="card-title">Etherpad</div>
-        <div class="card-desc">Collaborative real-time notes and agendas.</div>
-        <a href="http://localhost:9001" target="_blank">Open Etherpad</a>
+        <div class="card-title" data-key="svc1_title">Etherpad</div>
+        <div class="card-desc" data-key="svc1_desc">Collaborative notes and agendas.</div>
+        <a href="http://localhost:9001" data-key="svc1_link">Open Etherpad</a>
       </div>
       <div class="card">
         <div class="card-icon">📁</div>
-        <div class="card-title">FileBrowser</div>
-        <div class="card-desc">Upload, download, and manage shared files.</div>
-        <a href="http://localhost:8081" target="_blank">Open FileBrowser</a>
+        <div class="card-title" data-key="svc2_title">FileBrowser</div>
+        <div class="card-desc" data-key="svc2_desc">Upload, download, and share files.</div>
+        <a href="http://localhost:8081" data-key="svc2_link">Open FileBrowser</a>
       </div>
       <div class="card">
         <div class="card-icon">📘</div>
-        <div class="card-title">Kolibri</div>
-        <div class="card-desc">Offline learning platform and resources.</div>
-        <a href="http://localhost:8082" target="_blank">Open Kolibri</a>
+        <div class="card-title" data-key="svc3_title">Kolibri</div>
+        <div class="card-desc" data-key="svc3_desc">Offline learning platform and resources.</div>
+        <a href="http://localhost:8082" data-key="svc3_link">Open Kolibri</a>
       </div>
       <div class="card">
         <div class="card-icon">📡</div>
-        <div class="card-title">UniFi Controller</div>
-        <div class="card-desc">Manage Ubiquiti devices and network settings.</div>
-        <a href="https://localhost:8443" target="_blank">Open UniFi</a>
+        <div class="card-title" data-key="svc4_title">UniFi Controller</div>
+        <div class="card-desc" data-key="svc4_desc">Manage Ubiquiti devices and network settings.</div>
+        <a href="https://localhost:8443" data-key="svc4_link">Open UniFi</a>
       </div>
       <div class="card">
         <div class="card-icon">💬</div>
-        <div class="card-title">Element Chat</div>
-        <div class="card-desc">Secure local messaging with Matrix.</div>
-        <a href="http://localhost:8083" target="_blank">Open Chat</a>
+        <div class="card-title" data-key="svc5_title">Element Chat</div>
+        <div class="card-desc" data-key="svc5_desc">Secure local messaging with Matrix.</div>
+        <a href="http://localhost:8083" data-key="svc5_link">Open Chat</a>
       </div>
     </div>
   </main>
+ <script>
+  async function fetchJSON(path) {
+    const res = await fetch(path);
+    return res.ok ? res.json() : {};
+  }
+  async function initI18n() {
+    const config = await fetchJSON('i18n/languages.json');
+    // config.languages is an array of { code, label }
+    const languages = config.languages || [{ code: 'en', label: 'English' }];
+    const select = document.getElementById('lang-select');
+
+    // Keep the placeholder, then append real options:
+    languages.forEach(({ code, label }) => {
+      const opt = document.createElement('option');
+      opt.value = code;
+      opt.textContent = label;
+      select.appendChild(opt);
+    });
+
+    select.addEventListener('change', async () => {
+      const translations = await fetchJSON(`i18n/${select.value}.json`);
+      document.querySelectorAll('[data-key]').forEach(el => {
+        const key = el.getAttribute('data-key');
+        if (translations[key]) el.textContent = translations[key];
+      });
+    });
+
+    // Try browser locale, fallback to first real code
+    const browserLang = navigator.language.split('-')[0];
+    if (languages.some(l => l.code === browserLang)) {
+      select.value = browserLang;
+    }
+    if (!select.value) select.value = languages[0].code;
+    select.dispatchEvent(new Event('change'));
+  }
+  window.onload = initI18n;
+</script>
+
+
 </body>
 </html>
-

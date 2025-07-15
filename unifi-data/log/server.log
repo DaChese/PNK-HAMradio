@@ -226,3 +226,50 @@
 [2025-07-11T17:31:55,224Z] <autoupdate-check> INFO  productinfo - firmware[UXSDM] new version (6.6.77.15402) is available
 [2025-07-11T18:31:53,790Z] <sync-uidb> INFO  productinfo - [UIDB] Sync external UiDb Snapshot
 [2025-07-11T18:31:53,858Z] <sync-uidb> INFO  productinfo - [UIDB] Sync UiDb Records of private models
+[2025-07-15T16:54:41,369Z] <launcher> INFO  startup - Initiating startup
+[2025-07-15T16:54:43,633Z] <launcher> INFO  system - ======================================================================
+[2025-07-15T16:54:43,634Z] <launcher> INFO  system - UniFi 9.2.87 (build atag_9.2.87_29974 - release/release) is started
+[2025-07-15T16:54:43,636Z] <launcher> INFO  system - Environment: UniFi-OS[false], UniFi-Cloud[false], UniFi-MongoService[false]
+[2025-07-15T16:54:43,636Z] <launcher> INFO  system - ======================================================================
+[2025-07-15T16:54:43,636Z] <launcher> INFO  system - BASE dir:/usr/lib/unifi
+[2025-07-15T16:54:43,647Z] <launcher> INFO  system - Current System IP: 172.18.0.6
+[2025-07-15T16:54:43,648Z] <launcher> INFO  system - Hostname: 0704da1dcc82
+[2025-07-15T16:54:43,649Z] <launcher> INFO  system - ubic.env: prod
+[2025-07-15T16:54:43,649Z] <launcher> INFO  system - System loaded
+[2025-07-15T16:54:43,810Z] <launcher> INFO  mongo  - Checking if database needs to be shut down
+[2025-07-15T16:54:45,127Z] <launcher> INFO  mongo  - Database was not running
+[2025-07-15T16:54:45,127Z] <launcher> INFO  mongo  - Starting database process...
+[2025-07-15T16:54:51,044Z] <launcher> INFO  mongo  - Database process is started
+[2025-07-15T16:54:51,119Z] <launcher> INFO  mongo  - Connected to database (v3.6.8@mongodb://localhost:27117, journal enabled)
+[2025-07-15T16:54:51,159Z] <launcher> WARN  startup -   component[mongoRuntimeService] initialization took 7347ms
+[2025-07-15T16:54:51,910Z] <launcher> INFO  db     - Starting database service initialization...
+[2025-07-15T16:54:51,944Z] <launcher> INFO  db     - *** Factory Default *** Database exists. Clean it
+[2025-07-15T16:54:52,754Z] <launcher> INFO  db     - Database service initialized...
+[2025-07-15T16:54:52,755Z] <launcher> WARN  startup -   component[configDbService] initialization took 845ms
+[2025-07-15T16:54:52,759Z] <launcher> INFO  stat   - *** Factory Default *** Stat Database exists. Clean it
+[2025-07-15T16:54:52,807Z] <launcher> INFO  audit  - *** Factory Default *** Audit Database exists. Drop it
+[2025-07-15T16:54:54,461Z] <launcher> INFO  tomcat - Adding basic REST API support during the startup
+[2025-07-15T16:54:55,955Z] <launcher> INFO  system - Tomcat startup took 14448ms
+[2025-07-15T16:55:19,152Z] <launcher> INFO  webrtc - WebRTC library version: EvoStream Media Server (www.evostream.com) build v2.9.1 - Gladiator - (built for Debian-8.2.0-x86_64 on 2020-02-05T23:33:19.000) OpenSSL version: 1.1.1d usrsctp version: v0.1.2 compiled on machine: Linux debian-8-2-0-64 3.16.0-6-amd64 #1 SMP Debian 3.16.57-2 (2018-07-14) x86_64 GNU/Linux
+[2025-07-15T16:55:22,718Z] <launcher> WARN  system - Country Code is not configured for Site with ID=687687dc040ba94a99f2092d
+[2025-07-15T16:55:22,719Z] <launcher> WARN  system - Country Code is not configured for Site with ID=687687dc040ba94a99f2092d
+[2025-07-15T16:55:22,741Z] <launcher> INFO  state  - Creating Default Local Area Network for Site[687687dc040ba94a99f2092d]
+[2025-07-15T16:55:22,791Z] <launcher> WARN  db     - Cannot notify listeners on saving 'apgroup' document with missing data
+[2025-07-15T16:55:28,710Z] <launcher> INFO  startup - Context ready
+[2025-07-15T16:55:28,712Z] <launcher> INFO  migration - Version 9.2.87 has not changed, skipping migration
+[2025-07-15T16:55:28,810Z] <launcher> INFO  startup - Calling context ready handlers
+[2025-07-15T16:55:28,825Z] <launcher> INFO  productinfo - [UIDB] Initializing UiDbService
+[2025-07-15T16:55:32,152Z] <launcher> INFO  productinfo - Using controller channel=RELEASE, firmware channel=RELEASE. Available controller channels=[RELEASE], available firmware channels=[RELEASE]. SSO is disabled.
+[2025-07-15T16:55:32,403Z] <launcher> INFO  startup - Done with context ready handlers
+[2025-07-15T16:55:32,414Z] <launcher> INFO  tomcat - Removing basic REST API support
+[2025-07-15T16:55:32,489Z] <launcher> INFO  startup - Startup complete
+[2025-07-15T16:55:32,490Z] <launcher> INFO  tomcat - systemd: Watchdog ping NOT enabled
+[2025-07-15T16:55:32,490Z] <launcher> INFO  tomcat - systemd: Startup completed. Ready for watchdog keep-alive checking.
+[2025-07-15T16:55:32,626Z] <launcher> INFO  sdnotify - ubnt_sdnotify_jni is loaded from: /usr/lib/unifi/lib/native/Linux/x86_64/libubnt_sdnotify_jni.so
+[2025-07-15T16:56:28,897Z] <sync-uidb> INFO  productinfo - [UIDB] Sync external UiDb Snapshot
+[2025-07-15T16:56:29,236Z] <sync-uidb> INFO  productinfo - [UIDB] Sync UiDb Records of private models
+[2025-07-15T16:56:32,883Z] <autoupdate-check> INFO  productinfo - firmware[UMBBE630] new version (7.3.17.17470) is available
+[2025-07-15T17:56:29,240Z] <sync-uidb> INFO  productinfo - [UIDB] Sync external UiDb Snapshot
+[2025-07-15T17:56:29,300Z] <sync-uidb> INFO  productinfo - [UIDB] Sync UiDb Records of private models
+[2025-07-15T18:56:29,300Z] <sync-uidb> INFO  productinfo - [UIDB] Sync external UiDb Snapshot
+[2025-07-15T18:56:29,359Z] <sync-uidb> INFO  productinfo - [UIDB] Sync UiDb Records of private models

@@ -779,3 +779,558 @@
 2025-07-11T18:46:05.227+0000 I NETWORK  [conn30] end connection 127.0.0.1:52986 (6 connections now open)
 2025-07-11T18:46:05.228+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:42202 #35 (7 connections now open)
 2025-07-11T18:46:05.228+0000 I NETWORK  [conn35] received client metadata from 127.0.0.1:42202 conn35: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T16:54:48.572+0000 I CONTROL  [main] ***** SERVER RESTARTED *****
+2025-07-15T16:54:48.883+0000 I CONTROL  [initandlisten] MongoDB starting : pid=96 port=27117 dbpath=/usr/lib/unifi/data/db 64-bit host=0704da1dcc82
+2025-07-15T16:54:48.883+0000 I CONTROL  [initandlisten] db version v3.6.8
+2025-07-15T16:54:48.883+0000 I CONTROL  [initandlisten] git version: 8e540c0b6db93ce994cc548f000900bdc740f80a
+2025-07-15T16:54:48.883+0000 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.1.1f  31 Mar 2020
+2025-07-15T16:54:48.883+0000 I CONTROL  [initandlisten] allocator: tcmalloc
+2025-07-15T16:54:48.883+0000 I CONTROL  [initandlisten] modules: none
+2025-07-15T16:54:48.883+0000 I CONTROL  [initandlisten] build environment:
+2025-07-15T16:54:48.883+0000 I CONTROL  [initandlisten]     distarch: x86_64
+2025-07-15T16:54:48.883+0000 I CONTROL  [initandlisten]     target_arch: x86_64
+2025-07-15T16:54:48.883+0000 I CONTROL  [initandlisten] options: { net: { bindIp: "127.0.0.1", port: 27117, unixDomainSocket: { pathPrefix: "/usr/lib/unifi/run" } }, processManagement: { pidFilePath: "/usr/lib/unifi/run/mongod.pid" }, storage: { dbPath: "/usr/lib/unifi/data/db", wiredTiger: { engineConfig: { configString: "cache_size=256M" } } }, systemLog: { destination: "file", logAppend: true, logRotate: "reopen", path: "/usr/lib/unifi/logs/mongod.log" } }
+2025-07-15T16:54:48.883+0000 W -        [initandlisten] Detected unclean shutdown - /usr/lib/unifi/data/db/mongod.lock is not empty.
+2025-07-15T16:54:48.885+0000 I -        [initandlisten] Detected data files in /usr/lib/unifi/data/db created by the 'wiredTiger' storage engine, so setting the active storage engine to 'wiredTiger'.
+2025-07-15T16:54:48.885+0000 W STORAGE  [initandlisten] Recovering data from the last clean checkpoint.
+2025-07-15T16:54:48.885+0000 I STORAGE  [initandlisten] 
+2025-07-15T16:54:48.885+0000 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+2025-07-15T16:54:48.885+0000 I STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+2025-07-15T16:54:48.885+0000 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=3457M,session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),cache_cursors=false,compatibility=(release="3.0",require_max="3.0"),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),statistics_log=(wait=0),verbose=(recovery_progress),cache_size=256M
+2025-07-15T16:54:49.504+0000 I STORAGE  [initandlisten] WiredTiger message [1752598489:504446][96:0x76a140c51ac0], txn-recover: Main recovery loop: starting at 1/1133824
+2025-07-15T16:54:49.504+0000 I STORAGE  [initandlisten] WiredTiger message [1752598489:504882][96:0x76a140c51ac0], txn-recover: Recovering log 1 through 2
+2025-07-15T16:54:49.552+0000 I STORAGE  [initandlisten] WiredTiger message [1752598489:552116][96:0x76a140c51ac0], txn-recover: Recovering log 2 through 2
+2025-07-15T16:54:49.587+0000 I STORAGE  [initandlisten] WiredTiger message [1752598489:587229][96:0x76a140c51ac0], txn-recover: Set global recovery timestamp: 0
+2025-07-15T16:54:49.802+0000 I CONTROL  [initandlisten] 
+2025-07-15T16:54:49.802+0000 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2025-07-15T16:54:49.802+0000 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2025-07-15T16:54:49.802+0000 I CONTROL  [initandlisten] ** WARNING: You are running this process as the root user, which is not recommended.
+2025-07-15T16:54:49.802+0000 I CONTROL  [initandlisten] 
+2025-07-15T16:54:49.802+0000 I CONTROL  [initandlisten] 
+2025-07-15T16:54:49.802+0000 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/enabled is 'always'.
+2025-07-15T16:54:49.802+0000 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
+2025-07-15T16:54:49.802+0000 I CONTROL  [initandlisten] 
+2025-07-15T16:54:50.644+0000 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory '/usr/lib/unifi/data/db/diagnostic.data'
+2025-07-15T16:54:50.648+0000 I NETWORK  [initandlisten] waiting for connections on port 27117
+2025-07-15T16:54:50.879+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:48910 #1 (1 connection now open)
+2025-07-15T16:54:50.894+0000 I NETWORK  [conn1] received client metadata from 127.0.0.1:48910 conn1: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T16:54:50.942+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:48918 #2 (2 connections now open)
+2025-07-15T16:54:50.942+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:48932 #3 (3 connections now open)
+2025-07-15T16:54:50.943+0000 I NETWORK  [conn3] received client metadata from 127.0.0.1:48932 conn3: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T16:54:50.944+0000 I NETWORK  [conn2] received client metadata from 127.0.0.1:48918 conn2: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T16:54:50.967+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:48940 #4 (4 connections now open)
+2025-07-15T16:54:50.971+0000 I NETWORK  [conn4] received client metadata from 127.0.0.1:48940 conn4: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T16:54:50.983+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:48956 #5 (5 connections now open)
+2025-07-15T16:54:50.992+0000 I NETWORK  [conn5] received client metadata from 127.0.0.1:48956 conn5: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T16:54:51.024+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:48958 #6 (6 connections now open)
+2025-07-15T16:54:51.031+0000 I NETWORK  [conn6] received client metadata from 127.0.0.1:48958 conn6: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T16:54:51.098+0000 I FTDC     [ftdc] Unclean full-time diagnostic data capture shutdown detected, found interim file, some metrics may have been lost. OK
+2025-07-15T16:54:51.981+0000 I COMMAND  [conn6] CMD: drop ace.wan_sla
+2025-07-15T16:54:51.982+0000 I STORAGE  [conn6] Finishing collection drop for ace.wan_sla (eb34197c-e526-4a00-be47-5a777aa4992f).
+2025-07-15T16:54:52.059+0000 I COMMAND  [conn6] CMD: drop ace.traffic_rule
+2025-07-15T16:54:52.059+0000 I STORAGE  [conn6] Finishing collection drop for ace.traffic_rule (a5c244da-4a87-465e-9eb3-3576a45e3d80).
+2025-07-15T16:54:52.068+0000 I COMMAND  [conn6] CMD: drop ace.threat_log_view
+2025-07-15T16:54:52.068+0000 I STORAGE  [conn6] Finishing collection drop for ace.threat_log_view (8fec7b02-e561-4f46-a1df-9005ab7f6e58).
+2025-07-15T16:54:52.077+0000 I COMMAND  [conn6] CMD: drop ace.floorplan
+2025-07-15T16:54:52.078+0000 I STORAGE  [conn6] Finishing collection drop for ace.floorplan (3b5e8dd1-4947-4277-b009-dc49d3cc3305).
+2025-07-15T16:54:52.084+0000 I COMMAND  [conn6] CMD: drop ace.appstate_log
+2025-07-15T16:54:52.084+0000 I STORAGE  [conn6] Finishing collection drop for ace.appstate_log (d5ba11dd-3fcf-48d8-83c9-5e4201a2deb2).
+2025-07-15T16:54:52.212+0000 I COMMAND  [conn6] CMD: drop ace.alert
+2025-07-15T16:54:52.212+0000 I STORAGE  [conn6] Finishing collection drop for ace.alert (8322e9b5-58cc-4a4d-a4ef-d1574e0847ad).
+2025-07-15T16:54:52.220+0000 I COMMAND  [conn6] CMD: drop ace.micro_segment_groups
+2025-07-15T16:54:52.220+0000 I STORAGE  [conn6] Finishing collection drop for ace.micro_segment_groups (b2cb56ab-eae9-4ca9-b6ca-d781a862de2b).
+2025-07-15T16:54:52.245+0000 I COMMAND  [conn6] CMD: drop ace.apgroup
+2025-07-15T16:54:52.245+0000 I STORAGE  [conn6] Finishing collection drop for ace.apgroup (c657f2dc-1fed-4790-90c6-d48a5e0bcf79).
+2025-07-15T16:54:52.251+0000 I COMMAND  [conn6] CMD: drop ace.qos_rule
+2025-07-15T16:54:52.251+0000 I STORAGE  [conn6] Finishing collection drop for ace.qos_rule (fdd0fab9-ef63-4eff-8acb-ab7630702b5d).
+2025-07-15T16:54:52.265+0000 I COMMAND  [conn6] CMD: drop ace.admin_activity_log
+2025-07-15T16:54:52.265+0000 I STORAGE  [conn6] Finishing collection drop for ace.admin_activity_log (e3063151-9471-45df-b7a5-a07839ef8ca1).
+2025-07-15T16:54:52.273+0000 I COMMAND  [conn6] CMD: drop ace.teleport_client
+2025-07-15T16:54:52.274+0000 I STORAGE  [conn6] Finishing collection drop for ace.teleport_client (a7cddaab-1b4b-42e4-9205-e6fe1b3e99f3).
+2025-07-15T16:54:52.285+0000 I COMMAND  [conn6] CMD: drop ace.teleport_token
+2025-07-15T16:54:52.285+0000 I STORAGE  [conn6] Finishing collection drop for ace.teleport_token (143c3bc4-bc60-42ea-80ff-27e9c1109959).
+2025-07-15T16:54:52.299+0000 I COMMAND  [conn6] CMD: drop ace.wireguard_user
+2025-07-15T16:54:52.299+0000 I STORAGE  [conn6] Finishing collection drop for ace.wireguard_user (a9440462-52c5-416b-808a-fde2984e6d91).
+2025-07-15T16:54:52.319+0000 I COMMAND  [conn6] CMD: drop ace.wifiman_feedback
+2025-07-15T16:54:52.319+0000 I STORAGE  [conn6] Finishing collection drop for ace.wifiman_feedback (298d23c3-adff-4779-bfec-6c5cabeb59b8).
+2025-07-15T16:54:52.358+0000 I COMMAND  [conn6] CMD: drop ace.api_key
+2025-07-15T16:54:52.358+0000 I STORAGE  [conn6] Finishing collection drop for ace.api_key (3ba2caff-d735-4d68-aa2f-223eb99bc9a9).
+2025-07-15T16:54:52.366+0000 I COMMAND  [conn6] CMD: drop ace.api_key_privilege
+2025-07-15T16:54:52.366+0000 I STORAGE  [conn6] Finishing collection drop for ace.api_key_privilege (a1b75612-d82c-4210-a941-1f3d35b4c6ee).
+2025-07-15T16:54:52.378+0000 I COMMAND  [conn6] CMD: drop ace.firewall_policy
+2025-07-15T16:54:52.378+0000 I STORAGE  [conn6] Finishing collection drop for ace.firewall_policy (7bb660e1-dfac-4322-ab31-eb578f3f087f).
+2025-07-15T16:54:52.404+0000 I COMMAND  [conn6] CMD: drop ace.simple_app_block
+2025-07-15T16:54:52.406+0000 I STORAGE  [conn6] Finishing collection drop for ace.simple_app_block (96ca583e-7d7e-49fe-a825-bece8324db3a).
+2025-07-15T16:54:52.422+0000 I COMMAND  [conn6] CMD: drop ace.switch_stacking
+2025-07-15T16:54:52.422+0000 I STORAGE  [conn6] Finishing collection drop for ace.switch_stacking (1f2c2638-8bbf-48ae-884e-a931316343c8).
+2025-07-15T16:54:52.444+0000 I COMMAND  [conn6] CMD: drop ace.managed_shadow_mode
+2025-07-15T16:54:52.444+0000 I STORAGE  [conn6] Finishing collection drop for ace.managed_shadow_mode (2e678239-ce2c-4fbf-ad21-703464f1ecf9).
+2025-07-15T16:54:52.464+0000 I COMMAND  [conn6] CMD: drop ace.predefined_firewall_rule
+2025-07-15T16:54:52.464+0000 I STORAGE  [conn6] Finishing collection drop for ace.predefined_firewall_rule (eb4849eb-491e-49eb-a47f-0de4a08f46de).
+2025-07-15T16:54:52.471+0000 I COMMAND  [conn6] CMD: drop ace.acl_rule
+2025-07-15T16:54:52.472+0000 I STORAGE  [conn6] Finishing collection drop for ace.acl_rule (a044bba6-1d04-4a75-ba0e-a23bd3a624fd).
+2025-07-15T16:54:52.476+0000 I COMMAND  [conn6] CMD: drop ace.traffic_route
+2025-07-15T16:54:52.476+0000 I STORAGE  [conn6] Finishing collection drop for ace.traffic_route (905b7d75-a99f-4d74-a17f-9f9eb8b25caa).
+2025-07-15T16:54:52.483+0000 I COMMAND  [conn6] CMD: drop ace.floorplan_shape
+2025-07-15T16:54:52.484+0000 I STORAGE  [conn6] Finishing collection drop for ace.floorplan_shape (89077634-5ca8-4147-90a5-9d0610f69ac1).
+2025-07-15T16:54:52.491+0000 I COMMAND  [conn6] CMD: drop ace.static_dns
+2025-07-15T16:54:52.491+0000 I STORAGE  [conn6] Finishing collection drop for ace.static_dns (8035fe71-8e80-4733-828b-9d7037abc6f1).
+2025-07-15T16:54:52.494+0000 I COMMAND  [conn6] CMD: drop ace.firewall_zone
+2025-07-15T16:54:52.494+0000 I STORAGE  [conn6] Finishing collection drop for ace.firewall_zone (14a50142-3c33-4a1e-9e21-dfbee2d9797f).
+2025-07-15T16:54:52.504+0000 I COMMAND  [conn6] CMD: drop ace.diagnostics_config
+2025-07-15T16:54:52.504+0000 I STORAGE  [conn6] Finishing collection drop for ace.diagnostics_config (863202b2-c42c-491b-8e60-3dfc729a2363).
+2025-07-15T16:54:52.507+0000 I COMMAND  [conn6] CMD: drop ace.trigger_log
+2025-07-15T16:54:52.508+0000 I STORAGE  [conn6] Finishing collection drop for ace.trigger_log (c410e929-7eb0-407d-9eb8-647579b8a978).
+2025-07-15T16:54:52.513+0000 I COMMAND  [conn6] CMD: drop ace.config_meta
+2025-07-15T16:54:52.513+0000 I STORAGE  [conn6] Finishing collection drop for ace.config_meta (ba6c20d8-4243-4b04-8403-45d0db33da7f).
+2025-07-15T16:54:52.521+0000 I COMMAND  [conn6] CMD: drop ace.reference_name_history
+2025-07-15T16:54:52.521+0000 I STORAGE  [conn6] Finishing collection drop for ace.reference_name_history (c1cd4742-885b-40e8-96b8-85a5c81fe45d).
+2025-07-15T16:54:52.531+0000 I COMMAND  [conn6] CMD: drop ace.ospf_router
+2025-07-15T16:54:52.531+0000 I STORAGE  [conn6] Finishing collection drop for ace.ospf_router (6a83a6da-47d5-4efc-ab85-104ae8e43972).
+2025-07-15T16:54:52.535+0000 I COMMAND  [conn6] CMD: drop ace.nat_rule
+2025-07-15T16:54:52.535+0000 I STORAGE  [conn6] Finishing collection drop for ace.nat_rule (afb611c7-5007-4298-a280-c4e71b5c67b9).
+2025-07-15T16:54:52.540+0000 I COMMAND  [conn6] CMD: drop ace.bgp_router
+2025-07-15T16:54:52.540+0000 I STORAGE  [conn6] Finishing collection drop for ace.bgp_router (149840ef-c5c4-47ac-ba7d-1a8f09614380).
+2025-07-15T16:54:52.541+0000 I COMMAND  [conn6] CMD: drop ace.mclag_group
+2025-07-15T16:54:52.542+0000 I STORAGE  [conn6] Finishing collection drop for ace.mclag_group (bb233d8f-ab5c-4cb3-b4f7-8288e4053dc9).
+2025-07-15T16:54:52.545+0000 I COMMAND  [conn6] CMD: drop ace.alert_setting
+2025-07-15T16:54:52.545+0000 I STORAGE  [conn6] Finishing collection drop for ace.alert_setting (8d981510-1a81-46cd-ab1c-bdfd60daa94e).
+2025-07-15T16:54:52.760+0000 I COMMAND  [conn6] CMD: drop ace_stat.pingtest
+2025-07-15T16:54:52.760+0000 I STORAGE  [conn6] Finishing collection drop for ace_stat.pingtest (4a05fc6a-b0c5-411d-ad7a-ed2db6e5bf31).
+2025-07-15T16:54:52.768+0000 I COMMAND  [conn6] CMD: drop ace_stat.downtime
+2025-07-15T16:54:52.768+0000 I STORAGE  [conn6] Finishing collection drop for ace_stat.downtime (cbeb4aff-4f1e-4d34-aab6-a0e7c130b04f).
+2025-07-15T16:54:52.786+0000 I COMMAND  [conn6] CMD: drop ace_stat.wifi_connection_event
+2025-07-15T16:54:52.786+0000 I STORAGE  [conn6] Finishing collection drop for ace_stat.wifi_connection_event (335ef1fc-fb55-475f-8868-ab74f16b3d7d).
+2025-07-15T16:54:52.809+0000 I COMMAND  [conn6] dropDatabase ace_audit - starting
+2025-07-15T16:54:52.809+0000 I COMMAND  [conn6] dropDatabase ace_audit - dropping 0 collections
+2025-07-15T16:54:52.813+0000 I COMMAND  [conn6] dropDatabase ace_audit - finished
+2025-07-15T16:54:55.212+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:47650 #7 (7 connections now open)
+2025-07-15T16:54:55.213+0000 I NETWORK  [conn7] received client metadata from 127.0.0.1:47650 conn7: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T16:55:22.793+0000 I STORAGE  [conn6] createCollection: ace.apgroup with generated UUID: bb815ba5-d36b-492f-8fa3-b3ac5a8f9b96
+2025-07-15T16:55:23.837+0000 I STORAGE  [conn6] createCollection: ace.alert with generated UUID: 356c749e-f762-4883-b5d3-ec5a46fd1fd1
+2025-07-15T16:55:23.848+0000 I INDEX    [conn6] build index on: ace.alert properties: { v: 2, key: { parameters.ADMIN.name: 1 }, name: "parameters.ADMIN.name_1", ns: "ace.alert" }
+2025-07-15T16:55:23.848+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:23.849+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:23.855+0000 I INDEX    [conn6] build index on: ace.alert properties: { v: 2, key: { parameters.DEVICE.target_id: 1 }, name: "parameters.DEVICE.target_id_1", ns: "ace.alert" }
+2025-07-15T16:55:23.855+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:23.856+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:23.864+0000 I INDEX    [conn6] build index on: ace.alert properties: { v: 2, key: { parameters.CLIENT.target_id: 1 }, name: "parameters.CLIENT.target_id_1", ns: "ace.alert" }
+2025-07-15T16:55:23.864+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:23.866+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:28.973+0000 I STORAGE  [conn6] createCollection: ace.threat_log_view with generated UUID: d3a299f3-79c1-4c1f-84b1-755ef101b897
+2025-07-15T16:55:28.988+0000 I INDEX    [conn6] build index on: ace.threat_log_view properties: { v: 2, key: { time: -1, site_id: 1, src_mac: 1, threat_type: 1, threat_direction: 1 }, name: "time-1_site_id_1_client_mac_1_threat_type_1_threat_direction_1", ns: "ace.threat_log_view" }
+2025-07-15T16:55:28.988+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:28.989+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:28.996+0000 I INDEX    [conn6] build index on: ace.threat_log_view properties: { v: 2, key: { _fts: "text", _ftsx: 1 }, name: "search_text_1", ns: "ace.threat_log_view", weights: { counterpart: 1, domain: 1, signature: 1 }, default_language: "english", language_override: "language", textIndexVersion: 3 }
+2025-07-15T16:55:28.996+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:28.997+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:28.998+0000 I STORAGE  [conn6] createCollection: ace.firewall_zone with generated UUID: d0349f3c-eb26-4f77-9742-b4878db691ad
+2025-07-15T16:55:29.013+0000 I INDEX    [conn6] build index on: ace.firewall_zone properties: { v: 2, key: { site_id: 1 }, name: "site_id", ns: "ace.firewall_zone" }
+2025-07-15T16:55:29.013+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.015+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.016+0000 I STORAGE  [conn6] createCollection: ace.predefined_firewall_rule with generated UUID: d750fa20-a5e9-40d2-b1f7-84858a9a4450
+2025-07-15T16:55:29.030+0000 I INDEX    [conn6] build index on: ace.predefined_firewall_rule properties: { v: 2, key: { site_id: 1 }, name: "site_id", ns: "ace.predefined_firewall_rule" }
+2025-07-15T16:55:29.030+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.031+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.033+0000 I STORAGE  [conn6] createCollection: ace.teleport_client with generated UUID: 4a3c9564-d66d-4f7b-b676-fe438da4bfea
+2025-07-15T16:55:29.045+0000 I INDEX    [conn6] build index on: ace.teleport_client properties: { v: 2, key: { external_client_id: 1 }, name: "external_client_id", ns: "ace.teleport_client" }
+2025-07-15T16:55:29.045+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.046+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.052+0000 I INDEX    [conn6] build index on: ace.teleport_client properties: { v: 2, key: { last_seen_timestamp: 1 }, name: "last_seen_timestamp", ns: "ace.teleport_client" }
+2025-07-15T16:55:29.052+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.053+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.055+0000 I STORAGE  [conn6] createCollection: ace.static_dns with generated UUID: 7d0ddeb6-f66e-4a3e-a088-a9a2a3acc368
+2025-07-15T16:55:29.066+0000 I INDEX    [conn6] build index on: ace.static_dns properties: { v: 2, key: { site_id: 1 }, name: "site_id", ns: "ace.static_dns" }
+2025-07-15T16:55:29.067+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.068+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.069+0000 I STORAGE  [conn6] createCollection: ace.teleport_token with generated UUID: 22f3ec96-0679-4bec-8d6a-2505f7a22739
+2025-07-15T16:55:29.082+0000 I INDEX    [conn6] build index on: ace.teleport_token properties: { v: 2, key: { token: 1 }, name: "token", ns: "ace.teleport_token" }
+2025-07-15T16:55:29.082+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.083+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.087+0000 I STORAGE  [conn6] createCollection: ace.simple_app_block with generated UUID: 55be7051-63e0-43e1-8224-0aa146b08846
+2025-07-15T16:55:29.102+0000 I INDEX    [conn6] build index on: ace.simple_app_block properties: { v: 2, key: { site_id: 1 }, name: "site_id", ns: "ace.simple_app_block" }
+2025-07-15T16:55:29.102+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.103+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.109+0000 I INDEX    [conn6] build index on: ace.simple_app_block properties: { v: 2, key: { short_id: -1 }, name: "short_id", ns: "ace.simple_app_block" }
+2025-07-15T16:55:29.110+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.111+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.112+0000 I STORAGE  [conn6] createCollection: ace.api_key_privilege with generated UUID: d38d0dbb-656c-4077-b6b2-c413a66274a7
+2025-07-15T16:55:29.124+0000 I INDEX    [conn6] build index on: ace.api_key_privilege properties: { v: 2, key: { api_key_id: 1 }, name: "api_key_id", ns: "ace.api_key_privilege" }
+2025-07-15T16:55:29.124+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.126+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.131+0000 I INDEX    [conn6] build index on: ace.api_key_privilege properties: { v: 2, key: { site_id: 1 }, name: "site_id", ns: "ace.api_key_privilege" }
+2025-07-15T16:55:29.131+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.133+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.140+0000 I INDEX    [conn6] build index on: ace.alert properties: { v: 2, key: { time: -1, key: 1, site_id: 1, status: 1 }, name: "time_-1_key_1_site_id_1_status_1", ns: "ace.alert" }
+2025-07-15T16:55:29.140+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.141+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.146+0000 I STORAGE  [conn6] createCollection: ace.reference_name_history with generated UUID: 671ef865-c5dd-45a7-90e6-de3c628ff525
+2025-07-15T16:55:29.159+0000 I INDEX    [conn6] build index on: ace.reference_name_history properties: { v: 2, unique: true, key: { site_id: 1, type: 1, reference_id: 1 }, name: "site_id_1_type_1_reference_id_1", ns: "ace.reference_name_history" }
+2025-07-15T16:55:29.160+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.161+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.164+0000 I STORAGE  [conn6] createCollection: ace.floorplan_shape with generated UUID: 05997510-4b78-4b91-bef9-1c81acd05a9e
+2025-07-15T16:55:29.177+0000 I INDEX    [conn6] build index on: ace.floorplan_shape properties: { v: 2, key: { site_id: 1 }, name: "site_id", ns: "ace.floorplan_shape" }
+2025-07-15T16:55:29.177+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.179+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.184+0000 I INDEX    [conn6] build index on: ace.floorplan_shape properties: { v: 2, unique: true, key: { uuid: 1 }, name: "uuid", ns: "ace.floorplan_shape" }
+2025-07-15T16:55:29.185+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.186+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.193+0000 I INDEX    [conn6] build index on: ace.floorplan_shape properties: { v: 2, key: { plan_id: 1 }, name: "plan_id", ns: "ace.floorplan_shape" }
+2025-07-15T16:55:29.193+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.194+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.197+0000 I STORAGE  [conn6] createCollection: ace.appstate_log with generated UUID: 0cb04e02-b4d8-4066-91f6-3d14344c0a82
+2025-07-15T16:55:29.211+0000 I INDEX    [conn6] build index on: ace.appstate_log properties: { v: 2, key: { time: 1 }, name: "time", ns: "ace.appstate_log" }
+2025-07-15T16:55:29.212+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.213+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.215+0000 I STORAGE  [conn6] createCollection: ace.api_key with generated UUID: 2d4d9ccc-4d35-49b0-bd7d-e87f9ec3930d
+2025-07-15T16:55:29.230+0000 I INDEX    [conn6] build index on: ace.api_key properties: { v: 2, key: { uid: 1 }, name: "uid", ns: "ace.api_key" }
+2025-07-15T16:55:29.230+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.231+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.237+0000 I INDEX    [conn6] build index on: ace.api_key properties: { v: 2, key: { admin_id: 1 }, name: "admin_id", ns: "ace.api_key" }
+2025-07-15T16:55:29.238+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.239+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.243+0000 I STORAGE  [conn6] createCollection: ace.wifiman_feedback with generated UUID: 2b81b21b-0435-4882-91cb-6928ac3e4b79
+2025-07-15T16:55:29.255+0000 I INDEX    [conn6] build index on: ace.wifiman_feedback properties: { v: 2, key: { site_id: 1 }, name: "site_id", ns: "ace.wifiman_feedback" }
+2025-07-15T16:55:29.255+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.257+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.262+0000 I STORAGE  [conn6] createCollection: ace.admin_activity_log with generated UUID: 6f826bd6-604a-45a0-9380-e0f499d5de48
+2025-07-15T16:55:29.275+0000 I INDEX    [conn6] build index on: ace.admin_activity_log properties: { v: 2, key: { time: -1, site_id: 1, key: 1, change_key: 1 }, name: "time_-1_site_id_1_key_1_change_key_1", ns: "ace.admin_activity_log" }
+2025-07-15T16:55:29.275+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.276+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.283+0000 I INDEX    [conn6] build index on: ace.admin_activity_log properties: { v: 2, key: { site_id: 1, admin.admin_id: 1 }, name: "site_id_1_admin_admin_id_1", ns: "ace.admin_activity_log" }
+2025-07-15T16:55:29.283+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.284+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.289+0000 I STORAGE  [conn6] createCollection: ace.nat_rule with generated UUID: 19056c39-54ee-41d0-8cf8-be6b5ee8ad1f
+2025-07-15T16:55:29.305+0000 I INDEX    [conn6] build index on: ace.nat_rule properties: { v: 2, key: { site_id: 1 }, name: "site_id", ns: "ace.nat_rule" }
+2025-07-15T16:55:29.305+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.306+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.308+0000 I STORAGE  [conn6] createCollection: ace.floorplan with generated UUID: 4cda368e-2029-4dc1-84e0-34a6df4ad1be
+2025-07-15T16:55:29.322+0000 I INDEX    [conn6] build index on: ace.floorplan properties: { v: 2, key: { site_id: 1 }, name: "site_id", ns: "ace.floorplan" }
+2025-07-15T16:55:29.322+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.323+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.329+0000 I INDEX    [conn6] build index on: ace.apgroup properties: { v: 2, key: { site_id: 1 }, name: "site_id", ns: "ace.apgroup" }
+2025-07-15T16:55:29.329+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.332+0000 I INDEX    [conn6] build index done.  scanned 1 total records. 0 secs
+2025-07-15T16:55:29.334+0000 I STORAGE  [conn6] createCollection: ace.ospf_router with generated UUID: 8233d058-be21-468c-aeff-115ca21add85
+2025-07-15T16:55:29.346+0000 I INDEX    [conn6] build index on: ace.ospf_router properties: { v: 2, key: { site_id: 1 }, name: "site_id", ns: "ace.ospf_router" }
+2025-07-15T16:55:29.346+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.347+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.349+0000 I STORAGE  [conn6] createCollection: ace.alert_setting with generated UUID: 2fa399f7-668a-4dc5-b5d8-20e85f5d1bb3
+2025-07-15T16:55:29.365+0000 I INDEX    [conn6] build index on: ace.alert_setting properties: { v: 2, unique: true, key: { site_id: 1, admin_id: 1 }, name: "site_id_1_admin_id_1", ns: "ace.alert_setting" }
+2025-07-15T16:55:29.365+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.366+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.370+0000 I STORAGE  [conn6] createCollection: ace.trigger_log with generated UUID: df35a503-6282-448e-b5d1-760c1e6a1b02
+2025-07-15T16:55:29.383+0000 I INDEX    [conn6] build index on: ace.trigger_log properties: { v: 2, key: { time: -1, site_id: 1, trigger.type: 1, source.mac: 1 }, name: "time_-1_site_id_1_trigger_type_1_source_mac_1", ns: "ace.trigger_log" }
+2025-07-15T16:55:29.383+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.384+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.392+0000 I INDEX    [conn6] build index on: ace.trigger_log properties: { v: 2, key: { time: 1, trigger.trigger_id: 1, key: 1, source.mac: 1, source.ip: 1 }, name: "time_1_trigger_trigger_id_1_key_1_source_mac_1_source_ip_1", ns: "ace.trigger_log" }
+2025-07-15T16:55:29.392+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.393+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.394+0000 I STORAGE  [conn6] createCollection: ace.diagnostics_config with generated UUID: f1dcca3b-a1cc-4201-826e-2ed406c65657
+2025-07-15T16:55:29.412+0000 I INDEX    [conn6] build index on: ace.diagnostics_config properties: { v: 2, key: { mac: 1 }, name: "mac", ns: "ace.diagnostics_config" }
+2025-07-15T16:55:29.412+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.413+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.417+0000 I STORAGE  [conn6] createCollection: ace.config_meta with generated UUID: c7b4bc0f-9b81-48c3-8339-c7a14ee88d4d
+2025-07-15T16:55:29.429+0000 I INDEX    [conn6] build index on: ace.config_meta properties: { v: 2, key: { site_id: 1, mac: 1 }, name: "site_id_1_mac_1", ns: "ace.config_meta" }
+2025-07-15T16:55:29.429+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.430+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.436+0000 I STORAGE  [conn6] createCollection: ace.traffic_rule with generated UUID: 2b87d578-abef-4968-a88c-c73e70562051
+2025-07-15T16:55:29.802+0000 I INDEX    [conn6] build index on: ace.traffic_rule properties: { v: 2, key: { site_id: 1 }, name: "site_id", ns: "ace.traffic_rule" }
+2025-07-15T16:55:29.802+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.805+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.806+0000 I COMMAND  [conn6] command ace.$cmd command: createIndexes { createIndexes: "traffic_rule", indexes: [ { key: { site_id: 1 }, name: "site_id" } ], $db: "ace", lsid: { id: UUID("331d4dc1-45ee-4ac2-8dfe-0c28aaac7e18") } } numYields:0 reslen:98 locks:{ Global: { acquireCount: { r: 2, w: 2 } }, Database: { acquireCount: { w: 2, W: 1 } }, Collection: { acquireCount: { w: 2 } } } protocol:op_msg 369ms
+2025-07-15T16:55:29.991+0000 I INDEX    [conn6] build index on: ace.traffic_rule properties: { v: 2, key: { short_id: -1 }, name: "short_id", ns: "ace.traffic_rule" }
+2025-07-15T16:55:29.991+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:29.993+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:29.993+0000 I COMMAND  [conn6] command ace.$cmd command: createIndexes { createIndexes: "traffic_rule", indexes: [ { key: { short_id: -1 }, name: "short_id" } ], $db: "ace", lsid: { id: UUID("331d4dc1-45ee-4ac2-8dfe-0c28aaac7e18") } } numYields:0 reslen:98 locks:{ Global: { acquireCount: { r: 2, w: 2 } }, Database: { acquireCount: { w: 2, W: 1 } }, Collection: { acquireCount: { w: 2 } } } protocol:op_msg 186ms
+2025-07-15T16:55:29.999+0000 I STORAGE  [conn6] createCollection: ace.micro_segment_groups with generated UUID: d97fd1b5-acb1-48d3-99ee-5b71b7f00011
+2025-07-15T16:55:30.110+0000 I INDEX    [conn6] build index on: ace.micro_segment_groups properties: { v: 2, key: { site_id: 1 }, name: "site_id", ns: "ace.micro_segment_groups" }
+2025-07-15T16:55:30.110+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:30.114+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:30.114+0000 I COMMAND  [conn6] command ace.$cmd command: createIndexes { createIndexes: "micro_segment_groups", indexes: [ { key: { site_id: 1 }, name: "site_id" } ], $db: "ace", lsid: { id: UUID("331d4dc1-45ee-4ac2-8dfe-0c28aaac7e18") } } numYields:0 reslen:98 locks:{ Global: { acquireCount: { r: 2, w: 2 } }, Database: { acquireCount: { w: 2, W: 1 } }, Collection: { acquireCount: { w: 2 } } } protocol:op_msg 115ms
+2025-07-15T16:55:30.126+0000 I STORAGE  [conn6] createCollection: ace.qos_rule with generated UUID: b763e5f5-d2a0-43b1-bbf1-daa7a5dca8ec
+2025-07-15T16:55:30.253+0000 I INDEX    [conn6] build index on: ace.qos_rule properties: { v: 2, key: { site_id: 1 }, name: "site_id", ns: "ace.qos_rule" }
+2025-07-15T16:55:30.254+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:30.256+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:30.256+0000 I COMMAND  [conn6] command ace.$cmd command: createIndexes { createIndexes: "qos_rule", indexes: [ { key: { site_id: 1 }, name: "site_id" } ], $db: "ace", lsid: { id: UUID("331d4dc1-45ee-4ac2-8dfe-0c28aaac7e18") } } numYields:0 reslen:98 locks:{ Global: { acquireCount: { r: 2, w: 2 } }, Database: { acquireCount: { w: 2, W: 1 } }, Collection: { acquireCount: { w: 2 } } } protocol:op_msg 129ms
+2025-07-15T16:55:30.324+0000 I INDEX    [conn6] build index on: ace.qos_rule properties: { v: 2, key: { short_id: -1 }, name: "short_id", ns: "ace.qos_rule" }
+2025-07-15T16:55:30.324+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:30.326+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:30.333+0000 I STORAGE  [conn6] createCollection: ace.mclag_group with generated UUID: 0e060293-45c9-41d1-bff3-5efd4c5d1641
+2025-07-15T16:55:30.686+0000 I INDEX    [conn6] build index on: ace.mclag_group properties: { v: 2, key: { site_id: 1 }, name: "site_id", ns: "ace.mclag_group" }
+2025-07-15T16:55:30.686+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:30.689+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:30.690+0000 I COMMAND  [conn6] command ace.$cmd command: createIndexes { createIndexes: "mclag_group", indexes: [ { key: { site_id: 1 }, name: "site_id" } ], $db: "ace", lsid: { id: UUID("331d4dc1-45ee-4ac2-8dfe-0c28aaac7e18") } } numYields:0 reslen:98 locks:{ Global: { acquireCount: { r: 2, w: 2 } }, Database: { acquireCount: { w: 2, W: 1 } }, Collection: { acquireCount: { w: 2 } } } protocol:op_msg 356ms
+2025-07-15T16:55:30.700+0000 I STORAGE  [conn6] createCollection: ace.traffic_route with generated UUID: 92c967e7-eb01-4aa9-bd67-2c6981ce78e8
+2025-07-15T16:55:31.019+0000 I INDEX    [conn6] build index on: ace.traffic_route properties: { v: 2, key: { site_id: 1 }, name: "site_id", ns: "ace.traffic_route" }
+2025-07-15T16:55:31.019+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:31.036+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:31.036+0000 I COMMAND  [conn6] command ace.$cmd command: createIndexes { createIndexes: "traffic_route", indexes: [ { key: { site_id: 1 }, name: "site_id" } ], $db: "ace", lsid: { id: UUID("331d4dc1-45ee-4ac2-8dfe-0c28aaac7e18") } } numYields:0 reslen:98 locks:{ Global: { acquireCount: { r: 2, w: 2 } }, Database: { acquireCount: { w: 2, W: 1 } }, Collection: { acquireCount: { w: 2 } } } protocol:op_msg 336ms
+2025-07-15T16:55:31.164+0000 I INDEX    [conn6] build index on: ace.traffic_route properties: { v: 2, key: { short_id: -1 }, name: "short_id", ns: "ace.traffic_route" }
+2025-07-15T16:55:31.164+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:31.167+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:31.167+0000 I COMMAND  [conn6] command ace.$cmd command: createIndexes { createIndexes: "traffic_route", indexes: [ { key: { short_id: -1 }, name: "short_id" } ], $db: "ace", lsid: { id: UUID("331d4dc1-45ee-4ac2-8dfe-0c28aaac7e18") } } numYields:0 reslen:98 locks:{ Global: { acquireCount: { r: 2, w: 2 } }, Database: { acquireCount: { w: 2, W: 1 } }, Collection: { acquireCount: { w: 2 } } } protocol:op_msg 125ms
+2025-07-15T16:55:31.174+0000 I STORAGE  [conn6] createCollection: ace.wan_sla with generated UUID: 81af1e6e-ba6a-4da8-b552-00390818ce56
+2025-07-15T16:55:31.255+0000 I INDEX    [conn6] build index on: ace.wan_sla properties: { v: 2, key: { site_id: 1 }, name: "site_id", ns: "ace.wan_sla" }
+2025-07-15T16:55:31.255+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:31.257+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:31.261+0000 I STORAGE  [conn6] createCollection: ace.wireguard_user with generated UUID: 5e589a1b-3407-4ec4-9fdc-34dda41cff48
+2025-07-15T16:55:31.340+0000 I INDEX    [conn6] build index on: ace.wireguard_user properties: { v: 2, key: { site_id: 1 }, name: "site_id", ns: "ace.wireguard_user" }
+2025-07-15T16:55:31.340+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:31.343+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:31.349+0000 I STORAGE  [conn6] createCollection: ace.switch_stacking with generated UUID: 21af95aa-c996-4a8b-bee2-2c16077de9cb
+2025-07-15T16:55:31.526+0000 I INDEX    [conn6] build index on: ace.switch_stacking properties: { v: 2, key: { site_id: 1 }, name: "site_id", ns: "ace.switch_stacking" }
+2025-07-15T16:55:31.526+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:31.529+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:31.529+0000 I COMMAND  [conn6] command ace.$cmd command: createIndexes { createIndexes: "switch_stacking", indexes: [ { key: { site_id: 1 }, name: "site_id" } ], $db: "ace", lsid: { id: UUID("331d4dc1-45ee-4ac2-8dfe-0c28aaac7e18") } } numYields:0 reslen:98 locks:{ Global: { acquireCount: { r: 2, w: 2 } }, Database: { acquireCount: { w: 2, W: 1 } }, Collection: { acquireCount: { w: 2 } } } protocol:op_msg 180ms
+2025-07-15T16:55:31.534+0000 I STORAGE  [conn6] createCollection: ace.managed_shadow_mode with generated UUID: d7ed9643-8064-4161-97f7-35943c336041
+2025-07-15T16:55:31.694+0000 I INDEX    [conn6] build index on: ace.managed_shadow_mode properties: { v: 2, key: { site_id: 1 }, name: "site_id", ns: "ace.managed_shadow_mode" }
+2025-07-15T16:55:31.695+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:31.698+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:31.698+0000 I COMMAND  [conn6] command ace.$cmd command: createIndexes { createIndexes: "managed_shadow_mode", indexes: [ { key: { site_id: 1 }, name: "site_id" } ], $db: "ace", lsid: { id: UUID("331d4dc1-45ee-4ac2-8dfe-0c28aaac7e18") } } numYields:0 reslen:98 locks:{ Global: { acquireCount: { r: 2, w: 2 } }, Database: { acquireCount: { w: 2, W: 1 } }, Collection: { acquireCount: { w: 2 } } } protocol:op_msg 164ms
+2025-07-15T16:55:31.708+0000 I STORAGE  [conn6] createCollection: ace.acl_rule with generated UUID: a629d3d5-ebdb-4a62-8ca0-64d24950b96f
+2025-07-15T16:55:31.829+0000 I INDEX    [conn6] build index on: ace.acl_rule properties: { v: 2, key: { site_id: 1 }, name: "site_id", ns: "ace.acl_rule" }
+2025-07-15T16:55:31.829+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:31.832+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:31.832+0000 I COMMAND  [conn6] command ace.$cmd command: createIndexes { createIndexes: "acl_rule", indexes: [ { key: { site_id: 1 }, name: "site_id" } ], $db: "ace", lsid: { id: UUID("331d4dc1-45ee-4ac2-8dfe-0c28aaac7e18") } } numYields:0 reslen:98 locks:{ Global: { acquireCount: { r: 2, w: 2 } }, Database: { acquireCount: { w: 2, W: 1 } }, Collection: { acquireCount: { w: 2 } } } protocol:op_msg 124ms
+2025-07-15T16:55:31.835+0000 I STORAGE  [conn6] createCollection: ace.bgp_router with generated UUID: 545e9966-1087-4daa-9157-64ee2d9c4768
+2025-07-15T16:55:31.871+0000 I INDEX    [conn6] build index on: ace.bgp_router properties: { v: 2, key: { site_id: 1 }, name: "site_id", ns: "ace.bgp_router" }
+2025-07-15T16:55:31.871+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:31.872+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:31.879+0000 I STORAGE  [conn6] createCollection: ace.firewall_policy with generated UUID: 580770d6-9d79-48b7-9be1-918280894e74
+2025-07-15T16:55:31.902+0000 I INDEX    [conn6] build index on: ace.firewall_policy properties: { v: 2, key: { site_id: 1 }, name: "site_id", ns: "ace.firewall_policy" }
+2025-07-15T16:55:31.904+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:31.905+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:31.923+0000 I INDEX    [conn6] build index on: ace.firewall_policy properties: { v: 2, key: { short_id: -1 }, name: "short_id", ns: "ace.firewall_policy" }
+2025-07-15T16:55:31.925+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:31.926+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:31.931+0000 I STORAGE  [conn6] createCollection: ace_stat.wifi_connection_event with generated UUID: 1737a56c-be63-4083-bc26-d1397a38f7f0
+2025-07-15T16:55:31.950+0000 I INDEX    [conn6] build index on: ace_stat.wifi_connection_event properties: { v: 2, key: { site_id: 1, time: 1 }, name: "site_id_1_time_1", ns: "ace_stat.wifi_connection_event" }
+2025-07-15T16:55:31.950+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:31.952+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:31.954+0000 I STORAGE  [conn6] createCollection: ace_stat.downtime with generated UUID: 5f4bab7f-0fdb-4739-96d2-2c55704e9e6e
+2025-07-15T16:55:31.972+0000 I INDEX    [conn6] build index on: ace_stat.downtime properties: { v: 2, key: { site_id: 1, wan_networkgroup: 1 }, name: "site_id_1_wan_networkgroup_1", ns: "ace_stat.downtime" }
+2025-07-15T16:55:31.972+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:31.974+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:31.981+0000 I INDEX    [conn6] build index on: ace_stat.downtime properties: { v: 2, key: { timestamp: 1 }, name: "timestamp", ns: "ace_stat.downtime" }
+2025-07-15T16:55:31.981+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:31.983+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:31.985+0000 I STORAGE  [conn6] createCollection: ace_stat.pingtest with generated UUID: 452a7ccf-4ed9-4d16-92b4-67739e152159
+2025-07-15T16:55:32.006+0000 I INDEX    [conn6] build index on: ace_stat.pingtest properties: { v: 2, key: { client_mac: 1, site_id: 1 }, name: "client_mac_1_site_id_1", ns: "ace_stat.pingtest" }
+2025-07-15T16:55:32.006+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:32.007+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:32.015+0000 I INDEX    [conn6] build index on: ace_stat.pingtest properties: { v: 2, key: { site_id: 1 }, name: "site_id", ns: "ace_stat.pingtest" }
+2025-07-15T16:55:32.015+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:32.016+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:32.027+0000 I INDEX    [conn6] build index on: ace_stat.pingtest properties: { v: 2, key: { client_mac: 1 }, name: "client_mac", ns: "ace_stat.pingtest" }
+2025-07-15T16:55:32.027+0000 I INDEX    [conn6] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2025-07-15T16:55:32.028+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:32.041+0000 I STORAGE  [conn6] createCollection: ace_audit.traffic_flow with generated UUID: c6c11fff-9d0e-4059-966e-595434ab791a
+2025-07-15T16:55:32.059+0000 I INDEX    [conn6] build index on: ace_audit.traffic_flow properties: { v: 2, key: { time: -1, site_id: 1, risk: 1, action: 1, direction: 1, policies.type: 1 }, name: "time_-1_site_id_1_risk_1_action_1_direction_1_policies_type_1", ns: "ace_audit.traffic_flow", background: true }
+2025-07-15T16:55:32.059+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T16:55:32.072+0000 I INDEX    [conn6] build index on: ace_audit.traffic_flow properties: { v: 2, key: { ips.alarm_id: 1 }, name: "ips_alarm_id_1", ns: "ace_audit.traffic_flow", background: true }
+2025-07-15T16:55:32.072+0000 I INDEX    [conn6] build index done.  scanned 0 total records. 0 secs
+2025-07-15T17:05:50.926+0000 I NETWORK  [conn2] end connection 127.0.0.1:48918 (6 connections now open)
+2025-07-15T17:05:50.926+0000 I NETWORK  [conn4] end connection 127.0.0.1:48940 (5 connections now open)
+2025-07-15T17:05:50.926+0000 I NETWORK  [conn5] end connection 127.0.0.1:48956 (4 connections now open)
+2025-07-15T17:05:50.927+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:48392 #8 (5 connections now open)
+2025-07-15T17:05:50.927+0000 I NETWORK  [conn8] received client metadata from 127.0.0.1:48392 conn8: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T17:05:50.928+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:48398 #9 (6 connections now open)
+2025-07-15T17:05:50.928+0000 I NETWORK  [conn9] received client metadata from 127.0.0.1:48398 conn9: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T17:05:50.929+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:48414 #10 (7 connections now open)
+2025-07-15T17:05:50.929+0000 I NETWORK  [conn10] received client metadata from 127.0.0.1:48414 conn10: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T17:10:50.926+0000 I NETWORK  [conn3] end connection 127.0.0.1:48932 (6 connections now open)
+2025-07-15T17:10:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:54326 #11 (7 connections now open)
+2025-07-15T17:10:50.926+0000 I NETWORK  [conn11] received client metadata from 127.0.0.1:54326 conn11: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T17:15:50.926+0000 I NETWORK  [conn6] end connection 127.0.0.1:48958 (6 connections now open)
+2025-07-15T17:15:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:48316 #12 (7 connections now open)
+2025-07-15T17:15:50.927+0000 I NETWORK  [conn12] received client metadata from 127.0.0.1:48316 conn12: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T17:16:50.926+0000 I NETWORK  [conn8] end connection 127.0.0.1:48392 (6 connections now open)
+2025-07-15T17:16:50.926+0000 I NETWORK  [conn9] end connection 127.0.0.1:48398 (5 connections now open)
+2025-07-15T17:16:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:50964 #13 (6 connections now open)
+2025-07-15T17:16:50.927+0000 I NETWORK  [conn13] received client metadata from 127.0.0.1:50964 conn13: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T17:16:50.928+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:50968 #14 (7 connections now open)
+2025-07-15T17:16:50.928+0000 I NETWORK  [conn14] received client metadata from 127.0.0.1:50968 conn14: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T17:20:50.926+0000 I NETWORK  [conn10] end connection 127.0.0.1:48414 (6 connections now open)
+2025-07-15T17:20:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:33940 #15 (7 connections now open)
+2025-07-15T17:20:50.926+0000 I NETWORK  [conn15] received client metadata from 127.0.0.1:33940 conn15: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T17:25:50.926+0000 I NETWORK  [conn11] end connection 127.0.0.1:54326 (6 connections now open)
+2025-07-15T17:25:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:54174 #16 (7 connections now open)
+2025-07-15T17:25:50.927+0000 I NETWORK  [conn16] received client metadata from 127.0.0.1:54174 conn16: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T17:26:50.926+0000 I NETWORK  [conn12] end connection 127.0.0.1:48316 (6 connections now open)
+2025-07-15T17:26:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:45160 #17 (7 connections now open)
+2025-07-15T17:26:50.927+0000 I NETWORK  [conn17] received client metadata from 127.0.0.1:45160 conn17: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T17:27:50.926+0000 I NETWORK  [conn13] end connection 127.0.0.1:50964 (6 connections now open)
+2025-07-15T17:27:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:56786 #18 (7 connections now open)
+2025-07-15T17:27:50.926+0000 I NETWORK  [conn18] received client metadata from 127.0.0.1:56786 conn18: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T17:30:50.926+0000 I NETWORK  [conn14] end connection 127.0.0.1:50968 (6 connections now open)
+2025-07-15T17:30:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:39198 #19 (7 connections now open)
+2025-07-15T17:30:50.926+0000 I NETWORK  [conn19] received client metadata from 127.0.0.1:39198 conn19: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T17:35:50.926+0000 I NETWORK  [conn15] end connection 127.0.0.1:33940 (6 connections now open)
+2025-07-15T17:35:50.927+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:41042 #20 (7 connections now open)
+2025-07-15T17:35:50.927+0000 I NETWORK  [conn20] received client metadata from 127.0.0.1:41042 conn20: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T17:36:50.926+0000 I NETWORK  [conn16] end connection 127.0.0.1:54174 (6 connections now open)
+2025-07-15T17:36:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:36156 #21 (7 connections now open)
+2025-07-15T17:36:50.927+0000 I NETWORK  [conn21] received client metadata from 127.0.0.1:36156 conn21: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T17:37:50.926+0000 I NETWORK  [conn17] end connection 127.0.0.1:45160 (6 connections now open)
+2025-07-15T17:37:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:38408 #22 (7 connections now open)
+2025-07-15T17:37:50.927+0000 I NETWORK  [conn22] received client metadata from 127.0.0.1:38408 conn22: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T17:40:50.926+0000 I NETWORK  [conn18] end connection 127.0.0.1:56786 (6 connections now open)
+2025-07-15T17:40:50.927+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:45900 #23 (7 connections now open)
+2025-07-15T17:40:50.927+0000 I NETWORK  [conn23] received client metadata from 127.0.0.1:45900 conn23: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T17:45:50.926+0000 I NETWORK  [conn19] end connection 127.0.0.1:39198 (6 connections now open)
+2025-07-15T17:45:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:35662 #24 (7 connections now open)
+2025-07-15T17:45:50.927+0000 I NETWORK  [conn24] received client metadata from 127.0.0.1:35662 conn24: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T17:46:50.926+0000 I NETWORK  [conn20] end connection 127.0.0.1:41042 (6 connections now open)
+2025-07-15T17:46:50.927+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:43384 #25 (7 connections now open)
+2025-07-15T17:46:50.927+0000 I NETWORK  [conn25] received client metadata from 127.0.0.1:43384 conn25: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T17:47:50.926+0000 I NETWORK  [conn21] end connection 127.0.0.1:36156 (6 connections now open)
+2025-07-15T17:47:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:50190 #26 (7 connections now open)
+2025-07-15T17:47:50.926+0000 I NETWORK  [conn26] received client metadata from 127.0.0.1:50190 conn26: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T17:50:50.926+0000 I NETWORK  [conn22] end connection 127.0.0.1:38408 (6 connections now open)
+2025-07-15T17:50:50.927+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:51250 #27 (7 connections now open)
+2025-07-15T17:50:50.927+0000 I NETWORK  [conn27] received client metadata from 127.0.0.1:51250 conn27: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T17:55:50.926+0000 I NETWORK  [conn23] end connection 127.0.0.1:45900 (6 connections now open)
+2025-07-15T17:55:50.927+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:39884 #28 (7 connections now open)
+2025-07-15T17:55:50.927+0000 I NETWORK  [conn28] received client metadata from 127.0.0.1:39884 conn28: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T17:56:50.926+0000 I NETWORK  [conn24] end connection 127.0.0.1:35662 (6 connections now open)
+2025-07-15T17:56:50.927+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:36222 #29 (7 connections now open)
+2025-07-15T17:56:50.927+0000 I NETWORK  [conn29] received client metadata from 127.0.0.1:36222 conn29: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T17:57:50.926+0000 I NETWORK  [conn25] end connection 127.0.0.1:43384 (6 connections now open)
+2025-07-15T17:57:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:55132 #30 (7 connections now open)
+2025-07-15T17:57:50.926+0000 I NETWORK  [conn30] received client metadata from 127.0.0.1:55132 conn30: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T18:00:50.926+0000 I NETWORK  [conn26] end connection 127.0.0.1:50190 (6 connections now open)
+2025-07-15T18:00:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:35392 #31 (7 connections now open)
+2025-07-15T18:00:50.926+0000 I NETWORK  [conn31] received client metadata from 127.0.0.1:35392 conn31: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T18:05:50.926+0000 I NETWORK  [conn27] end connection 127.0.0.1:51250 (6 connections now open)
+2025-07-15T18:05:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:37630 #32 (7 connections now open)
+2025-07-15T18:05:50.926+0000 I NETWORK  [conn32] received client metadata from 127.0.0.1:37630 conn32: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T18:06:50.926+0000 I NETWORK  [conn28] end connection 127.0.0.1:39884 (6 connections now open)
+2025-07-15T18:06:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:32908 #33 (7 connections now open)
+2025-07-15T18:06:50.926+0000 I NETWORK  [conn33] received client metadata from 127.0.0.1:32908 conn33: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T18:07:50.926+0000 I NETWORK  [conn29] end connection 127.0.0.1:36222 (6 connections now open)
+2025-07-15T18:07:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:32960 #34 (7 connections now open)
+2025-07-15T18:07:50.927+0000 I NETWORK  [conn34] received client metadata from 127.0.0.1:32960 conn34: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T18:10:50.926+0000 I NETWORK  [conn30] end connection 127.0.0.1:55132 (6 connections now open)
+2025-07-15T18:10:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:32942 #35 (7 connections now open)
+2025-07-15T18:10:50.928+0000 I NETWORK  [conn35] received client metadata from 127.0.0.1:32942 conn35: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T18:15:50.926+0000 I NETWORK  [conn31] end connection 127.0.0.1:35392 (6 connections now open)
+2025-07-15T18:15:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:42786 #36 (7 connections now open)
+2025-07-15T18:15:50.926+0000 I NETWORK  [conn36] received client metadata from 127.0.0.1:42786 conn36: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T18:16:50.926+0000 I NETWORK  [conn32] end connection 127.0.0.1:37630 (6 connections now open)
+2025-07-15T18:16:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:46330 #37 (7 connections now open)
+2025-07-15T18:16:50.926+0000 I NETWORK  [conn37] received client metadata from 127.0.0.1:46330 conn37: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T18:17:50.926+0000 I NETWORK  [conn33] end connection 127.0.0.1:32908 (6 connections now open)
+2025-07-15T18:17:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:48130 #38 (7 connections now open)
+2025-07-15T18:17:50.926+0000 I NETWORK  [conn38] received client metadata from 127.0.0.1:48130 conn38: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T18:20:50.926+0000 I NETWORK  [conn34] end connection 127.0.0.1:32960 (6 connections now open)
+2025-07-15T18:20:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:42938 #39 (7 connections now open)
+2025-07-15T18:20:50.927+0000 I NETWORK  [conn39] received client metadata from 127.0.0.1:42938 conn39: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T18:25:50.926+0000 I NETWORK  [conn35] end connection 127.0.0.1:32942 (6 connections now open)
+2025-07-15T18:25:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:44196 #40 (7 connections now open)
+2025-07-15T18:25:50.926+0000 I NETWORK  [conn40] received client metadata from 127.0.0.1:44196 conn40: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T18:26:50.926+0000 I NETWORK  [conn36] end connection 127.0.0.1:42786 (6 connections now open)
+2025-07-15T18:26:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:42060 #41 (7 connections now open)
+2025-07-15T18:26:50.926+0000 I NETWORK  [conn41] received client metadata from 127.0.0.1:42060 conn41: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T18:27:50.926+0000 I NETWORK  [conn37] end connection 127.0.0.1:46330 (6 connections now open)
+2025-07-15T18:27:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:47296 #42 (7 connections now open)
+2025-07-15T18:27:50.927+0000 I NETWORK  [conn42] received client metadata from 127.0.0.1:47296 conn42: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T18:30:50.926+0000 I NETWORK  [conn38] end connection 127.0.0.1:48130 (6 connections now open)
+2025-07-15T18:30:50.927+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:58722 #43 (7 connections now open)
+2025-07-15T18:30:50.927+0000 I NETWORK  [conn43] received client metadata from 127.0.0.1:58722 conn43: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T18:35:50.926+0000 I NETWORK  [conn39] end connection 127.0.0.1:42938 (6 connections now open)
+2025-07-15T18:35:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:46774 #44 (7 connections now open)
+2025-07-15T18:35:50.926+0000 I NETWORK  [conn44] received client metadata from 127.0.0.1:46774 conn44: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T18:36:50.926+0000 I NETWORK  [conn40] end connection 127.0.0.1:44196 (6 connections now open)
+2025-07-15T18:36:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:42920 #45 (7 connections now open)
+2025-07-15T18:36:50.926+0000 I NETWORK  [conn45] received client metadata from 127.0.0.1:42920 conn45: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T18:37:50.926+0000 I NETWORK  [conn41] end connection 127.0.0.1:42060 (6 connections now open)
+2025-07-15T18:37:50.927+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:47768 #46 (7 connections now open)
+2025-07-15T18:37:50.927+0000 I NETWORK  [conn46] received client metadata from 127.0.0.1:47768 conn46: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T18:40:50.926+0000 I NETWORK  [conn42] end connection 127.0.0.1:47296 (6 connections now open)
+2025-07-15T18:40:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:59492 #47 (7 connections now open)
+2025-07-15T18:40:50.926+0000 I NETWORK  [conn47] received client metadata from 127.0.0.1:59492 conn47: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T18:45:50.926+0000 I NETWORK  [conn43] end connection 127.0.0.1:58722 (6 connections now open)
+2025-07-15T18:45:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:58050 #48 (7 connections now open)
+2025-07-15T18:45:50.927+0000 I NETWORK  [conn48] received client metadata from 127.0.0.1:58050 conn48: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T18:46:50.926+0000 I NETWORK  [conn44] end connection 127.0.0.1:46774 (6 connections now open)
+2025-07-15T18:46:50.927+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:59880 #49 (7 connections now open)
+2025-07-15T18:46:50.928+0000 I NETWORK  [conn49] received client metadata from 127.0.0.1:59880 conn49: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T18:47:50.926+0000 I NETWORK  [conn45] end connection 127.0.0.1:42920 (6 connections now open)
+2025-07-15T18:47:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:45584 #50 (7 connections now open)
+2025-07-15T18:47:50.926+0000 I NETWORK  [conn50] received client metadata from 127.0.0.1:45584 conn50: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T18:50:50.926+0000 I NETWORK  [conn46] end connection 127.0.0.1:47768 (6 connections now open)
+2025-07-15T18:50:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:39232 #51 (7 connections now open)
+2025-07-15T18:50:50.926+0000 I NETWORK  [conn51] received client metadata from 127.0.0.1:39232 conn51: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T18:55:50.926+0000 I NETWORK  [conn47] end connection 127.0.0.1:59492 (6 connections now open)
+2025-07-15T18:55:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:44920 #52 (7 connections now open)
+2025-07-15T18:55:50.926+0000 I NETWORK  [conn52] received client metadata from 127.0.0.1:44920 conn52: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T18:56:50.926+0000 I NETWORK  [conn48] end connection 127.0.0.1:58050 (6 connections now open)
+2025-07-15T18:56:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:34686 #53 (7 connections now open)
+2025-07-15T18:56:50.927+0000 I NETWORK  [conn53] received client metadata from 127.0.0.1:34686 conn53: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T18:57:50.926+0000 I NETWORK  [conn49] end connection 127.0.0.1:59880 (6 connections now open)
+2025-07-15T18:57:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:35996 #54 (7 connections now open)
+2025-07-15T18:57:50.926+0000 I NETWORK  [conn54] received client metadata from 127.0.0.1:35996 conn54: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T19:00:50.926+0000 I NETWORK  [conn50] end connection 127.0.0.1:45584 (6 connections now open)
+2025-07-15T19:00:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:41704 #55 (7 connections now open)
+2025-07-15T19:00:50.926+0000 I NETWORK  [conn55] received client metadata from 127.0.0.1:41704 conn55: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T19:05:50.926+0000 I NETWORK  [conn51] end connection 127.0.0.1:39232 (6 connections now open)
+2025-07-15T19:05:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:40648 #56 (7 connections now open)
+2025-07-15T19:05:50.926+0000 I NETWORK  [conn56] received client metadata from 127.0.0.1:40648 conn56: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T19:06:50.926+0000 I NETWORK  [conn52] end connection 127.0.0.1:44920 (6 connections now open)
+2025-07-15T19:06:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:55432 #57 (7 connections now open)
+2025-07-15T19:06:50.926+0000 I NETWORK  [conn57] received client metadata from 127.0.0.1:55432 conn57: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T19:07:50.926+0000 I NETWORK  [conn53] end connection 127.0.0.1:34686 (6 connections now open)
+2025-07-15T19:07:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:51488 #58 (7 connections now open)
+2025-07-15T19:07:50.926+0000 I NETWORK  [conn58] received client metadata from 127.0.0.1:51488 conn58: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T19:10:50.926+0000 I NETWORK  [conn54] end connection 127.0.0.1:35996 (6 connections now open)
+2025-07-15T19:10:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:52472 #59 (7 connections now open)
+2025-07-15T19:10:50.927+0000 I NETWORK  [conn59] received client metadata from 127.0.0.1:52472 conn59: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T19:15:50.926+0000 I NETWORK  [conn55] end connection 127.0.0.1:41704 (6 connections now open)
+2025-07-15T19:15:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:50902 #60 (7 connections now open)
+2025-07-15T19:15:50.927+0000 I NETWORK  [conn60] received client metadata from 127.0.0.1:50902 conn60: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T19:16:50.926+0000 I NETWORK  [conn56] end connection 127.0.0.1:40648 (6 connections now open)
+2025-07-15T19:16:50.927+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:39102 #61 (7 connections now open)
+2025-07-15T19:16:50.927+0000 I NETWORK  [conn61] received client metadata from 127.0.0.1:39102 conn61: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T19:17:50.926+0000 I NETWORK  [conn57] end connection 127.0.0.1:55432 (6 connections now open)
+2025-07-15T19:17:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:56212 #62 (7 connections now open)
+2025-07-15T19:17:50.926+0000 I NETWORK  [conn62] received client metadata from 127.0.0.1:56212 conn62: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T19:20:50.926+0000 I NETWORK  [conn58] end connection 127.0.0.1:51488 (6 connections now open)
+2025-07-15T19:20:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:39048 #63 (7 connections now open)
+2025-07-15T19:20:50.926+0000 I NETWORK  [conn63] received client metadata from 127.0.0.1:39048 conn63: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T19:25:50.926+0000 I NETWORK  [conn59] end connection 127.0.0.1:52472 (6 connections now open)
+2025-07-15T19:25:50.927+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:52514 #64 (7 connections now open)
+2025-07-15T19:25:50.927+0000 I NETWORK  [conn64] received client metadata from 127.0.0.1:52514 conn64: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T19:26:50.926+0000 I NETWORK  [conn60] end connection 127.0.0.1:50902 (6 connections now open)
+2025-07-15T19:26:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:55768 #65 (7 connections now open)
+2025-07-15T19:26:50.926+0000 I NETWORK  [conn65] received client metadata from 127.0.0.1:55768 conn65: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T19:27:50.926+0000 I NETWORK  [conn61] end connection 127.0.0.1:39102 (6 connections now open)
+2025-07-15T19:27:50.927+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:41900 #66 (7 connections now open)
+2025-07-15T19:27:50.927+0000 I NETWORK  [conn66] received client metadata from 127.0.0.1:41900 conn66: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T19:30:50.926+0000 I NETWORK  [conn62] end connection 127.0.0.1:56212 (6 connections now open)
+2025-07-15T19:30:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:54364 #67 (7 connections now open)
+2025-07-15T19:30:50.926+0000 I NETWORK  [conn67] received client metadata from 127.0.0.1:54364 conn67: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T19:35:50.926+0000 I NETWORK  [conn63] end connection 127.0.0.1:39048 (6 connections now open)
+2025-07-15T19:35:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:45226 #68 (7 connections now open)
+2025-07-15T19:35:50.926+0000 I NETWORK  [conn68] received client metadata from 127.0.0.1:45226 conn68: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T19:36:50.926+0000 I NETWORK  [conn64] end connection 127.0.0.1:52514 (6 connections now open)
+2025-07-15T19:36:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:52316 #69 (7 connections now open)
+2025-07-15T19:36:50.926+0000 I NETWORK  [conn69] received client metadata from 127.0.0.1:52316 conn69: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T19:37:50.926+0000 I NETWORK  [conn65] end connection 127.0.0.1:55768 (6 connections now open)
+2025-07-15T19:37:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:41236 #70 (7 connections now open)
+2025-07-15T19:37:50.926+0000 I NETWORK  [conn70] received client metadata from 127.0.0.1:41236 conn70: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T19:40:50.926+0000 I NETWORK  [conn66] end connection 127.0.0.1:41900 (6 connections now open)
+2025-07-15T19:40:50.928+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:48256 #71 (7 connections now open)
+2025-07-15T19:40:50.928+0000 I NETWORK  [conn71] received client metadata from 127.0.0.1:48256 conn71: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T19:45:50.926+0000 I NETWORK  [conn67] end connection 127.0.0.1:54364 (6 connections now open)
+2025-07-15T19:45:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:52692 #72 (7 connections now open)
+2025-07-15T19:45:50.927+0000 I NETWORK  [conn72] received client metadata from 127.0.0.1:52692 conn72: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T19:46:50.926+0000 I NETWORK  [conn68] end connection 127.0.0.1:45226 (6 connections now open)
+2025-07-15T19:46:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:45350 #73 (7 connections now open)
+2025-07-15T19:46:50.926+0000 I NETWORK  [conn73] received client metadata from 127.0.0.1:45350 conn73: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T19:47:50.926+0000 I NETWORK  [conn69] end connection 127.0.0.1:52316 (6 connections now open)
+2025-07-15T19:47:50.926+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:39740 #74 (7 connections now open)
+2025-07-15T19:47:50.926+0000 I NETWORK  [conn74] received client metadata from 127.0.0.1:39740 conn74: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }
+2025-07-15T19:50:50.926+0000 I NETWORK  [conn70] end connection 127.0.0.1:41236 (6 connections now open)
+2025-07-15T19:50:50.928+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:42400 #75 (7 connections now open)
+2025-07-15T19:50:50.928+0000 I NETWORK  [conn75] received client metadata from 127.0.0.1:42400 conn75: { driver: { name: "mongo-java-driver|sync", version: "5.0.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.8.0-1027-azure" }, platform: "Java/Ubuntu/17.0.15+6-Ubuntu-0ubuntu120.04", env: { container: { runtime: "docker" } } }

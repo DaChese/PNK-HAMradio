@@ -3,3 +3,4 @@
 [2025-07-11T17:30:53,402Z] <launcher> INFO  migration - DB migration itself took: 2ms
 [2025-07-11T17:30:53,403Z] <launcher> INFO  migration - DB migration closed
 [2025-07-11T17:30:53,404Z] <launcher> INFO  migration - DB migration took 598ms in total
+[2025-07-15T16:55:28,712Z] <launcher> INFO  migration - Version 9.2.87 has not changed, skipping migration
