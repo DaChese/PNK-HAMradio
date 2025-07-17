@@ -1,0 +1,77 @@
+services:
+  etherpad:
+    image: etherpad/etherpad
+    container_name: etherpad
+    restart: unless-stopped
+    ports:
+      - "9001:9001"
+    volumes:
+      - etherpad_data:/opt/etherpad-lite/var
+
+  filebrowser:
+    image: filebrowser/filebrowser:s6
+    container_name: filebrowser
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    volumes:
+      - ./pnk-files:/srv
+
+  kolibri:
+    image: treehouses/kolibri
+    container_name: kolibri
+    restart: unless-stopped
+    ports:
+      - "8082:8080"
+    volumes:
+      - ./kolibri-content:/root/.kolibri
+
+  unifi-controller:
+    image: jacobalberty/unifi
+    container_name: unifi-controller
+    restart: unless-stopped
+    ports:
+      - "3478:3478/udp"
+      - "10001:10001/udp"
+      - "8080:8080"
+      - "8443:8443"
+      - "8880:8880"
+      - "8843:8843"
+      - "6789:6789"
+    volumes:
+      - ./unifi-data:/unifi
+    environment:
+      - TZ=UTC
+
+  dendrite:
+    image: matrixdotorg/dendrite-monolith:latest
+    container_name: dendrite
+    restart: unless-stopped
+    ports:
+      - "8008:8008"
+      - "8448:8448"
+    volumes:
+      - ./matrix-pnk/dendrite/dendrite.yaml:/etc/dendrite/dendrite.yaml:ro
+      - ./matrix-pnk/dendrite/media:/etc/dendrite/media
+      - ./matrix-pnk/dendrite:/etc/dendrite
+    command:
+      [
+        "/usr/bin/dendrite-monolith-server",
+        "--config", "/etc/dendrite/dendrite.yaml"
+      ]
+  element:
+    image: vectorim/element-web
+    container_name: element
+    restart: unless-stopped
+    ports:
+      - "8083:80"
+    volumes:
+      - ./matrix-pnk/element-config.json:/config.json:ro
+    environment:
+      - DEFAULT_HOMESERVER_URL=http://localhost:8008
+
+volumes:
+  etherpad_data:
+  pnk-files:
+  kolibri-content:
+  unifi-data:

@@ -1,0 +1,493 @@
+[2025-07-11T17:29:55,046Z] <launcher> WARN  system - reload system.properties failed: file not found
+[2025-07-11T17:29:55,083Z] <launcher> WARN  system - reload system.properties.bk failed: file not found
+[2025-07-11T17:29:56,959Z] <launcher> INFO  startup - Initiating startup
+[2025-07-11T17:29:59,361Z] <launcher> INFO  system - *** Running for the first time, creating identity ***
+[2025-07-11T17:29:59,362Z] <launcher> INFO  system - UUID: d863178e-4275-4a53-89e1-aff0174f67ce
+[2025-07-11T17:29:59,392Z] <launcher> INFO  system - Reporter UUID: ee168feb-3366-463c-b6f9-63230f9bc2c7
+[2025-07-11T17:29:59,404Z] <launcher> INFO  system - ======================================================================
+[2025-07-11T17:29:59,404Z] <launcher> INFO  system - UniFi 9.2.87 (build atag_9.2.87_29974 - release/release) is started
+[2025-07-11T17:29:59,405Z] <launcher> INFO  system - Environment: UniFi-OS[false], UniFi-Cloud[false], UniFi-MongoService[false]
+[2025-07-11T17:29:59,405Z] <launcher> INFO  system - ======================================================================
+[2025-07-11T17:29:59,405Z] <launcher> INFO  system - BASE dir:/usr/lib/unifi
+[2025-07-11T17:29:59,435Z] <launcher> INFO  system - Current System IP: 172.18.0.5
+[2025-07-11T17:29:59,445Z] <launcher> INFO  system - Hostname: 63fbbc81eb14
+[2025-07-11T17:29:59,446Z] <launcher> INFO  system - ubic.env: prod
+[2025-07-11T17:29:59,448Z] <launcher> INFO  system - System loaded
+[2025-07-11T17:29:59,449Z] <launcher> WARN  startup -   component[systemService] initialization took 104ms
+[2025-07-11T17:29:59,755Z] <launcher> INFO  mongo  - Checking if database needs to be shut down
+[2025-07-11T17:30:01,428Z] <launcher> INFO  mongo  - Database was not running
+[2025-07-11T17:30:01,428Z] <launcher> INFO  mongo  - Starting database process...
+[2025-07-11T17:30:01,532Z] <mongod-tail> WARN  mongo  - Mongo log not found during startup
+[2025-07-11T17:30:01,645Z] <mongod-tail> WARN  mongo  - Mongo log not found during startup
+[2025-07-11T17:30:01,750Z] <mongod-tail> WARN  mongo  - Mongo log not found during startup
+[2025-07-11T17:30:01,852Z] <mongod-tail> WARN  mongo  - Mongo log not found during startup
+[2025-07-11T17:30:01,955Z] <mongod-tail> WARN  mongo  - Mongo log not found during startup
+[2025-07-11T17:30:02,056Z] <mongod-tail> WARN  mongo  - Mongo log not found during startup
+[2025-07-11T17:30:02,158Z] <mongod-tail> WARN  mongo  - Mongo log not found during startup
+[2025-07-11T17:30:05,293Z] <launcher> INFO  mongo  - Database process is started
+[2025-07-11T17:30:05,344Z] <launcher> INFO  mongo  - Connected to database (v3.6.8@mongodb://localhost:27117, journal enabled)
+[2025-07-11T17:30:05,359Z] <launcher> WARN  startup -   component[mongoRuntimeService] initialization took 5604ms
+[2025-07-11T17:30:06,089Z] <launcher> INFO  db     - Starting database service initialization...
+[2025-07-11T17:30:11,753Z] <launcher> INFO  db     - Database service initialized...
+[2025-07-11T17:30:11,754Z] <launcher> WARN  startup -   component[configDbService] initialization took 5676ms
+[2025-07-11T17:30:12,131Z] <launcher> WARN  startup -   component[statDbService] initialization took 374ms
+[2025-07-11T17:30:13,907Z] <launcher> WARN  system - Valid keystore is missing or invalid. Generating one ...
+[2025-07-11T17:30:13,912Z] <launcher> INFO  system - Generating Certificate[UniFi]... please wait...
+[2025-07-11T17:30:16,393Z] <launcher> INFO  system - Certificate[UniFi] generated!
+[2025-07-11T17:30:16,422Z] <launcher> INFO  tomcat - Adding basic REST API support during the startup
+[2025-07-11T17:30:18,658Z] <launcher> INFO  system - Tomcat startup took 21628ms
+[2025-07-11T17:30:43,701Z] <launcher> INFO  webrtc - WebRTC library version: EvoStream Media Server (www.evostream.com) build v2.9.1 - Gladiator - (built for Debian-8.2.0-x86_64 on 2020-02-05T23:33:19.000) OpenSSL version: 1.1.1d usrsctp version: v0.1.2 compiled on machine: Linux debian-8-2-0-64 3.16.0-6-amd64 #1 SMP Debian 3.16.57-2 (2018-07-14) x86_64 GNU/Linux
+[2025-07-11T17:30:46,577Z] <launcher> WARN  system - Country Code is not configured for Site with ID=68714a23f8335956254ddd24
+[2025-07-11T17:30:46,579Z] <launcher> WARN  system - Country Code is not configured for Site with ID=68714a23f8335956254ddd24
+[2025-07-11T17:30:46,604Z] <launcher> INFO  state  - Creating Default Local Area Network for Site[68714a23f8335956254ddd24]
+[2025-07-11T17:30:46,686Z] <launcher> WARN  db     - Cannot notify listeners on saving 'apgroup' document with missing data
+[2025-07-11T17:30:52,802Z] <launcher> INFO  startup - Context ready
+[2025-07-11T17:30:52,805Z] <launcher> INFO  migration - Certificate has been re-generated, attempting to start migration
+[2025-07-11T17:30:53,394Z] <launcher> INFO  migration - DB migration initialized
+[2025-07-11T17:30:53,402Z] <launcher> INFO  migration - DB migration itself took: 2ms
+[2025-07-11T17:30:53,403Z] <launcher> INFO  migration - DB migration closed
+[2025-07-11T17:30:53,404Z] <launcher> INFO  migration - DB migration took 598ms in total
+[2025-07-11T17:30:53,479Z] <launcher> INFO  startup - Calling context ready handlers
+[2025-07-11T17:30:53,510Z] <launcher> INFO  productinfo - [UIDB] Initializing UiDbService
+[2025-07-11T17:30:53,510Z] <launcher> INFO  productinfo - [UIDB] Local UI DB file [/usr/lib/unifi/data/uidb.json] does not exist
+[2025-07-11T17:30:53,641Z] <ModelLifecycleManager-startStop> WARN  dev    - failed to read /usr/lib/unifi/data/model_lifecycles.json - /usr/lib/unifi/data/model_lifecycles.json (No such file or directory)
+[2025-07-11T17:30:54,473Z] <launcher> INFO  productinfo - Using controller channel=RELEASE, firmware channel=RELEASE. Available controller channels=[RELEASE], available firmware channels=[RELEASE]. SSO is disabled.
+[2025-07-11T17:30:54,702Z] <launcher> INFO  startup - Done with context ready handlers
+[2025-07-11T17:30:54,703Z] <launcher> INFO  tomcat - Removing basic REST API support
+[2025-07-11T17:30:54,705Z] <launcher> INFO  startup - Startup complete
+[2025-07-11T17:30:54,707Z] <launcher> INFO  tomcat - systemd: Watchdog ping NOT enabled
+[2025-07-11T17:30:54,708Z] <launcher> INFO  tomcat - systemd: Startup completed. Ready for watchdog keep-alive checking.
+[2025-07-11T17:30:54,726Z] <launcher> INFO  sdnotify - ubnt_sdnotify_jni is loaded from: /usr/lib/unifi/lib/native/Linux/x86_64/libubnt_sdnotify_jni.so
+[2025-07-11T17:31:53,617Z] <sync-uidb> INFO  productinfo - [UIDB] Sync external UiDb Snapshot
+[2025-07-11T17:31:53,789Z] <sync-uidb> INFO  productinfo - [UIDB] Sync UiDb Records of private models
+[2025-07-11T17:31:55,169Z] <autoupdate-check> INFO  productinfo - firmware[BZ2] new version (4.3.28.11361) is available
+[2025-07-11T17:31:55,170Z] <autoupdate-check> INFO  productinfo - firmware[BZ2LR] new version (4.3.28.11361) is available
+[2025-07-11T17:31:55,171Z] <autoupdate-check> INFO  productinfo - firmware[S216150] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,171Z] <autoupdate-check> INFO  productinfo - firmware[S224250] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,171Z] <autoupdate-check> INFO  productinfo - firmware[S224500] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,171Z] <autoupdate-check> INFO  productinfo - firmware[S248500] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,171Z] <autoupdate-check> INFO  productinfo - firmware[S248750] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,171Z] <autoupdate-check> INFO  productinfo - firmware[S28150] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,172Z] <autoupdate-check> INFO  productinfo - firmware[U2HSR] new version (4.3.28.11361) is available
+[2025-07-11T17:31:55,172Z] <autoupdate-check> INFO  productinfo - firmware[U2IW] new version (4.3.28.11361) is available
+[2025-07-11T17:31:55,172Z] <autoupdate-check> INFO  productinfo - firmware[U2Lv2] new version (4.3.28.11361) is available
+[2025-07-11T17:31:55,172Z] <autoupdate-check> INFO  productinfo - firmware[U2O] new version (4.3.28.11361) is available
+[2025-07-11T17:31:55,172Z] <autoupdate-check> INFO  productinfo - firmware[U2Sv2] new version (4.3.28.11361) is available
+[2025-07-11T17:31:55,173Z] <autoupdate-check> INFO  productinfo - firmware[U5O] new version (4.3.28.11361) is available
+[2025-07-11T17:31:55,173Z] <autoupdate-check> INFO  productinfo - firmware[U6ENT] new version (6.6.77.15402) is available
+[2025-07-11T17:31:55,173Z] <autoupdate-check> INFO  productinfo - firmware[U6ENTIW] new version (6.6.77.15402) is available
+[2025-07-11T17:31:55,173Z] <autoupdate-check> INFO  productinfo - firmware[U6EXT] new version (6.6.77.15402) is available
+[2025-07-11T17:31:55,173Z] <autoupdate-check> INFO  productinfo - firmware[U6IW] new version (6.6.77.15402) is available
+[2025-07-11T17:31:55,173Z] <autoupdate-check> INFO  productinfo - firmware[U6M] new version (6.6.77.15402) is available
+[2025-07-11T17:31:55,174Z] <autoupdate-check> INFO  productinfo - firmware[U6MP] new version (7.0.103.16014) is available
+[2025-07-11T17:31:55,175Z] <autoupdate-check> INFO  productinfo - firmware[U7EDU] new version (4.3.28.11361) is available
+[2025-07-11T17:31:55,176Z] <autoupdate-check> INFO  productinfo - firmware[U7HD] new version (6.6.77.15402) is available
+[2025-07-11T17:31:55,176Z] <autoupdate-check> INFO  productinfo - firmware[U7IW] new version (6.6.77.15402) is available
+[2025-07-11T17:31:55,176Z] <autoupdate-check> INFO  productinfo - firmware[U7IWP] new version (4.3.28.11361) is available
+[2025-07-11T17:31:55,176Z] <autoupdate-check> INFO  productinfo - firmware[U7LR] new version (6.6.77.15402) is available
+[2025-07-11T17:31:55,177Z] <autoupdate-check> INFO  productinfo - firmware[U7LT] new version (6.6.77.15402) is available
+[2025-07-11T17:31:55,177Z] <autoupdate-check> INFO  productinfo - firmware[U7MP] new version (6.6.77.15402) is available
+[2025-07-11T17:31:55,178Z] <autoupdate-check> INFO  productinfo - firmware[U7MSH] new version (6.6.77.15402) is available
+[2025-07-11T17:31:55,179Z] <autoupdate-check> INFO  productinfo - firmware[U7NHD] new version (6.7.17.15512) is available
+[2025-07-11T17:31:55,179Z] <autoupdate-check> INFO  productinfo - firmware[U7P] new version (4.3.28.11361) is available
+[2025-07-11T17:31:55,180Z] <autoupdate-check> INFO  productinfo - firmware[U7PG2] new version (6.6.77.15402) is available
+[2025-07-11T17:31:55,180Z] <autoupdate-check> INFO  productinfo - firmware[U7PIW] new version (8.0.49.16814) is available
+[2025-07-11T17:31:55,180Z] <autoupdate-check> INFO  productinfo - firmware[U7PRO] new version (8.0.49.16814) is available
+[2025-07-11T17:31:55,180Z] <autoupdate-check> INFO  productinfo - firmware[U7PROMAX] new version (8.0.49.16814) is available
+[2025-07-11T17:31:55,180Z] <autoupdate-check> INFO  productinfo - firmware[U7SHD] new version (6.6.77.15402) is available
+[2025-07-11T17:31:55,181Z] <autoupdate-check> INFO  productinfo - firmware[U7UKU] new version (6.6.77.15402) is available
+[2025-07-11T17:31:55,183Z] <autoupdate-check> INFO  productinfo - firmware[UACCMPOEAF] new version (6.5.87.14874) is available
+[2025-07-11T17:31:55,184Z] <autoupdate-check> INFO  productinfo - firmware[UAE6] new version (6.6.78.15404) is available
+[2025-07-11T17:31:55,185Z] <autoupdate-check> INFO  productinfo - firmware[UAIW6] new version (6.6.78.15404) is available
+[2025-07-11T17:31:55,185Z] <autoupdate-check> INFO  productinfo - firmware[UAL6] new version (6.7.17.15512) is available
+[2025-07-11T17:31:55,185Z] <autoupdate-check> INFO  productinfo - firmware[UALR6] new version (6.7.17.15512) is available
+[2025-07-11T17:31:55,185Z] <autoupdate-check> INFO  productinfo - firmware[UALR6v2] new version (6.7.17.15512) is available
+[2025-07-11T17:31:55,185Z] <autoupdate-check> INFO  productinfo - firmware[UALRPL6] new version (6.7.17.15512) is available
+[2025-07-11T17:31:55,186Z] <autoupdate-check> INFO  productinfo - firmware[UAM6] new version (6.6.78.15404) is available
+[2025-07-11T17:31:55,189Z] <autoupdate-check> INFO  productinfo - firmware[UAP6MP] new version (6.6.77.15402) is available
+[2025-07-11T17:31:55,189Z] <autoupdate-check> INFO  productinfo - firmware[UAPA693] new version (8.0.49.16814) is available
+[2025-07-11T17:31:55,189Z] <autoupdate-check> INFO  productinfo - firmware[UAPA697] new version (8.0.49.16814) is available
+[2025-07-11T17:31:55,190Z] <autoupdate-check> INFO  productinfo - firmware[UAPA698] new version (8.0.49.16814) is available
+[2025-07-11T17:31:55,190Z] <autoupdate-check> INFO  productinfo - firmware[UAPA699] new version (8.0.49.16814) is available
+[2025-07-11T17:31:55,190Z] <autoupdate-check> INFO  productinfo - firmware[UAPA6A4] new version (8.0.49.16814) is available
+[2025-07-11T17:31:55,192Z] <autoupdate-check> INFO  productinfo - firmware[UAPA6A5] new version (8.0.49.16814) is available
+[2025-07-11T17:31:55,192Z] <autoupdate-check> INFO  productinfo - firmware[UAPA6A6] new version (8.0.49.16814) is available
+[2025-07-11T17:31:55,192Z] <autoupdate-check> INFO  productinfo - firmware[UAPA6A9] new version (8.0.49.16814) is available
+[2025-07-11T17:31:55,193Z] <autoupdate-check> INFO  productinfo - firmware[UAPA6AB] new version (8.0.49.16814) is available
+[2025-07-11T17:31:55,193Z] <autoupdate-check> INFO  productinfo - firmware[UAPA6AC] new version (8.0.49.16814) is available
+[2025-07-11T17:31:55,193Z] <autoupdate-check> INFO  productinfo - firmware[UAPA6AE] new version (8.0.49.16814) is available
+[2025-07-11T17:31:55,193Z] <autoupdate-check> INFO  productinfo - firmware[UAPA6B0] new version (8.0.49.16814) is available
+[2025-07-11T17:31:55,193Z] <autoupdate-check> INFO  productinfo - firmware[UAPA6B1] new version (8.0.49.16814) is available
+[2025-07-11T17:31:55,194Z] <autoupdate-check> INFO  productinfo - firmware[UAPA6B3] new version (8.0.35.16717) is available
+[2025-07-11T17:31:55,194Z] <autoupdate-check> INFO  productinfo - firmware[UAPL6] new version (6.7.17.15512) is available
+[2025-07-11T17:31:55,194Z] <autoupdate-check> INFO  productinfo - firmware[UBB] new version (3.1.5.256) is available
+[2025-07-11T17:31:55,194Z] <autoupdate-check> INFO  productinfo - firmware[UBBXG] new version (1.2.0.113) is available
+[2025-07-11T17:31:55,194Z] <autoupdate-check> INFO  productinfo - firmware[UCI] new version (1.4.3.384) is available
+[2025-07-11T17:31:55,195Z] <autoupdate-check> INFO  productinfo - firmware[UCXG] new version (6.6.77.15402) is available
+[2025-07-11T17:31:55,195Z] <autoupdate-check> INFO  productinfo - firmware[UDB] new version (1.4.0.310) is available
+[2025-07-11T17:31:55,195Z] <autoupdate-check> INFO  productinfo - firmware[UDBE802] new version (1.4.0.310) is available
+[2025-07-11T17:31:55,195Z] <autoupdate-check> INFO  productinfo - firmware[UDM] new version (1.12.30.4325) is available
+[2025-07-11T17:31:55,196Z] <autoupdate-check> INFO  productinfo - firmware[UDMA69B] new version (4.2.15.23927) is available
+[2025-07-11T17:31:55,196Z] <autoupdate-check> INFO  productinfo - firmware[UDMB] new version (6.7.17.15512) is available
+[2025-07-11T17:31:55,196Z] <autoupdate-check> INFO  productinfo - firmware[UDMPRO] new version (1.12.30.4325) is available
+[2025-07-11T17:31:55,197Z] <autoupdate-check> INFO  productinfo - firmware[UFLHD] new version (6.7.17.15512) is available
+[2025-07-11T17:31:55,197Z] <autoupdate-check> INFO  productinfo - firmware[UGW3] new version (4.4.57.5578372) is available
+[2025-07-11T17:31:55,197Z] <autoupdate-check> INFO  productinfo - firmware[UGW4] new version (4.4.57.5578372) is available
+[2025-07-11T17:31:55,197Z] <autoupdate-check> INFO  productinfo - firmware[UGWXG] new version (4.4.57.5578378) is available
+[2025-07-11T17:31:55,198Z] <autoupdate-check> INFO  productinfo - firmware[UHDIW] new version (6.7.17.15512) is available
+[2025-07-11T17:31:55,198Z] <autoupdate-check> INFO  productinfo - firmware[UKPW] new version (8.0.49.16814) is available
+[2025-07-11T17:31:55,199Z] <autoupdate-check> INFO  productinfo - firmware[ULTE] new version (7.0.110.16137) is available
+[2025-07-11T17:31:55,199Z] <autoupdate-check> INFO  productinfo - firmware[ULTEPEU] new version (7.0.110.16137) is available
+[2025-07-11T17:31:55,199Z] <autoupdate-check> INFO  productinfo - firmware[ULTEPUS] new version (7.0.110.16137) is available
+[2025-07-11T17:31:55,200Z] <autoupdate-check> INFO  productinfo - firmware[UP1] new version (2.2.6.532) is available
+[2025-07-11T17:31:55,200Z] <autoupdate-check> INFO  productinfo - firmware[UP6] new version (2.2.6.532) is available
+[2025-07-11T17:31:55,200Z] <autoupdate-check> INFO  productinfo - firmware[US16P150] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,201Z] <autoupdate-check> INFO  productinfo - firmware[US24] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,201Z] <autoupdate-check> INFO  productinfo - firmware[US24P250] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,201Z] <autoupdate-check> INFO  productinfo - firmware[US24P500] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,202Z] <autoupdate-check> INFO  productinfo - firmware[US24PL2] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,202Z] <autoupdate-check> INFO  productinfo - firmware[US24PRO] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,202Z] <autoupdate-check> INFO  productinfo - firmware[US24PRO2] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,202Z] <autoupdate-check> INFO  productinfo - firmware[US48] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,202Z] <autoupdate-check> INFO  productinfo - firmware[US48P500] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,202Z] <autoupdate-check> INFO  productinfo - firmware[US48P750] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,203Z] <autoupdate-check> INFO  productinfo - firmware[US48PL2] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,203Z] <autoupdate-check> INFO  productinfo - firmware[US48PRO] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,203Z] <autoupdate-check> INFO  productinfo - firmware[US48PRO2] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,204Z] <autoupdate-check> INFO  productinfo - firmware[US624P] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,204Z] <autoupdate-check> INFO  productinfo - firmware[US648P] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,204Z] <autoupdate-check> INFO  productinfo - firmware[US68P] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,204Z] <autoupdate-check> INFO  productinfo - firmware[US6XG150] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,204Z] <autoupdate-check> INFO  productinfo - firmware[US8] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,204Z] <autoupdate-check> INFO  productinfo - firmware[US8P150] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,205Z] <autoupdate-check> INFO  productinfo - firmware[US8P60] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,205Z] <autoupdate-check> INFO  productinfo - firmware[USAGGPRO] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,205Z] <autoupdate-check> INFO  productinfo - firmware[USC8] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,205Z] <autoupdate-check> INFO  productinfo - firmware[USC8P450] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,205Z] <autoupdate-check> INFO  productinfo - firmware[USF5P] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,207Z] <autoupdate-check> INFO  productinfo - firmware[USFXG] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,207Z] <autoupdate-check> INFO  productinfo - firmware[USL16LP] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,207Z] <autoupdate-check> INFO  productinfo - firmware[USL16LPB] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,207Z] <autoupdate-check> INFO  productinfo - firmware[USL16P] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,208Z] <autoupdate-check> INFO  productinfo - firmware[USL16PB] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,208Z] <autoupdate-check> INFO  productinfo - firmware[USL24] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,208Z] <autoupdate-check> INFO  productinfo - firmware[USL24B] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,208Z] <autoupdate-check> INFO  productinfo - firmware[USL24P] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,208Z] <autoupdate-check> INFO  productinfo - firmware[USL24PB] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,209Z] <autoupdate-check> INFO  productinfo - firmware[USL48] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,209Z] <autoupdate-check> INFO  productinfo - firmware[USL48B] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,209Z] <autoupdate-check> INFO  productinfo - firmware[USL48P] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,210Z] <autoupdate-check> INFO  productinfo - firmware[USL48PB] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,210Z] <autoupdate-check> INFO  productinfo - firmware[USL8A] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,210Z] <autoupdate-check> INFO  productinfo - firmware[USL8LP] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,211Z] <autoupdate-check> INFO  productinfo - firmware[USL8LPB] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,211Z] <autoupdate-check> INFO  productinfo - firmware[USL8MP] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,211Z] <autoupdate-check> INFO  productinfo - firmware[USLP8P] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,212Z] <autoupdate-check> INFO  productinfo - firmware[USM8P] new version (2.1.8.971) is available
+[2025-07-11T17:31:55,212Z] <autoupdate-check> INFO  productinfo - firmware[USM8P210] new version (2.1.8.971) is available
+[2025-07-11T17:31:55,212Z] <autoupdate-check> INFO  productinfo - firmware[USM8P60] new version (2.1.8.971) is available
+[2025-07-11T17:31:55,212Z] <autoupdate-check> INFO  productinfo - firmware[USMINI] new version (2.1.3.755) is available
+[2025-07-11T17:31:55,212Z] <autoupdate-check> INFO  productinfo - firmware[USMINI2] new version (2.1.3.974) is available
+[2025-07-11T17:31:55,213Z] <autoupdate-check> INFO  productinfo - firmware[USPM16] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,214Z] <autoupdate-check> INFO  productinfo - firmware[USPM16P] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,215Z] <autoupdate-check> INFO  productinfo - firmware[USPM24] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,215Z] <autoupdate-check> INFO  productinfo - firmware[USPM24P] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,215Z] <autoupdate-check> INFO  productinfo - firmware[USPM48] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,216Z] <autoupdate-check> INFO  productinfo - firmware[USPM48P] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,216Z] <autoupdate-check> INFO  productinfo - firmware[USPPDUHD] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,216Z] <autoupdate-check> INFO  productinfo - firmware[USPPDUP] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,216Z] <autoupdate-check> INFO  productinfo - firmware[USPRPS] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,216Z] <autoupdate-check> INFO  productinfo - firmware[USPRPSP] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,216Z] <autoupdate-check> INFO  productinfo - firmware[USWED35] new version (2.1.8.971) is available
+[2025-07-11T17:31:55,217Z] <autoupdate-check> INFO  productinfo - firmware[USWED36] new version (2.1.8.971) is available
+[2025-07-11T17:31:55,217Z] <autoupdate-check> INFO  productinfo - firmware[USWED37] new version (2.1.8.971) is available
+[2025-07-11T17:31:55,218Z] <autoupdate-check> INFO  productinfo - firmware[USWED42] new version (7.2.111.16489) is available
+[2025-07-11T17:31:55,218Z] <autoupdate-check> INFO  productinfo - firmware[USWED43] new version (7.2.114.16504) is available
+[2025-07-11T17:31:55,218Z] <autoupdate-check> INFO  productinfo - firmware[USWED44] new version (7.2.111.16489) is available
+[2025-07-11T17:31:55,218Z] <autoupdate-check> INFO  productinfo - firmware[USWED45] new version (7.2.114.16504) is available
+[2025-07-11T17:31:55,219Z] <autoupdate-check> INFO  productinfo - firmware[USWED72] new version (7.1.33.16032) is available
+[2025-07-11T17:31:55,219Z] <autoupdate-check> INFO  productinfo - firmware[USWED74] new version (7.2.110.16470) is available
+[2025-07-11T17:31:55,219Z] <autoupdate-check> INFO  productinfo - firmware[USWED75] new version (7.2.112.16494) is available
+[2025-07-11T17:31:55,219Z] <autoupdate-check> INFO  productinfo - firmware[USWED76] new version (7.2.111.16489) is available
+[2025-07-11T17:31:55,219Z] <autoupdate-check> INFO  productinfo - firmware[USWED77] new version (7.2.111.16489) is available
+[2025-07-11T17:31:55,221Z] <autoupdate-check> INFO  productinfo - firmware[USWF066] new version (3.0.0.755) is available
+[2025-07-11T17:31:55,221Z] <autoupdate-check> INFO  productinfo - firmware[USWF067] new version (7.2.108.16428) is available
+[2025-07-11T17:31:55,221Z] <autoupdate-check> INFO  productinfo - firmware[USWF069] new version (7.2.108.16428) is available
+[2025-07-11T17:31:55,222Z] <autoupdate-check> INFO  productinfo - firmware[USXG] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,222Z] <autoupdate-check> INFO  productinfo - firmware[USXG24] new version (7.1.26.15869) is available
+[2025-07-11T17:31:55,222Z] <autoupdate-check> INFO  productinfo - firmware[UX] new version (4.0.12.17054) is available
+[2025-07-11T17:31:55,222Z] <autoupdate-check> INFO  productinfo - firmware[UXBSDM] new version (6.6.77.15402) is available
+[2025-07-11T17:31:55,222Z] <autoupdate-check> INFO  productinfo - firmware[UXG] new version (4.1.13.21166) is available
+[2025-07-11T17:31:55,223Z] <autoupdate-check> INFO  productinfo - firmware[UXGA6AA] new version (4.1.13.21166) is available
+[2025-07-11T17:31:55,223Z] <autoupdate-check> INFO  productinfo - firmware[UXGB] new version (4.1.13.21166) is available
+[2025-07-11T17:31:55,223Z] <autoupdate-check> INFO  productinfo - firmware[UXGENT] new version (4.1.13.21166) is available
+[2025-07-11T17:31:55,223Z] <autoupdate-check> INFO  productinfo - firmware[UXGPRO] new version (1.13.8.4578) is available
+[2025-07-11T17:31:55,223Z] <autoupdate-check> INFO  productinfo - firmware[UXGPROV2] new version (4.1.13.21166) is available
+[2025-07-11T17:31:55,224Z] <autoupdate-check> INFO  productinfo - firmware[UXSDM] new version (6.6.77.15402) is available
+[2025-07-11T18:31:53,790Z] <sync-uidb> INFO  productinfo - [UIDB] Sync external UiDb Snapshot
+[2025-07-11T18:31:53,858Z] <sync-uidb> INFO  productinfo - [UIDB] Sync UiDb Records of private models
+[2025-07-15T16:54:41,369Z] <launcher> INFO  startup - Initiating startup
+[2025-07-15T16:54:43,633Z] <launcher> INFO  system - ======================================================================
+[2025-07-15T16:54:43,634Z] <launcher> INFO  system - UniFi 9.2.87 (build atag_9.2.87_29974 - release/release) is started
+[2025-07-15T16:54:43,636Z] <launcher> INFO  system - Environment: UniFi-OS[false], UniFi-Cloud[false], UniFi-MongoService[false]
+[2025-07-15T16:54:43,636Z] <launcher> INFO  system - ======================================================================
+[2025-07-15T16:54:43,636Z] <launcher> INFO  system - BASE dir:/usr/lib/unifi
+[2025-07-15T16:54:43,647Z] <launcher> INFO  system - Current System IP: 172.18.0.6
+[2025-07-15T16:54:43,648Z] <launcher> INFO  system - Hostname: 0704da1dcc82
+[2025-07-15T16:54:43,649Z] <launcher> INFO  system - ubic.env: prod
+[2025-07-15T16:54:43,649Z] <launcher> INFO  system - System loaded
+[2025-07-15T16:54:43,810Z] <launcher> INFO  mongo  - Checking if database needs to be shut down
+[2025-07-15T16:54:45,127Z] <launcher> INFO  mongo  - Database was not running
+[2025-07-15T16:54:45,127Z] <launcher> INFO  mongo  - Starting database process...
+[2025-07-15T16:54:51,044Z] <launcher> INFO  mongo  - Database process is started
+[2025-07-15T16:54:51,119Z] <launcher> INFO  mongo  - Connected to database (v3.6.8@mongodb://localhost:27117, journal enabled)
+[2025-07-15T16:54:51,159Z] <launcher> WARN  startup -   component[mongoRuntimeService] initialization took 7347ms
+[2025-07-15T16:54:51,910Z] <launcher> INFO  db     - Starting database service initialization...
+[2025-07-15T16:54:51,944Z] <launcher> INFO  db     - *** Factory Default *** Database exists. Clean it
+[2025-07-15T16:54:52,754Z] <launcher> INFO  db     - Database service initialized...
+[2025-07-15T16:54:52,755Z] <launcher> WARN  startup -   component[configDbService] initialization took 845ms
+[2025-07-15T16:54:52,759Z] <launcher> INFO  stat   - *** Factory Default *** Stat Database exists. Clean it
+[2025-07-15T16:54:52,807Z] <launcher> INFO  audit  - *** Factory Default *** Audit Database exists. Drop it
+[2025-07-15T16:54:54,461Z] <launcher> INFO  tomcat - Adding basic REST API support during the startup
+[2025-07-15T16:54:55,955Z] <launcher> INFO  system - Tomcat startup took 14448ms
+[2025-07-15T16:55:19,152Z] <launcher> INFO  webrtc - WebRTC library version: EvoStream Media Server (www.evostream.com) build v2.9.1 - Gladiator - (built for Debian-8.2.0-x86_64 on 2020-02-05T23:33:19.000) OpenSSL version: 1.1.1d usrsctp version: v0.1.2 compiled on machine: Linux debian-8-2-0-64 3.16.0-6-amd64 #1 SMP Debian 3.16.57-2 (2018-07-14) x86_64 GNU/Linux
+[2025-07-15T16:55:22,718Z] <launcher> WARN  system - Country Code is not configured for Site with ID=687687dc040ba94a99f2092d
+[2025-07-15T16:55:22,719Z] <launcher> WARN  system - Country Code is not configured for Site with ID=687687dc040ba94a99f2092d
+[2025-07-15T16:55:22,741Z] <launcher> INFO  state  - Creating Default Local Area Network for Site[687687dc040ba94a99f2092d]
+[2025-07-15T16:55:22,791Z] <launcher> WARN  db     - Cannot notify listeners on saving 'apgroup' document with missing data
+[2025-07-15T16:55:28,710Z] <launcher> INFO  startup - Context ready
+[2025-07-15T16:55:28,712Z] <launcher> INFO  migration - Version 9.2.87 has not changed, skipping migration
+[2025-07-15T16:55:28,810Z] <launcher> INFO  startup - Calling context ready handlers
+[2025-07-15T16:55:28,825Z] <launcher> INFO  productinfo - [UIDB] Initializing UiDbService
+[2025-07-15T16:55:32,152Z] <launcher> INFO  productinfo - Using controller channel=RELEASE, firmware channel=RELEASE. Available controller channels=[RELEASE], available firmware channels=[RELEASE]. SSO is disabled.
+[2025-07-15T16:55:32,403Z] <launcher> INFO  startup - Done with context ready handlers
+[2025-07-15T16:55:32,414Z] <launcher> INFO  tomcat - Removing basic REST API support
+[2025-07-15T16:55:32,489Z] <launcher> INFO  startup - Startup complete
+[2025-07-15T16:55:32,490Z] <launcher> INFO  tomcat - systemd: Watchdog ping NOT enabled
+[2025-07-15T16:55:32,490Z] <launcher> INFO  tomcat - systemd: Startup completed. Ready for watchdog keep-alive checking.
+[2025-07-15T16:55:32,626Z] <launcher> INFO  sdnotify - ubnt_sdnotify_jni is loaded from: /usr/lib/unifi/lib/native/Linux/x86_64/libubnt_sdnotify_jni.so
+[2025-07-15T16:56:28,897Z] <sync-uidb> INFO  productinfo - [UIDB] Sync external UiDb Snapshot
+[2025-07-15T16:56:29,236Z] <sync-uidb> INFO  productinfo - [UIDB] Sync UiDb Records of private models
+[2025-07-15T16:56:32,883Z] <autoupdate-check> INFO  productinfo - firmware[UMBBE630] new version (7.3.17.17470) is available
+[2025-07-15T17:56:29,240Z] <sync-uidb> INFO  productinfo - [UIDB] Sync external UiDb Snapshot
+[2025-07-15T17:56:29,300Z] <sync-uidb> INFO  productinfo - [UIDB] Sync UiDb Records of private models
+[2025-07-15T18:56:29,300Z] <sync-uidb> INFO  productinfo - [UIDB] Sync external UiDb Snapshot
+[2025-07-15T18:56:29,359Z] <sync-uidb> INFO  productinfo - [UIDB] Sync UiDb Records of private models
+[2025-07-15T19:56:29,361Z] <sync-uidb> INFO  productinfo - [UIDB] Sync external UiDb Snapshot
+[2025-07-15T19:56:29,401Z] <sync-uidb> INFO  productinfo - [UIDB] Sync UiDb Records of private models
+[2025-07-16T01:34:04,231Z] <launcher> INFO  startup - Initiating startup
+[2025-07-16T01:34:05,716Z] <launcher> INFO  system - ======================================================================
+[2025-07-16T01:34:05,716Z] <launcher> INFO  system - UniFi 9.2.87 (build atag_9.2.87_29974 - release/release) is started
+[2025-07-16T01:34:05,717Z] <launcher> INFO  system - Environment: UniFi-OS[false], UniFi-Cloud[false], UniFi-MongoService[false]
+[2025-07-16T01:34:05,717Z] <launcher> INFO  system - ======================================================================
+[2025-07-16T01:34:05,718Z] <launcher> INFO  system - BASE dir:/usr/lib/unifi
+[2025-07-16T01:34:05,726Z] <launcher> INFO  system - Current System IP: 172.18.0.5
+[2025-07-16T01:34:05,726Z] <launcher> INFO  system - Hostname: 0704da1dcc82
+[2025-07-16T01:34:05,727Z] <launcher> INFO  system - ubic.env: prod
+[2025-07-16T01:34:05,727Z] <launcher> INFO  system - System loaded
+[2025-07-16T01:34:05,888Z] <launcher> INFO  mongo  - Checking if database needs to be shut down
+[2025-07-16T01:34:07,067Z] <launcher> INFO  mongo  - Database was not running
+[2025-07-16T01:34:07,067Z] <launcher> INFO  mongo  - Starting database process...
+[2025-07-16T01:34:12,195Z] <launcher> INFO  mongo  - Database process is started
+[2025-07-16T01:34:12,228Z] <launcher> INFO  mongo  - Connected to database (v3.6.8@mongodb://localhost:27117, journal enabled)
+[2025-07-16T01:34:12,236Z] <launcher> WARN  startup -   component[mongoRuntimeService] initialization took 6347ms
+[2025-07-16T01:34:12,873Z] <launcher> INFO  db     - Starting database service initialization...
+[2025-07-16T01:34:12,902Z] <launcher> INFO  db     - *** Factory Default *** Database exists. Clean it
+[2025-07-16T01:34:13,673Z] <launcher> INFO  db     - Database service initialized...
+[2025-07-16T01:34:13,674Z] <launcher> WARN  startup -   component[configDbService] initialization took 802ms
+[2025-07-16T01:34:13,682Z] <launcher> INFO  stat   - *** Factory Default *** Stat Database exists. Clean it
+[2025-07-16T01:34:13,742Z] <launcher> INFO  audit  - *** Factory Default *** Audit Database exists. Drop it
+[2025-07-16T01:34:15,281Z] <launcher> INFO  tomcat - Adding basic REST API support during the startup
+[2025-07-16T01:34:17,095Z] <launcher> INFO  system - Tomcat startup took 12779ms
+[2025-07-16T01:34:37,978Z] <launcher> INFO  webrtc - WebRTC library version: EvoStream Media Server (www.evostream.com) build v2.9.1 - Gladiator - (built for Debian-8.2.0-x86_64 on 2020-02-05T23:33:19.000) OpenSSL version: 1.1.1d usrsctp version: v0.1.2 compiled on machine: Linux debian-8-2-0-64 3.16.0-6-amd64 #1 SMP Debian 3.16.57-2 (2018-07-14) x86_64 GNU/Linux
+[2025-07-16T01:34:40,585Z] <launcher> WARN  system - Country Code is not configured for Site with ID=6877019540c1a71ea713d8d1
+[2025-07-16T01:34:40,586Z] <launcher> WARN  system - Country Code is not configured for Site with ID=6877019540c1a71ea713d8d1
+[2025-07-16T01:34:40,610Z] <launcher> INFO  state  - Creating Default Local Area Network for Site[6877019540c1a71ea713d8d1]
+[2025-07-16T01:34:40,675Z] <launcher> WARN  db     - Cannot notify listeners on saving 'apgroup' document with missing data
+[2025-07-16T01:34:46,348Z] <launcher> INFO  startup - Context ready
+[2025-07-16T01:34:46,351Z] <launcher> INFO  migration - Version 9.2.87 has not changed, skipping migration
+[2025-07-16T01:34:46,429Z] <launcher> INFO  startup - Calling context ready handlers
+[2025-07-16T01:34:46,444Z] <launcher> INFO  productinfo - [UIDB] Initializing UiDbService
+[2025-07-16T01:34:47,704Z] <launcher> INFO  productinfo - Using controller channel=RELEASE, firmware channel=RELEASE. Available controller channels=[RELEASE], available firmware channels=[RELEASE]. SSO is disabled.
+[2025-07-16T01:34:47,922Z] <launcher> INFO  startup - Done with context ready handlers
+[2025-07-16T01:34:47,922Z] <launcher> INFO  tomcat - Removing basic REST API support
+[2025-07-16T01:34:47,923Z] <launcher> INFO  startup - Startup complete
+[2025-07-16T01:34:47,923Z] <launcher> INFO  tomcat - systemd: Watchdog ping NOT enabled
+[2025-07-16T01:34:47,923Z] <launcher> INFO  tomcat - systemd: Startup completed. Ready for watchdog keep-alive checking.
+[2025-07-16T01:34:48,027Z] <launcher> INFO  sdnotify - ubnt_sdnotify_jni is loaded from: /usr/lib/unifi/lib/native/Linux/x86_64/libubnt_sdnotify_jni.so
+[2025-07-16T01:35:46,499Z] <sync-uidb> INFO  productinfo - [UIDB] Sync external UiDb Snapshot
+[2025-07-16T01:35:46,852Z] <sync-uidb> INFO  productinfo - [UIDB] Sync UiDb Records of private models
+[2025-07-16T14:54:08,366Z] <launcher> INFO  startup - Initiating startup
+[2025-07-16T14:54:09,751Z] <launcher> INFO  system - ======================================================================
+[2025-07-16T14:54:09,752Z] <launcher> INFO  system - UniFi 9.2.87 (build atag_9.2.87_29974 - release/release) is started
+[2025-07-16T14:54:09,835Z] <launcher> INFO  system - Environment: UniFi-OS[false], UniFi-Cloud[false], UniFi-MongoService[false]
+[2025-07-16T14:54:09,837Z] <launcher> INFO  system - ======================================================================
+[2025-07-16T14:54:09,838Z] <launcher> INFO  system - BASE dir:/usr/lib/unifi
+[2025-07-16T14:54:09,882Z] <launcher> INFO  system - Current System IP: 172.18.0.5
+[2025-07-16T14:54:09,882Z] <launcher> INFO  system - Hostname: 0704da1dcc82
+[2025-07-16T14:54:09,882Z] <launcher> INFO  system - ubic.env: prod
+[2025-07-16T14:54:09,883Z] <launcher> INFO  system - System loaded
+[2025-07-16T14:54:09,888Z] <launcher> WARN  startup -   component[systemService] initialization took 143ms
+[2025-07-16T14:54:10,053Z] <launcher> INFO  mongo  - Checking if database needs to be shut down
+[2025-07-16T14:54:11,570Z] <launcher> INFO  mongo  - Database was not running
+[2025-07-16T14:54:11,572Z] <launcher> INFO  mongo  - Starting database process...
+[2025-07-16T14:54:15,854Z] <launcher> INFO  mongo  - Database process is started
+[2025-07-16T14:54:15,885Z] <launcher> INFO  mongo  - Connected to database (v3.6.8@mongodb://localhost:27117, journal enabled)
+[2025-07-16T14:54:15,903Z] <launcher> WARN  startup -   component[mongoRuntimeService] initialization took 5850ms
+[2025-07-16T14:54:16,436Z] <launcher> INFO  db     - Starting database service initialization...
+[2025-07-16T14:54:16,483Z] <launcher> INFO  db     - *** Factory Default *** Database exists. Clean it
+[2025-07-16T14:54:17,417Z] <launcher> INFO  db     - Database service initialized...
+[2025-07-16T14:54:17,418Z] <launcher> WARN  startup -   component[configDbService] initialization took 982ms
+[2025-07-16T14:54:17,430Z] <launcher> INFO  stat   - *** Factory Default *** Stat Database exists. Clean it
+[2025-07-16T14:54:17,494Z] <launcher> INFO  audit  - *** Factory Default *** Audit Database exists. Drop it
+[2025-07-16T14:54:19,171Z] <launcher> INFO  tomcat - Adding basic REST API support during the startup
+[2025-07-16T14:54:21,393Z] <launcher> INFO  system - Tomcat startup took 12983ms
+[2025-07-16T14:54:42,215Z] <launcher> INFO  webrtc - WebRTC library version: EvoStream Media Server (www.evostream.com) build v2.9.1 - Gladiator - (built for Debian-8.2.0-x86_64 on 2020-02-05T23:33:19.000) OpenSSL version: 1.1.1d usrsctp version: v0.1.2 compiled on machine: Linux debian-8-2-0-64 3.16.0-6-amd64 #1 SMP Debian 3.16.57-2 (2018-07-14) x86_64 GNU/Linux
+[2025-07-16T14:54:44,825Z] <launcher> WARN  system - Country Code is not configured for Site with ID=6877bd19601f7b44017dcf1d
+[2025-07-16T14:54:44,826Z] <launcher> WARN  system - Country Code is not configured for Site with ID=6877bd19601f7b44017dcf1d
+[2025-07-16T14:54:44,891Z] <launcher> INFO  state  - Creating Default Local Area Network for Site[6877bd19601f7b44017dcf1d]
+[2025-07-16T14:54:44,990Z] <launcher> WARN  db     - Cannot notify listeners on saving 'apgroup' document with missing data
+[2025-07-16T14:54:51,647Z] <launcher> INFO  startup - Context ready
+[2025-07-16T14:54:51,655Z] <launcher> INFO  migration - Version 9.2.87 has not changed, skipping migration
+[2025-07-16T14:54:51,787Z] <launcher> INFO  startup - Calling context ready handlers
+[2025-07-16T14:54:51,820Z] <launcher> INFO  productinfo - [UIDB] Initializing UiDbService
+[2025-07-16T14:54:53,501Z] <launcher> INFO  productinfo - Using controller channel=RELEASE, firmware channel=RELEASE. Available controller channels=[RELEASE], available firmware channels=[RELEASE]. SSO is disabled.
+[2025-07-16T14:54:53,650Z] <launcher> INFO  startup - Done with context ready handlers
+[2025-07-16T14:54:53,650Z] <launcher> INFO  tomcat - Removing basic REST API support
+[2025-07-16T14:54:53,651Z] <launcher> INFO  startup - Startup complete
+[2025-07-16T14:54:53,652Z] <launcher> INFO  tomcat - systemd: Watchdog ping NOT enabled
+[2025-07-16T14:54:53,652Z] <launcher> INFO  tomcat - systemd: Startup completed. Ready for watchdog keep-alive checking.
+[2025-07-16T14:54:53,860Z] <launcher> INFO  sdnotify - ubnt_sdnotify_jni is loaded from: /usr/lib/unifi/lib/native/Linux/x86_64/libubnt_sdnotify_jni.so
+[2025-07-16T14:55:51,918Z] <sync-uidb> INFO  productinfo - [UIDB] Sync external UiDb Snapshot
+[2025-07-16T14:55:52,197Z] <sync-uidb> INFO  productinfo - [UIDB] Sync UiDb Records of private models
+[2025-07-16T15:55:52,197Z] <sync-uidb> INFO  productinfo - [UIDB] Sync external UiDb Snapshot
+[2025-07-16T15:55:52,290Z] <sync-uidb> INFO  productinfo - [UIDB] Sync UiDb Records of private models
+[2025-07-16T16:51:01,707Z] <launcher> INFO  startup - Initiating startup
+[2025-07-16T16:51:02,976Z] <launcher> INFO  system - ======================================================================
+[2025-07-16T16:51:02,976Z] <launcher> INFO  system - UniFi 9.2.87 (build atag_9.2.87_29974 - release/release) is started
+[2025-07-16T16:51:02,978Z] <launcher> INFO  system - Environment: UniFi-OS[false], UniFi-Cloud[false], UniFi-MongoService[false]
+[2025-07-16T16:51:02,978Z] <launcher> INFO  system - ======================================================================
+[2025-07-16T16:51:02,978Z] <launcher> INFO  system - BASE dir:/usr/lib/unifi
+[2025-07-16T16:51:03,015Z] <launcher> INFO  system - Current System IP: 172.18.0.5
+[2025-07-16T16:51:03,015Z] <launcher> INFO  system - Hostname: 0704da1dcc82
+[2025-07-16T16:51:03,016Z] <launcher> INFO  system - ubic.env: prod
+[2025-07-16T16:51:03,016Z] <launcher> INFO  system - System loaded
+[2025-07-16T16:51:03,224Z] <launcher> INFO  mongo  - Checking if database needs to be shut down
+[2025-07-16T16:51:04,391Z] <launcher> INFO  mongo  - Database was not running
+[2025-07-16T16:51:04,392Z] <launcher> INFO  mongo  - Starting database process...
+[2025-07-16T16:51:10,041Z] <launcher> INFO  mongo  - Database process is started
+[2025-07-16T16:51:10,086Z] <launcher> INFO  mongo  - Connected to database (v3.6.8@mongodb://localhost:27117, journal enabled)
+[2025-07-16T16:51:10,095Z] <launcher> WARN  startup -   component[mongoRuntimeService] initialization took 6869ms
+[2025-07-16T16:51:10,651Z] <launcher> INFO  db     - Starting database service initialization...
+[2025-07-16T16:51:10,695Z] <launcher> INFO  db     - *** Factory Default *** Database exists. Clean it
+[2025-07-16T16:51:12,531Z] <launcher> INFO  db     - Database service initialized...
+[2025-07-16T16:51:12,532Z] <launcher> WARN  startup -   component[configDbService] initialization took 1881ms
+[2025-07-16T16:51:12,536Z] <launcher> INFO  stat   - *** Factory Default *** Stat Database exists. Clean it
+[2025-07-16T16:51:12,595Z] <launcher> INFO  audit  - *** Factory Default *** Audit Database exists. Drop it
+[2025-07-16T16:51:14,747Z] <launcher> INFO  tomcat - Adding basic REST API support during the startup
+[2025-07-16T16:51:16,605Z] <launcher> INFO  system - Tomcat startup took 14865ms
+[2025-07-16T16:51:38,774Z] <launcher> INFO  webrtc - WebRTC library version: EvoStream Media Server (www.evostream.com) build v2.9.1 - Gladiator - (built for Debian-8.2.0-x86_64 on 2020-02-05T23:33:19.000) OpenSSL version: 1.1.1d usrsctp version: v0.1.2 compiled on machine: Linux debian-8-2-0-64 3.16.0-6-amd64 #1 SMP Debian 3.16.57-2 (2018-07-14) x86_64 GNU/Linux
+[2025-07-16T16:51:42,441Z] <launcher> WARN  system - Country Code is not configured for Site with ID=6877d880a731e83a38a928e1
+[2025-07-16T16:51:42,447Z] <launcher> WARN  system - Country Code is not configured for Site with ID=6877d880a731e83a38a928e1
+[2025-07-16T16:51:42,516Z] <launcher> INFO  state  - Creating Default Local Area Network for Site[6877d880a731e83a38a928e1]
+[2025-07-16T16:51:42,646Z] <launcher> WARN  db     - Cannot notify listeners on saving 'apgroup' document with missing data
+[2025-07-16T16:51:48,852Z] <launcher> INFO  startup - Context ready
+[2025-07-16T16:51:48,854Z] <launcher> INFO  migration - Version 9.2.87 has not changed, skipping migration
+[2025-07-16T16:51:48,934Z] <launcher> INFO  startup - Calling context ready handlers
+[2025-07-16T16:51:48,952Z] <launcher> INFO  productinfo - [UIDB] Initializing UiDbService
+[2025-07-16T16:51:50,044Z] <launcher> INFO  productinfo - Using controller channel=RELEASE, firmware channel=RELEASE. Available controller channels=[RELEASE], available firmware channels=[RELEASE]. SSO is disabled.
+[2025-07-16T16:51:50,204Z] <launcher> INFO  startup - Done with context ready handlers
+[2025-07-16T16:51:50,205Z] <launcher> INFO  tomcat - Removing basic REST API support
+[2025-07-16T16:51:50,206Z] <launcher> INFO  startup - Startup complete
+[2025-07-16T16:51:50,207Z] <launcher> INFO  tomcat - systemd: Watchdog ping NOT enabled
+[2025-07-16T16:51:50,207Z] <launcher> INFO  tomcat - systemd: Startup completed. Ready for watchdog keep-alive checking.
+[2025-07-16T16:51:50,420Z] <launcher> INFO  sdnotify - ubnt_sdnotify_jni is loaded from: /usr/lib/unifi/lib/native/Linux/x86_64/libubnt_sdnotify_jni.so
+[2025-07-16T16:52:49,011Z] <sync-uidb> INFO  productinfo - [UIDB] Sync external UiDb Snapshot
+[2025-07-16T16:52:49,201Z] <sync-uidb> INFO  productinfo - [UIDB] Sync UiDb Records of private models
+[2025-07-16T17:52:49,201Z] <sync-uidb> INFO  productinfo - [UIDB] Sync external UiDb Snapshot
+[2025-07-16T17:52:49,255Z] <sync-uidb> INFO  productinfo - [UIDB] Sync UiDb Records of private models
+[2025-07-16T19:53:15,741Z] <launcher> INFO  startup - Initiating startup
+[2025-07-16T19:53:17,975Z] <launcher> INFO  system - ======================================================================
+[2025-07-16T19:53:17,975Z] <launcher> INFO  system - UniFi 9.2.87 (build atag_9.2.87_29974 - release/release) is started
+[2025-07-16T19:53:17,979Z] <launcher> INFO  system - Environment: UniFi-OS[false], UniFi-Cloud[false], UniFi-MongoService[false]
+[2025-07-16T19:53:17,979Z] <launcher> INFO  system - ======================================================================
+[2025-07-16T19:53:17,979Z] <launcher> INFO  system - BASE dir:/usr/lib/unifi
+[2025-07-16T19:53:18,052Z] <launcher> INFO  system - Current System IP: 172.18.0.6
+[2025-07-16T19:53:18,057Z] <launcher> INFO  system - Hostname: 0704da1dcc82
+[2025-07-16T19:53:18,057Z] <launcher> INFO  system - ubic.env: prod
+[2025-07-16T19:53:18,057Z] <launcher> INFO  system - System loaded
+[2025-07-16T19:53:18,059Z] <launcher> WARN  startup -   component[systemService] initialization took 118ms
+[2025-07-16T19:53:18,259Z] <launcher> INFO  mongo  - Checking if database needs to be shut down
+[2025-07-16T19:53:19,848Z] <launcher> INFO  mongo  - Database was not running
+[2025-07-16T19:53:19,848Z] <launcher> INFO  mongo  - Starting database process...
+[2025-07-16T19:53:22,977Z] <launcher> INFO  mongo  - Database process is started
+[2025-07-16T19:53:23,012Z] <launcher> INFO  mongo  - Connected to database (v3.6.8@mongodb://localhost:27117, journal enabled)
+[2025-07-16T19:53:23,027Z] <launcher> WARN  startup -   component[mongoRuntimeService] initialization took 4768ms
+[2025-07-16T19:53:23,467Z] <launcher> INFO  db     - Starting database service initialization...
+[2025-07-16T19:53:23,492Z] <launcher> INFO  db     - *** Factory Default *** Database exists. Clean it
+[2025-07-16T19:53:24,225Z] <launcher> INFO  db     - Database service initialized...
+[2025-07-16T19:53:24,225Z] <launcher> WARN  startup -   component[configDbService] initialization took 758ms
+[2025-07-16T19:53:24,234Z] <launcher> INFO  stat   - *** Factory Default *** Stat Database exists. Clean it
+[2025-07-16T19:53:24,300Z] <launcher> INFO  audit  - *** Factory Default *** Audit Database exists. Drop it
+[2025-07-16T19:53:25,782Z] <launcher> INFO  tomcat - Adding basic REST API support during the startup
+[2025-07-16T19:53:27,134Z] <launcher> INFO  system - Tomcat startup took 11301ms
+[2025-07-16T19:53:46,314Z] <launcher> INFO  webrtc - WebRTC library version: EvoStream Media Server (www.evostream.com) build v2.9.1 - Gladiator - (built for Debian-8.2.0-x86_64 on 2020-02-05T23:33:19.000) OpenSSL version: 1.1.1d usrsctp version: v0.1.2 compiled on machine: Linux debian-8-2-0-64 3.16.0-6-amd64 #1 SMP Debian 3.16.57-2 (2018-07-14) x86_64 GNU/Linux
+[2025-07-16T19:53:48,598Z] <launcher> WARN  system - Country Code is not configured for Site with ID=687803343ab8672b65422bd9
+[2025-07-16T19:53:48,599Z] <launcher> WARN  system - Country Code is not configured for Site with ID=687803343ab8672b65422bd9
+[2025-07-16T19:53:48,622Z] <launcher> INFO  state  - Creating Default Local Area Network for Site[687803343ab8672b65422bd9]
+[2025-07-16T19:53:48,779Z] <launcher> WARN  db     - Cannot notify listeners on saving 'apgroup' document with missing data
+[2025-07-16T19:53:54,189Z] <launcher> INFO  startup - Context ready
+[2025-07-16T19:53:54,192Z] <launcher> INFO  migration - Version 9.2.87 has not changed, skipping migration
+[2025-07-16T19:53:54,302Z] <launcher> INFO  startup - Calling context ready handlers
+[2025-07-16T19:53:54,319Z] <launcher> INFO  productinfo - [UIDB] Initializing UiDbService
+[2025-07-16T19:53:55,318Z] <launcher> INFO  productinfo - Using controller channel=RELEASE, firmware channel=RELEASE. Available controller channels=[RELEASE], available firmware channels=[RELEASE]. SSO is disabled.
+[2025-07-16T19:53:55,493Z] <launcher> INFO  startup - Done with context ready handlers
+[2025-07-16T19:53:55,494Z] <launcher> INFO  tomcat - Removing basic REST API support
+[2025-07-16T19:53:55,494Z] <launcher> INFO  startup - Startup complete
+[2025-07-16T19:53:55,495Z] <launcher> INFO  tomcat - systemd: Watchdog ping NOT enabled
+[2025-07-16T19:53:55,495Z] <launcher> INFO  tomcat - systemd: Startup completed. Ready for watchdog keep-alive checking.
+[2025-07-16T19:53:55,507Z] <launcher> INFO  sdnotify - ubnt_sdnotify_jni is loaded from: /usr/lib/unifi/lib/native/Linux/x86_64/libubnt_sdnotify_jni.so
+[2025-07-16T19:54:54,379Z] <sync-uidb> INFO  productinfo - [UIDB] Sync external UiDb Snapshot
+[2025-07-16T19:54:55,043Z] <sync-uidb> INFO  productinfo - [UIDB] Sync UiDb Records of private models
+[2025-07-17T15:43:45,914Z] <launcher> INFO  startup - Initiating startup
+[2025-07-17T15:43:48,598Z] <launcher> INFO  system - ======================================================================
+[2025-07-17T15:43:48,599Z] <launcher> INFO  system - UniFi 9.2.87 (build atag_9.2.87_29974 - release/release) is started
+[2025-07-17T15:43:48,600Z] <launcher> INFO  system - Environment: UniFi-OS[false], UniFi-Cloud[false], UniFi-MongoService[false]
+[2025-07-17T15:43:48,600Z] <launcher> INFO  system - ======================================================================
+[2025-07-17T15:43:48,601Z] <launcher> INFO  system - BASE dir:/usr/lib/unifi
+[2025-07-17T15:43:48,618Z] <launcher> INFO  system - Current System IP: 172.18.0.5
+[2025-07-17T15:43:48,640Z] <launcher> INFO  system - Hostname: bb3960b59e53
+[2025-07-17T15:43:48,642Z] <launcher> INFO  system - ubic.env: prod
+[2025-07-17T15:43:48,643Z] <launcher> INFO  system - System loaded
+[2025-07-17T15:43:48,650Z] <launcher> WARN  startup -   component[systemService] initialization took 144ms
+[2025-07-17T15:43:48,903Z] <launcher> INFO  mongo  - Checking if database needs to be shut down
+[2025-07-17T15:43:50,403Z] <launcher> INFO  mongo  - Database was not running
+[2025-07-17T15:43:50,404Z] <launcher> INFO  mongo  - Starting database process...
+[2025-07-17T15:43:56,887Z] <launcher> INFO  mongo  - Database process is started
+[2025-07-17T15:43:56,995Z] <launcher> INFO  mongo  - Connected to database (v3.6.8@mongodb://localhost:27117, journal enabled)
+[2025-07-17T15:43:57,080Z] <launcher> WARN  startup -   component[mongoRuntimeService] initialization took 8177ms
+[2025-07-17T15:43:58,149Z] <launcher> INFO  db     - Starting database service initialization...
+[2025-07-17T15:43:58,393Z] <launcher> INFO  db     - *** Factory Default *** Database exists. Clean it
+[2025-07-17T15:44:00,541Z] <launcher> INFO  db     - Database service initialized...
+[2025-07-17T15:44:00,562Z] <launcher> WARN  startup -   component[configDbService] initialization took 2413ms
+[2025-07-17T15:44:00,590Z] <launcher> INFO  stat   - *** Factory Default *** Stat Database exists. Clean it
+[2025-07-17T15:44:00,693Z] <launcher> WARN  startup -   component[statDbService] initialization took 107ms
+[2025-07-17T15:44:00,697Z] <launcher> INFO  audit  - *** Factory Default *** Audit Database exists. Drop it
+[2025-07-17T15:44:02,284Z] <launcher> INFO  tomcat - Adding basic REST API support during the startup
+[2025-07-17T15:44:05,467Z] <launcher> INFO  system - Tomcat startup took 19379ms
+[2025-07-17T15:44:27,020Z] <launcher> INFO  webrtc - WebRTC library version: EvoStream Media Server (www.evostream.com) build v2.9.1 - Gladiator - (built for Debian-8.2.0-x86_64 on 2020-02-05T23:33:19.000) OpenSSL version: 1.1.1d usrsctp version: v0.1.2 compiled on machine: Linux debian-8-2-0-64 3.16.0-6-amd64 #1 SMP Debian 3.16.57-2 (2018-07-14) x86_64 GNU/Linux
+[2025-07-17T15:44:29,587Z] <launcher> WARN  system - Country Code is not configured for Site with ID=68791a402e9c870ea3a66def
+[2025-07-17T15:44:29,591Z] <launcher> WARN  system - Country Code is not configured for Site with ID=68791a402e9c870ea3a66def
+[2025-07-17T15:44:29,615Z] <launcher> INFO  state  - Creating Default Local Area Network for Site[68791a402e9c870ea3a66def]
+[2025-07-17T15:44:29,674Z] <launcher> WARN  db     - Cannot notify listeners on saving 'apgroup' document with missing data
+[2025-07-17T15:44:36,124Z] <launcher> INFO  startup - Context ready
+[2025-07-17T15:44:36,137Z] <launcher> INFO  migration - Version 9.2.87 has not changed, skipping migration
+[2025-07-17T15:44:36,406Z] <launcher> INFO  startup - Calling context ready handlers
+[2025-07-17T15:44:36,475Z] <launcher> INFO  productinfo - [UIDB] Initializing UiDbService
+[2025-07-17T15:44:39,077Z] <launcher> INFO  productinfo - Using controller channel=RELEASE, firmware channel=RELEASE. Available controller channels=[RELEASE], available firmware channels=[RELEASE]. SSO is disabled.
+[2025-07-17T15:44:39,326Z] <launcher> INFO  startup - Done with context ready handlers
+[2025-07-17T15:44:39,327Z] <launcher> INFO  tomcat - Removing basic REST API support
+[2025-07-17T15:44:39,328Z] <launcher> INFO  startup - Startup complete
+[2025-07-17T15:44:39,329Z] <launcher> INFO  tomcat - systemd: Watchdog ping NOT enabled
+[2025-07-17T15:44:39,329Z] <launcher> INFO  tomcat - systemd: Startup completed. Ready for watchdog keep-alive checking.
+[2025-07-17T15:44:39,348Z] <launcher> INFO  sdnotify - ubnt_sdnotify_jni is loaded from: /usr/lib/unifi/lib/native/Linux/x86_64/libubnt_sdnotify_jni.so
