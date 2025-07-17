@@ -30,7 +30,7 @@ if [ ! -f "$DEND"/media/server.key ]; then
   docker run --rm \
     --entrypoint "/usr/bin/dendrite" \
     -v "$DEND":/etc/dendrite:rw \
-    matrixdotorg/dendrite-monolith:latest \
+    matrixdotorg/dendrite-monolith:v0.10.1 \
       generate-keys \
         --config /etc/dendrite/dendrite.yaml \
         --private-key /etc/dendrite/media/server.key
