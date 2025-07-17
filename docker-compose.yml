@@ -1,83 +1,79 @@
+version: '3.8'
+
 services:
   etherpad:
-    image: etherpad/etherpad
+    image: etherpad/etherpad:latest
     platform: linux/arm64
     container_name: etherpad
     restart: unless-stopped
     ports:
-      - "9001:9001"
+      - '9001:9001'
     volumes:
-      - etherpad_data:/opt/etherpad-lite/var
+      # persist your pads & settings
+      - ./matrix-pnk/etherpad/var:/opt/etherpad-lite/var
 
   filebrowser:
-    image: filebrowser/filebrowser:s6
+    image: filebrowser/filebrowser:v2-arm64-s6
     platform: linux/arm64
     container_name: filebrowser
     restart: unless-stopped
     ports:
-      - "8081:80"
+      - '8081:80'
     volumes:
-      - ./pnk-files:/srv
+      - ./matrix-pnk/filebrowser/database:/database
+      - ./matrix-pnk/filebrowser/files:/srv
 
   kolibri:
-    image: treehouses/kolibri
+    image: treehouses/kolibri:latest
     platform: linux/arm64
     container_name: kolibri
     restart: unless-stopped
     ports:
-      - "8082:8080"
+      - '8082:8080'
     volumes:
-      - ./kolibri-content:/root/.kolibri
+      - ./matrix-pnk/kolibri-content:/root/.kolibri
 
   unifi-controller:
-    image: jacobalberty/unifi
+    image: lscr.io/linuxserver/unifi-controller:version-7.4.162
     platform: linux/arm64
     container_name: unifi-controller
     restart: unless-stopped
     ports:
-      - "3478:3478/udp"
-      - "10001:10001/udp"
-      - "8080:8080"
-      - "8443:8443"
-      - "8880:8880"
-      - "8843:8843"
-      - "6789:6789"
-    volumes:
-      - ./unifi-data:/unifi
+      - '3478:3478/udp'   # STUN
+      - '6789:6789/tcp'   # Speed test
+      - '8080:8080/tcp'   # Device ↔ Controller
+      - '8443:8443/tcp'   # GUI/API
+      - '8880:8880/tcp'   # HTTP portal
+      - '8843:8843/tcp'   # HTTPS portal
+      - '10001:10001/udp' # AP discovery
     environment:
-      - TZ=UTC
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Detroit
+      - MEM_LIMIT=1024
+    volumes:
+      - ./matrix-pnk/unifi/config:/config
 
   dendrite:
-    image: matrixdotorg/dendrite-monolith:latest
+    image: matrixdotorg/dendrite-monolith:v0.14.1
     platform: linux/arm64
     container_name: dendrite
     restart: unless-stopped
     ports:
-      - "8008:8008"
-      - "8448:8448"
+      - '8008:8008'  # client-server API
+      - '8448:8448'  # federation API
     volumes:
       - ./matrix-pnk/dendrite/dendrite.yaml:/etc/dendrite/dendrite.yaml:ro
       - ./matrix-pnk/dendrite/media:/etc/dendrite/media
-      - ./matrix-pnk/dendrite:/etc/dendrite
-    command:
-      [
-        "/usr/bin/dendrite-monolith-server",
-        "--config", "/etc/dendrite/dendrite.yaml"
-      ]
+      - ./matrix-pnk/dendrite/dendrite.db:/etc/dendrite/dendrite.db
+
   element:
-    image: vectorim/element-web
+    image: vectorim/element-web:latest
     platform: linux/arm64
     container_name: element
     restart: unless-stopped
     ports:
-      - "8083:80"
+      - '8083:80'
     volumes:
+      # your custom Element config to skip the “pick a server” prompt
       - ./matrix-pnk/element-config.json:/config.json:ro
-    environment:
-      - DEFAULT_HOMESERVER_URL=http://localhost:8008
-
-volumes:
-  etherpad_data:
-  pnk-files:
-  kolibri-content:
-  unifi-data:
