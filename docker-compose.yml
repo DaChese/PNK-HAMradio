@@ -65,6 +65,8 @@ services:
     restart: unless-stopped
     ports:
       - "8083:80"
+    volumes:
+      - ./matrix-pnk/element-config.json:/config.json:ro
     environment:
       - DEFAULT_HOMESERVER_URL=http://localhost:8008
 
