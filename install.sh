@@ -16,7 +16,7 @@ cd "$HOME/PNK-HAMradio"
 git pull
 
 echo "Checking for Dendrite server key…"
-DEND=`pwd`/matrix-pnk/dendrite
+DEND="$(pwd)/matrix-pnk/dendrite"
 mkdir -p "$DEND"/media
 
 if [ ! -f "$DEND"/media/server.key ]; then
@@ -26,10 +26,10 @@ if [ ! -f "$DEND"/media/server.key ]; then
     -v "$DEND":/etc/dendrite:rw \
     matrixdotorg/dendrite-monolith:latest \
     generate-keys \
-      --config /etc/dendrite/dendrite.yaml \
-      --private-key /etc/dendrite/media/server.key
+      --config       /etc/dendrite/dendrite.yaml \
+      --private-key  /etc/dendrite/media/server.key
 else
-  echo "  Server key already exists, skipping"
+  echo " Server key already exists, skipping"
 fi
 
 echo "5) Deploying dashboard…"
