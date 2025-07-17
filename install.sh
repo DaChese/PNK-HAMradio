@@ -16,21 +16,32 @@ cd "$HOME/PNK-HAMradio"
 git pull
 
 echo "Checking for Dendrite server key…"
-DEND=`pwd`/matrix-pnk/dendrite
+DEND="$(pwd)/matrix-pnk/dendrite"
 mkdir -p "$DEND"/media
 
 if [ ! -f "$DEND"/media/server.key ]; then
-  echo "  🔑 Generating a fresh Matrix server key"
+  echo "  🔑 No existing key found—generating a fresh Matrix server key"
+
+  mv "$DEND"/dendrite.yaml     "$DEND"/dendrite.orig.yaml
+  mv "$DEND"/dendrite.tmp.yaml "$DEND"/dendrite.yaml
+
+
   docker run --rm \
     --entrypoint "/usr/bin/dendrite" \
     -v "$DEND":/etc/dendrite:rw \
     matrixdotorg/dendrite-monolith:latest \
-    generate-keys \
-      --config /etc/dendrite/dendrite.yaml \
-      --private-key /etc/dendrite/media/server.key
+      generate-keys \
+        --config /etc/dendrite/dendrite.yaml \
+        --private-key /etc/dendrite/media/server.key
+
+
+  mv "$DEND"/dendrite.orig.yaml "$DEND"/dendrite.yaml
+
+  echo "  ✅ server.key created and real config restored."
 else
   echo "  🔑 Server key already exists, skipping"
 fi
+
 
 echo "5) Deploying dashboard…"
 sudo cp index.html /var/www/html/index.html
