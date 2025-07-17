@@ -12,6 +12,18 @@ project to making a raspberry pi into a portable network kit and ham radio.
    
    cd PNK-HAMradio
 
+   chmod +x install.sh
+   
+   ./install.sh
+
+Start everything:
+
+docker compose up -d
+
+Access your dashboard
+
+http://<YOUR_PI_IP>:8000
+
 This repo was made by me and the ham radio software was derived from this repo below!
 
 Credits:
