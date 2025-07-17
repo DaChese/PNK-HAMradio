@@ -1,7 +1,7 @@
 services:
   etherpad:
     image: etherpad/etherpad
-    platform: linux/arm64/v8
+    platform: linux/arm64
     container_name: etherpad
     restart: unless-stopped
     ports:
@@ -11,7 +11,7 @@ services:
 
   filebrowser:
     image: filebrowser/filebrowser:s6
-    platform: linux/arm64/v8
+    platform: linux/arm64
     container_name: filebrowser
     restart: unless-stopped
     ports:
@@ -21,7 +21,7 @@ services:
 
   kolibri:
     image: treehouses/kolibri
-    platform: linux/arm64/v8
+    platform: linux/arm64
     container_name: kolibri
     restart: unless-stopped
     ports:
@@ -31,7 +31,7 @@ services:
 
   unifi-controller:
     image: jacobalberty/unifi
-    platform: linux/arm64/v8
+    platform: linux/arm64
     container_name: unifi-controller
     restart: unless-stopped
     ports:
@@ -49,7 +49,7 @@ services:
 
   dendrite:
     image: matrixdotorg/dendrite-monolith:latest
-    platform: linux/arm64/v8
+    platform: linux/arm64
     container_name: dendrite
     restart: unless-stopped
     ports:
@@ -66,7 +66,7 @@ services:
       ]
   element:
     image: vectorim/element-web
-    platform: linux/arm64/v8
+    platform: linux/arm64
     container_name: element
     restart: unless-stopped
     ports:
