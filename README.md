@@ -7,6 +7,7 @@ project to making a raspberry pi into a portable network kit and ham radio.
    - (Optional) `docker` group membership so you can run without `sudo`  
 
 2. **Clone the repo**
+
    git clone https://github.com/DaChese/PNK-HAMradio.git
    
    cd PNK-HAMradio
