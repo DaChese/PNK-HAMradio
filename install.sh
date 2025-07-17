@@ -40,3 +40,11 @@ chmod +x scripts/start.sh
 ./scripts/start.sh
 
 echo "✅ PNK is live at http://localhost/"
+
+echo "Ensure 73Linux - HamRadio Software is installed"
+if [ ! -d /opt/73Linux ]; then
+  echo "Cloning and installing ham-radio stack…"
+  git clone https://github.com/km4ack/73Linux.git /opt/73Linux
+  cd /opt/73Linux
+  sudo bash installHam.sh
+fi
