@@ -49,10 +49,16 @@ services:
     restart: unless-stopped
     ports:
       - "8008:8008"
+      - "8448:8448"
     volumes:
+      - ./matrix-pnk/dendrite/dendrite.yaml:/etc/dendrite/dendrite.yaml:ro
+      - ./matrix-pnk/dendrite/media:/etc/dendrite/media
       - ./matrix-pnk/dendrite:/etc/dendrite
-    command: ["/usr/bin/dendrite", "--config", "/etc/dendrite/dendrite.yaml"]
-
+    command:
+      [
+        "/usr/bin/dendrite-monolith-server",
+        "--config", "/etc/dendrite/dendrite.yaml"
+      ]
   element:
     image: vectorim/element-web
     container_name: element

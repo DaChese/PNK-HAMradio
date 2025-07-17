@@ -1,0 +1,9 @@
+global:
+  server_name: "localhost"
+  key_validity_period: "168h0m0s"
+  well_known_server_name: "localhost"
+  trusted_third_party_id_servers: []
+
+monolith:
+  database:
+    connection_string: file:/etc/dendrite/dendrite.db

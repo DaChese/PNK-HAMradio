@@ -39422,3 +39422,53 @@
 [2025-07-16T20:16:45,412Z] <ble_state_check> DEBUG tasks  - Finished task[ble_state_check] in 0 ms
 [2025-07-16T20:16:45,526Z] <tracer> DEBUG tasks  - Started task[tracer]
 [2025-07-16T20:16:45,527Z] <tracer> DEBUG tasks  - Finished task[tracer] in 1 ms
+[2025-07-17T15:44:28,627Z] <load-db-privacy-tokens> DEBUG tasks  - Started task[load-db-privacy-tokens]
+[2025-07-17T15:44:28,973Z] <load-db-privacy-tokens> DEBUG tasks  - Finished task[load-db-privacy-tokens] in 348 ms
+[2025-07-17T15:44:34,192Z] <launcher> INFO  tasks  - Pre-started 1 threads for stat-processor
+[2025-07-17T15:44:36,795Z] <launcher> INFO  tasks  - [UIDB] Updated UiDb snapshot version: 80253b9735fdf716b2b1fae4d66163e3a546f209
+[2025-07-17T15:44:37,053Z] <ModelLifecycleManager-startStop> DEBUG tasks  - Started task[ModelLifecycleManager-startStop]
+[2025-07-17T15:44:37,081Z] <ModelLifecycleManager-startStop> DEBUG tasks  - Finished task[ModelLifecycleManager-startStop] in 28 ms
+[2025-07-17T15:44:37,097Z] <refresh-fingerprint-ml-support> DEBUG tasks  - Started task[refresh-fingerprint-ml-support]
+[2025-07-17T15:44:37,101Z] <refresh-fingerprint-ml-support> DEBUG tasks  - Finished task[refresh-fingerprint-ml-support] in 4 ms
+[2025-07-17T15:44:39,120Z] <cloudaccess-connect> DEBUG tasks  - Started task[cloudaccess-connect]
+[2025-07-17T15:44:39,121Z] <cloudaccess-connect> DEBUG tasks  - Finished task[cloudaccess-connect] in 1 ms
+[2025-07-17T15:44:39,215Z] <model-lifecycle-cache-refresh> DEBUG tasks  - Started task[model-lifecycle-cache-refresh]
+[2025-07-17T15:44:39,222Z] <launcher> INFO  tasks  - Scheduling periodic time-series task to run every 5 minutes starting from Thu Jul 17 15:45:00 UTC 2025
+[2025-07-17T15:44:39,277Z] <tracer> DEBUG tasks  - Started task[tracer]
+[2025-07-17T15:44:39,282Z] <tracer> DEBUG tasks  - Finished task[tracer] in 5 ms
+[2025-07-17T15:44:39,354Z] <load-app-state-log> DEBUG tasks  - Started task[load-app-state-log]
+[2025-07-17T15:44:39,357Z] <load-app-state-log> DEBUG tasks  - Finished task[load-app-state-log] in 3 ms
+[2025-07-17T15:44:39,692Z] <model-lifecycle-cache-refresh> DEBUG tasks  - Finished task[model-lifecycle-cache-refresh] in 478 ms
+[2025-07-17T15:44:44,013Z] <ble_state_check> DEBUG tasks  - Started task[ble_state_check]
+[2025-07-17T15:44:44,015Z] <ble_state_check> DEBUG tasks  - Finished task[ble_state_check] in 2 ms
+[2025-07-17T15:44:44,023Z] <cache-warmup> DEBUG tasks  - Started task[cache-warmup]
+[2025-07-17T15:44:44,024Z] <cache-warmup> DEBUG tasks  - 	warming up FIREWALL_POLICIES
+[2025-07-17T15:44:44,029Z] <cache-warmup> DEBUG tasks  - Finished task[cache-warmup] in 6 ms
+[2025-07-17T15:44:44,283Z] <tracer> DEBUG tasks  - Started task[tracer]
+[2025-07-17T15:44:44,283Z] <tracer> DEBUG tasks  - Finished task[tracer] in 0 ms
+[2025-07-17T15:44:46,427Z] <device-state-check> DEBUG tasks  - Started task[device-state-check]
+[2025-07-17T15:44:46,430Z] <device-state-check> DEBUG tasks  - Finished task[device-state-check] in 3 ms
+[2025-07-17T15:44:49,013Z] <ble-load-keystore> DEBUG tasks  - Started task[ble-load-keystore]
+[2025-07-17T15:44:49,015Z] <ble_state_check> DEBUG tasks  - Started task[ble_state_check]
+[2025-07-17T15:44:49,015Z] <ble_state_check> DEBUG tasks  - Finished task[ble_state_check] in 0 ms
+[2025-07-17T15:44:49,036Z] <ble-load-keystore> DEBUG tasks  - Finished task[ble-load-keystore] in 23 ms
+[2025-07-17T15:44:49,212Z] <stamgr> DEBUG tasks  - Started task[stamgr]
+[2025-07-17T15:44:49,213Z] <stamgr> DEBUG tasks  - Finished task[stamgr] in 1 ms
+[2025-07-17T15:44:49,214Z] <wss-connection> DEBUG tasks  - Started task[wss-connection]
+[2025-07-17T15:44:49,214Z] <wss-connection> DEBUG tasks  - Finished task[wss-connection] in 0 ms
+[2025-07-17T15:44:49,283Z] <tracer> DEBUG tasks  - Started task[tracer]
+[2025-07-17T15:44:49,284Z] <tracer> DEBUG tasks  - Finished task[tracer] in 1 ms
+[2025-07-17T15:44:49,357Z] <webrtc-connection> DEBUG tasks  - Started task[webrtc-connection]
+[2025-07-17T15:44:49,358Z] <webrtc-connection> DEBUG tasks  - Finished task[webrtc-connection] in 1 ms
+[2025-07-17T15:44:54,016Z] <ble_state_check> DEBUG tasks  - Started task[ble_state_check]
+[2025-07-17T15:44:54,016Z] <ble_state_check> DEBUG tasks  - Finished task[ble_state_check] in 1 ms
+[2025-07-17T15:44:54,214Z] <ips-alert-caching> DEBUG tasks  - Started task[ips-alert-caching]
+[2025-07-17T15:44:54,219Z] <ips-alert-caching> DEBUG tasks  - Finished task[ips-alert-caching] in 5 ms
+[2025-07-17T15:44:54,284Z] <tracer> DEBUG tasks  - Started task[tracer]
+[2025-07-17T15:44:54,284Z] <tracer> DEBUG tasks  - Finished task[tracer] in 0 ms
+[2025-07-17T15:44:59,016Z] <ble_state_check> DEBUG tasks  - Started task[ble_state_check]
+[2025-07-17T15:44:59,017Z] <ble_state_check> DEBUG tasks  - Finished task[ble_state_check] in 1 ms
+[2025-07-17T15:44:59,285Z] <tracer> DEBUG tasks  - Started task[tracer]
+[2025-07-17T15:44:59,285Z] <tracer> DEBUG tasks  - Finished task[tracer] in 1 ms
+[2025-07-17T15:45:00,010Z] <stat-processor> DEBUG tasks  - Started task[stat-processor]
+[2025-07-17T15:45:00,343Z] <stat-processor> DEBUG tasks  - Finished task[stat-processor] in 333 ms

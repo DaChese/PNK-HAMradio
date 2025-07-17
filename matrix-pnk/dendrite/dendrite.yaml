@@ -1,0 +1,47 @@
+global:
+  server_name: "localhost"
+  private_key: /etc/dendrite/media/server.key
+  key_validity_period: "168h0m0s"
+  well_known_server_name: "localhost"
+  trusted_third_party_id_servers: []
+
+appservice_api:
+  database:
+    connection_string: file:/etc/dendrite/appservice.db
+
+client_api:
+  connection_string: file:/etc/dendrite/clientapi.db
+
+federation_api:
+  database:
+    connection_string: file:/etc/dendrite/federationapi.db
+
+key_server:
+  database:
+    connection_string: file:/etc/dendrite/keyserver.db
+
+media_api:
+  base_path: /etc/dendrite/media
+  database:
+    connection_string: file:/etc/dendrite/mediaapi.db
+
+room_server:
+  database:
+    connection_string: file:/etc/dendrite/roomserver.db
+
+sync_api:
+  database:
+    connection_string: file:/etc/dendrite/syncapi.db
+
+user_api:
+  account_database:
+    connection_string: file:/etc/dendrite/userapi.db
+
+relay_api:
+  database:
+    connection_string: file:/etc/dendrite/relayapi.db
+
+mscs:
+  database:
+    connection_string: file:/etc/dendrite/mscs.db
+
