@@ -24,7 +24,7 @@ services:
       - ./matrix-pnk/filebrowser/files:/srv
 
   kolibri:
-    image: treehouses/kolibri:latest
+    image: treehouses/kolibri:0.10.3
     platform: linux/arm64
     container_name: kolibri
     restart: unless-stopped
