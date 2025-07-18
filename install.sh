@@ -43,5 +43,17 @@ chmod +x scripts/start.sh
 
 echo "PNK is live at http://localhost/"
 
-echo "Ensure 73Linux - HamRadio Software is installed"
- git clone https://github.com/km4ack/73Linux.git $HOME/73Linux && bash $HOME/73Linux/73.sh
+echo "Cloning and installing 73Linux - HamRadio Software…"
+if [ -d "$HOME/73Linux/.git" ]; then
+  cd "$HOME/73Linux"
+  git pull
+else
+  git clone --depth 1 --single-branch https://github.com/km4ack/73Linux.git "$HOME/73Linux"
+fi
+
+if [ -d "$HOME/73Linux" ]; then
+  bash "$HOME/73Linux/73.sh"
+else
+  echo "Error: 73Linux directory does not exist. Install failed."
+  exit 1
+fi
