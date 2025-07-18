@@ -104,5 +104,5 @@ else
     echo "Skipping 73Linux installation"
   fi
 
-echo "8) Installation complete!"
+echo "Installation complete!"
 echo "You can now access PNK at http://localhost/"
