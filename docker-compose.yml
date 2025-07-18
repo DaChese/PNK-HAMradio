@@ -54,7 +54,7 @@ services:
       - ./matrix-pnk/unifi/config:/config
 
   dendrite:
-    image: matrixdotorg/dendrite-monolith:v0.14.1
+    image: matrixdotorg/dendrite-monolith:main 
     platform: linux/arm64
     container_name: dendrite
     restart: unless-stopped

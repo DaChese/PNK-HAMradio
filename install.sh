@@ -25,7 +25,7 @@ if [ ! -f "$DEND/media/server.key" ]; then
   echo "  Generating Matrix key…"
   docker run --rm \
     -v "$DEND:/etc/dendrite" \
-    matrixdotorg/dendrite-monolith:v0.14.1 \
+    matrixdotorg/dendrite-monolith:main \
       generate-keys \
         --config /etc/dendrite/dendrite.yaml \
         --private-key /etc/dendrite/media/server.key
