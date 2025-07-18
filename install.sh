@@ -100,8 +100,8 @@ echo "7) Installing 73Linux…"
 read -p "Do you want to install 73Linux? (y/N): " INSTALL_73LINUX
 if [[ "$INSTALL_73LINUX" =~ ^[Yy]$ ]]; then
   echo "Installing HamRadio Software into $HOME/PNK-HAMradio/73Linux"
-  echo clone https://github.com/km4ack/73Linux.git "$HOME/PNK-HAMradio/73Linux"
-  echo "run bash $HOME/PNK-HAMradio/73Linux/73.sh to get it started"
+  echo  git clone https://github.com/km4ack/73Linux.git $HOME/73Linux && bash $HOME/73Linux/73.sh"
+  echo "run bash $HOME/73Linux/73.sh to get it started"
 else
     echo "Skipping 73Linux installation"
   fi
