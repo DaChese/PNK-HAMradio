@@ -106,3 +106,4 @@ else
 
 echo "Installation complete!"
 echo "You can now access PNK at http://localhost/"
+fi
