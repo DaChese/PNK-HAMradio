@@ -2,12 +2,12 @@
 set -e
 
 echo "1) Installing dependencies…"
-sudo apt update
-sudo apt upgrade -y
-sudo apt install -y git docker-ce docker-ce-cli containerd.io lighttpd python3-pip curl
+apt update
+apt upgrade -y
+apt install -y git docker-ce docker-ce-cli containerd.io lighttpd python3-pip curl
 
 echo "2) Starting services…"
-sudo systemctl enable --now docker lighttpd
+systemctl enable --now docker lighttpd
 
 echo "3) Cloning/updating repo…"
 if [ ! -d "$HOME/PNK-HAMradio" ]; then
