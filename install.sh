@@ -44,4 +44,5 @@ chmod +x scripts/start.sh
 echo "PNK is live at http://localhost/"
 
 echo "Ensure 73Linux - HamRadio Software is installed"
- git clone https://github.com/km4ack/73Linux.git $HOME/73Linux && bash $HOME/73Linux/73.sh
+git clone https://github.com/km4ack/73Linux.git "$HOME/73Linux"
+bash "$HOME/73Linux/73.sh"
