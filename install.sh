@@ -18,8 +18,8 @@ git pull
 
 
 echo "Checking for Dendrite server key…"
-DEND="$(pwd)/matrix-pnk/dendrite"
-mkdir -p "$DEND"/media
+DEND="$HOME/PNK-HAMradio/matrix-pnk/dendrite"
+mkdir -p "$DEND/media"
 
 if [ ! -f "$DEND"/media/server.key ]; then
   echo "  Generating a fresh Matrix server key"
