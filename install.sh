@@ -44,17 +44,4 @@ chmod +x scripts/start.sh
 echo "PNK is live at http://localhost/"
 
 echo "Ensure 73Linux - HamRadio Software is installed"
-if [ ! -d /opt/73Linux ]; then
-  echo "Cloning and installing ham-radio stack…"
-  git clone https://github.com/km4ack/73Linux.git /opt/73Linux
-  cd /opt/73Linux
-else
-  echo "73Linux is already installed, skipping and running it"
-  cd /opt/73Linux
-fi
-
-bash 73.sh
-if [ $? -ne 0 ]; then
-  echo "Error: 73.sh failed to execute." >&2
-  exit 1
-fi
+ git clone https://github.com/km4ack/73Linux.git $HOME/73Linux && bash $HOME/73Linux/73.sh
