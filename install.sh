@@ -23,6 +23,10 @@ mkdir -p "$DEND/media"
 
 if [ ! -f "$DEND/media/server.key" ]; then
   echo "  Generating Matrix key…"
+  if [ ! -f "$DEND/dendrite.yaml" ]; then
+    echo "  Error: $DEND/dendrite.yaml not found. Please create the configuration file before proceeding."
+    exit 1
+  fi
   docker run --rm \
     -v "$DEND:/etc/dendrite" \
     matrixdotorg/dendrite-monolith:main \
