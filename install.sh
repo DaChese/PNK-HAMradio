@@ -48,5 +48,5 @@ if [ ! -d /opt/73Linux ]; then
   echo "Cloning and installing ham-radio stack…"
   git clone https://github.com/km4ack/73Linux.git /opt/73Linux
   cd /opt/73Linux
-  sudo bash 73.sh
+  bash 73.sh
 fi
