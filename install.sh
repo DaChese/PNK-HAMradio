@@ -89,8 +89,9 @@ else
   echo " - 73Linux: NOT installed"
 fi
 echo ""
-echo "PNK is live at http://localhost/"
-echo "Check above for any errors."
+echo "starting PNK services…"
+echo "Please wait, this may take a few minutes…"
+echo "This will start the PNK services and the Matrix Dendrite server."
 ./scripts/start.sh
 
 echo "PNK is live at http://localhost/"
@@ -98,8 +99,9 @@ echo "PNK is live at http://localhost/"
 echo "7) Installing 73Linux…"
 read -p "Do you want to install 73Linux? (y/N): " INSTALL_73LINUX
 if [[ "$INSTALL_73LINUX" =~ ^[Yy]$ ]]; then
-  if [ ! -d "$HOME/73Linux" ]; then 
-echo "Install HamRadio Software from  git clone https://github.com/km4ack/73Linux.git $HOME/73Linux && bash $HOME/73Linux/73.sh"
+  echo "Installing HamRadio Software into $HOME/PNK-HAMradio/73Linux"
+  echo clone https://github.com/km4ack/73Linux.git "$HOME/PNK-HAMradio/73Linux"
+  echo "run bash $HOME/PNK-HAMradio/73Linux/73.sh to get it started"
 else
     echo "Skipping 73Linux installation"
   fi
