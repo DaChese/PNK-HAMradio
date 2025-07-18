@@ -65,14 +65,20 @@ services:
       - ./matrix-pnk/dendrite/dendrite.yaml:/etc/dendrite/dendrite.yaml:ro
       - ./matrix-pnk/dendrite/media:/etc/dendrite/media
       - ./matrix-pnk/dendrite/dendrite.db:/etc/dendrite/dendrite.db
-
+    command:
+      [
+        "/usr/bin/dendrite-monolith-server",
+        "--config", "/etc/dendrite/dendrite.yaml"
+      ]
   element:
     image: vectorim/element-web:latest
     platform: linux/arm64
     container_name: element
     restart: unless-stopped
     ports:
-      - '8083:80'
+      - '8083:80'  
+    environment:
+      - DEFAULT_HOMESERVER_URL=http://localhost:8008
     volumes:
-      # your custom Element config to skip the “pick a server” prompt
+      # Element config to skip the “pick a server” prompt
       - ./matrix-pnk/element-config.json:/config.json:ro
