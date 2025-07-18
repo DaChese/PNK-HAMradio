@@ -23,7 +23,7 @@ mkdir -p "$DEND"/media
 if [ ! -f "$DEND"/media/server.key ]; then
   echo "  Generating a fresh Matrix server key"
   docker run --rm \
-    --entrypoint "/usr/bin/dendrite/media" \
+    --entrypoint "/usr/bin/dendrite" \
     -v "$DEND":/etc/dendrite:rw \
     matrixdotorg/dendrite-monolith:v0.14.1 \
     generate-keys \
