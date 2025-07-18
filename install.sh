@@ -48,5 +48,13 @@ if [ ! -d /opt/73Linux ]; then
   echo "Cloning and installing ham-radio stack…"
   git clone https://github.com/km4ack/73Linux.git /opt/73Linux
   cd /opt/73Linux
-  bash 73.sh
+else
+  echo "73Linux is already installed, skipping and running it"
+  cd /opt/73Linux
+fi
+
+bash 73.sh
+if [ $? -ne 0 ]; then
+  echo "Error: 73.sh failed to execute." >&2
+  exit 1
 fi
