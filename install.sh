@@ -96,11 +96,14 @@ echo "This will start the PNK services and the Matrix Dendrite server."
 
 echo "PNK is live at http://localhost/"
 
-echo "7) Installing 73Linux…"
+echo Interested in 73Linux?
+echo "73Linux is a lightweight Linux distribution designed for ham radio operators."
+echo "It provides a minimal environment with essential tools for ham radio operations."
 read -p "Do you want to install 73Linux? (y/N): " INSTALL_73LINUX
 if [[ "$INSTALL_73LINUX" =~ ^[Yy]$ ]]; then
+  echo run the following command to install 73Linux:
   echo  git clone https://github.com/km4ack/73Linux.git $HOME/73Linux && bash $HOME/73Linux/73.sh
 
 else
-  echo "Skipping 73Linux installation"
+  echo "Skipping 73Linux installation interest."
 fi

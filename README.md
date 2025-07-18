@@ -22,7 +22,7 @@ docker compose up -d
 
 Access your dashboard
 
-http://<YOUR_PI_IP>:8000
+http://<YOUR_PI_IP>:9001 or (http://localhost/)
 
 This repo was made by me and the ham radio software was derived from this repo below!
 
