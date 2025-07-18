@@ -127,7 +127,20 @@
   }
   window.onload = initI18n;
 </script>
-
-
+  <script>
+    // Handle language selection
+    document.getElementById('lang-select').addEventListener('change', (event) => {
+      const selectedLang = event.target.value;
+      // Load translations based on selected language
+      fetch(`i18n/${selectedLang}.json`)
+        .then(response => response.json())
+        .then(translations => {
+          document.querySelectorAll('[data-key]').forEach(el => {
+            const key = el.getAttribute('data-key');
+            if (translations[key]) el.textContent = translations[key];
+          });
+        });
+    });
+  </script>
 </body>
 </html>
