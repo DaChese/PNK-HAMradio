@@ -3,7 +3,8 @@ set -e
 
 echo "1) Installing dependencies…"
 sudo apt update
-sudo apt install -y git docker.io docker-compose-plugin lighttpd
+sudo apt upgrade -y
+sudo apt install -y git docker-ce docker-ce-cli containerd.io lighttpd python3-pip curl
 
 echo "2) Starting services…"
 sudo systemctl enable --now docker lighttpd
