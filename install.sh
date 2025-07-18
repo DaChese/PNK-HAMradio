@@ -99,13 +99,8 @@ echo "PNK is live at http://localhost/"
 echo "7) Installing 73Linux…"
 read -p "Do you want to install 73Linux? (y/N): " INSTALL_73LINUX
 if [[ "$INSTALL_73LINUX" =~ ^[Yy]$ ]]; then
-  echo "Installing HamRadio Software into $HOME/PNK-HAMradio/73Linux"
-  echo  git clone https://github.com/km4ack/73Linux.git $HOME/73Linux && bash $HOME/73Linux/73.sh"
-  echo "run bash $HOME/73Linux/73.sh to get it started"
-else
-    echo "Skipping 73Linux installation"
-  fi
+  echo  git clone https://github.com/km4ack/73Linux.git $HOME/73Linux && bash $HOME/73Linux/73.sh
 
-echo "Installation complete!"
-echo "You can now access PNK at http://localhost/"
+else
+  echo "Skipping 73Linux installation"
 fi
