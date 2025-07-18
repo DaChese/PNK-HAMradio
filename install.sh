@@ -95,22 +95,14 @@ echo "Check above for any errors."
 
 echo "PNK is live at http://localhost/"
 
-echo "Cloning and installing 73Linux - HamRadio Software…"
-if [ -d "$HOME/73Linux/.git" ]; then
-  cd "$HOME/73Linux"
-  git pull
-if [ -d "$HOME/73Linux" ]; then
-  if [ -x "$HOME/73Linux/73.sh" ]; then
-    bash "$HOME/73Linux/73.sh"
-  else
-    echo "Error: 73.sh does not exist or is not executable in $HOME/73Linux."
-    exit 1
+echo "7) Installing 73Linux…"
+read -p "Do you want to install 73Linux? (y/N): " INSTALL_73LINUX
+if [[ "$INSTALL_73LINUX" =~ ^[Yy]$ ]]; then
+  if [ ! -d "$HOME/73Linux" ]; then 
+echo "Install HamRadio Software from  git clone https://github.com/km4ack/73Linux.git $HOME/73Linux && bash $HOME/73Linux/73.sh
+else
+    echo "Skipping 73Linux installation"
   fi
-else
-  echo "Error: 73Linux directory does not exist. Install failed."
-  exit 1
-fibash "$HOME/73Linux/73.sh"
-else
-  echo "Error: 73Linux directory does not exist. Install failed."
-  exit 1
-fi
+
+echo "8) Installation complete!"
+echo "You can now access PNK at http://localhost/"
