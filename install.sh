@@ -15,38 +15,23 @@ fi
 cd "$HOME/PNK-HAMradio"
 git pull
 
+
 echo "Checking for Dendrite server key…"
 DEND="$(pwd)/matrix-pnk/dendrite"
 mkdir -p "$DEND"/media
 
 if [ ! -f "$DEND"/media/server.key ]; then
-  echo "  No existing key found—generating a fresh Matrix server key"
-
-  # 1) Swap out the real config for your stub
-  mv "$DEND"/dendrite.yaml     "$DEND"/dendrite.orig.yaml
-  mv "$DEND"/dendrite.tmp.yaml "$DEND"/dendrite.yaml
-
-  # 2) Run keygen against the stub (no private_key reference in stub)
+  echo "  Generating a fresh Matrix server key"
   docker run --rm \
     --entrypoint "/usr/bin/dendrite" \
     -v "$DEND":/etc/dendrite:rw \
-    matrixdotorg/dendrite-monolith:latest \
+    matrixdotorg/dendrite-monolith:v0.14.1 \
     generate-keys \
       --config       /etc/dendrite/dendrite.yaml \
       --private-key  /etc/dendrite/media/server.key
-    matrixdotorg/dendrite-monolith:v0.14.1 \
-      generate-keys \
-        --config /etc/dendrite/dendrite.yaml \
-        --private-key /etc/dendrite/media/server.key
-
-  # 3) Restore your real config (which now safely references the new key)
-  mv "$DEND"/dendrite.orig.yaml "$DEND"/dendrite.yaml
-
-  echo "  server.key created and real config restored."
 else
   echo " Server key already exists, skipping"
 fi
-
 
 echo "5) Deploying dashboard…"
 sudo cp index.html /var/www/html/index.html
