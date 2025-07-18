@@ -17,25 +17,14 @@ cd "$HOME/PNK-HAMradio"
 git pull
 
 
-echo "Checking for Dendrite server key…"
-DEND="$HOME/PNK-HAMradio/matrix-pnk/dendrite"
-mkdir -p "$DEND/media"
-
-if [ ! -f "$DEND/media/server.key" ]; then
-  echo "  Generating Matrix key…"
-  if [ ! -f "$DEND/dendrite.yaml" ]; then
-    echo "  Error: $DEND/dendrite.yaml not found. Please create the configuration file before proceeding."
-    exit 1
-  fi
-  docker run --rm \
-    -v "$DEND:/etc/dendrite" \
-    matrixdotorg/dendrite-monolith:main \
-      generate-keys \
-        --config /etc/dendrite/dendrite.yaml \
-        --private-key /etc/dendrite/media/server.key
-else
-  echo " Server key already exists, skipping"
-fi
+echo "4) Generating Matrix key…"
+mkdir -p matrix-pnk/dendrite/media
+docker run --rm \
+  -v "$(pwd)/matrix-pnk/dendrite:/etc/dendrite" \
+  matrixdotorg/dendrite-monolith:main \
+    generate-keys \
+      --config /etc/dendrite/dendrite.yaml \
+      --private-key /etc/dendrite/media/server.key
 
 echo "5) Deploying dashboard…"
 sudo cp index.html /var/www/html/index.html
