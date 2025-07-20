@@ -1,0 +1,965 @@
+etherpad          | > ep_etherpad-lite@2.3.2 prod /opt/etherpad-lite/src
+etherpad          | > cross-env NODE_ENV=production node --require tsx/cjs node/server.ts
+etherpad          | 
+etherpad          | [2025-07-20T07:04:35.949] [INFO] settings - All relative paths will be interpreted relative to the identified Etherpad base dir: /opt/etherpad-lite
+etherpad          | [2025-07-20T07:04:36.078] [INFO] settings - settings loaded from: /opt/etherpad-lite/settings.json
+etherpad          | [2025-07-20T07:04:36.094] [INFO] settings - No credentials file found in /opt/etherpad-lite/credentials.json. Ignoring.
+etherpad          | [2025-07-20T07:04:36.098] [WARN] settings - loglevel: INFO
+etherpad          | [2025-07-20T07:04:36.099] [WARN] settings - logLayoutType: colored
+etherpad          | [2025-07-20T07:04:36.102] [INFO] settings - Using skin "colibris" in dir: /opt/etherpad-lite/src/static/skins/colibris
+etherpad          | [2025-07-20T07:04:36.104] [WARN] settings - DirtyDB is used. This is not recommended for production. File location: /opt/etherpad-lite/var/dirty.db
+etherpad          | [2025-07-20T07:04:36.107] [INFO] settings - Random string used for versioning assets: df6dfa42
+etherpad          | [2025-07-20T07:04:39.043] [INFO] server - Starting Etherpad...
+etherpad          | [2025-07-20T07:04:39.311] [ERROR] settings - Can not perform Etherpad update check: Error: getaddrinfo ENOTFOUND etherpad.org
+etherpad          | [2025-07-20T07:04:39.317] [INFO] plugins - check installed plugins for migration
+etherpad          | [2025-07-20T07:04:39.323] [ERROR] server - Metrics at time of fatal error:
+etherpad          | {
+etherpad          |   "httpStartTime": 0,
+etherpad          |   "memoryUsage": 194572288,
+etherpad          |   "memoryUsageHeap": 89266584,
+etherpad          |   "ueberdb_lockAwaits": 0,
+etherpad          |   "ueberdb_lockAcquires": 0,
+etherpad          |   "ueberdb_lockReleases": 0,
+etherpad          |   "ueberdb_reads": 0,
+etherpad          |   "ueberdb_readsFailed": 0,
+etherpad          |   "ueberdb_readsFinished": 0,
+etherpad          |   "ueberdb_readsFromCache": 0,
+etherpad          |   "ueberdb_readsFromDb": 0,
+etherpad          |   "ueberdb_readsFromDbFailed": 0,
+etherpad          |   "ueberdb_readsFromDbFinished": 0,
+etherpad          |   "ueberdb_writes": 0,
+etherpad          |   "ueberdb_writesFailed": 0,
+etherpad          |   "ueberdb_writesFinished": 0,
+etherpad          |   "ueberdb_writesObsoleted": 0,
+etherpad          |   "ueberdb_writesToDb": 0,
+etherpad          |   "ueberdb_writesToDbFailed": 0,
+etherpad          |   "ueberdb_writesToDbFinished": 0,
+etherpad          |   "ueberdb_writesToDbRetried": 0
+etherpad          | }
+etherpad          | [2025-07-20T07:04:39.324] [ERROR] server - Error: EACCES: permission denied, open '/opt/etherpad-lite/var/dirty.db'
+etherpad          | [2025-07-20T07:04:39.324] [INFO] server - Exiting...
+etherpad          | [2025-07-20T07:04:39.337] [INFO] plugins - pnpm --version: 10.12.3
+etherpad          | [2025-07-20T07:04:39.347] [INFO] plugins - start migration of plugins in node_modules
+etherpad          | [2025-07-20T07:04:41.807] [ERROR] server - Error occurred while starting Etherpad
+etherpad          | [2025-07-20T07:04:41.809] [ERROR] server - Metrics at time of fatal error:
+etherpad          | {
+etherpad          |   "httpStartTime": 0,
+etherpad          |   "memoryUsage": 192344064,
+etherpad          |   "memoryUsageHeap": 89727408,
+etherpad          |   "ueberdb_lockAwaits": 0,
+etherpad          |   "ueberdb_lockAcquires": 0,
+etherpad          |   "ueberdb_lockReleases": 0,
+etherpad          |   "ueberdb_reads": 0,
+etherpad          |   "ueberdb_readsFailed": 0,
+etherpad          |   "ueberdb_readsFinished": 0,
+etherpad          |   "ueberdb_readsFromCache": 0,
+etherpad          |   "ueberdb_readsFromDb": 0,
+etherpad          |   "ueberdb_readsFromDbFailed": 0,
+etherpad          |   "ueberdb_readsFromDbFinished": 0,
+etherpad          |   "ueberdb_writes": 0,
+etherpad          |   "ueberdb_writesFailed": 0,
+etherpad          |   "ueberdb_writesFinished": 0,
+etherpad          |   "ueberdb_writesObsoleted": 0,
+etherpad          |   "ueberdb_writesToDb": 0,
+etherpad          |   "ueberdb_writesToDbFailed": 0,
+etherpad          |   "ueberdb_writesToDbFinished": 0,
+etherpad          |   "ueberdb_writesToDbRetried": 0
+etherpad          | }
+etherpad          | [2025-07-20T07:04:41.811] [ERROR] server - Error: EACCES: permission denied, open '/opt/etherpad-lite/var/installed_plugins.json'
+etherpad          |     at async open (node:internal/fs/promises:640:25)
+etherpad          |     at async Object.writeFile (node:internal/fs/promises:1214:14)
+etherpad          |     at async persistInstalledPlugins (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:140:3)
+etherpad          |     at async migratePluginsFromNodeModules (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:75:3)
+etherpad          |     at async checkForMigration (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:86:5)
+etherpad          |     at async Object.exports.start (/opt/etherpad-lite/src/node/server.ts:174:5)
+etherpad          | [2025-07-20T07:04:41.811] [ERROR] server - Error occurred while waiting to exit. Forcing an immediate unclean exit...
+etherpad          | /opt/etherpad-lite/src:
+etherpad          |  ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  ep_etherpad-lite@2.3.2 prod: `cross-env NODE_ENV=production node --require tsx/cjs node/server.ts`
+etherpad          | Exit status 1
+etherpad          |  ELIFECYCLE  Command failed with exit code 1.
+etherpad          | 
+etherpad          | > etherpad@2.3.2 prod /opt/etherpad-lite
+etherpad          | > pnpm --filter ep_etherpad-lite run prod
+etherpad          | 
+etherpad          | 
+etherpad          | > ep_etherpad-lite@2.3.2 prod /opt/etherpad-lite/src
+etherpad          | > cross-env NODE_ENV=production node --require tsx/cjs node/server.ts
+etherpad          | 
+etherpad          | [2025-07-20T07:04:48.671] [INFO] settings - All relative paths will be interpreted relative to the identified Etherpad base dir: /opt/etherpad-lite
+etherpad          | [2025-07-20T07:04:48.798] [INFO] settings - settings loaded from: /opt/etherpad-lite/settings.json
+etherpad          | [2025-07-20T07:04:48.814] [INFO] settings - No credentials file found in /opt/etherpad-lite/credentials.json. Ignoring.
+etherpad          | [2025-07-20T07:04:48.821] [WARN] settings - loglevel: INFO
+etherpad          | [2025-07-20T07:04:48.822] [WARN] settings - logLayoutType: colored
+etherpad          | [2025-07-20T07:04:48.826] [INFO] settings - Using skin "colibris" in dir: /opt/etherpad-lite/src/static/skins/colibris
+etherpad          | [2025-07-20T07:04:48.828] [WARN] settings - DirtyDB is used. This is not recommended for production. File location: /opt/etherpad-lite/var/dirty.db
+etherpad          | [2025-07-20T07:04:48.831] [INFO] settings - Random string used for versioning assets: 04812f96
+etherpad          | [2025-07-20T07:04:51.809] [INFO] server - Starting Etherpad...
+etherpad          | [2025-07-20T07:04:52.099] [ERROR] settings - Can not perform Etherpad update check: Error: getaddrinfo ENOTFOUND etherpad.org
+etherpad          | [2025-07-20T07:04:52.106] [INFO] plugins - check installed plugins for migration
+etherpad          | [2025-07-20T07:04:52.113] [ERROR] server - Metrics at time of fatal error:
+etherpad          | {
+etherpad          |   "httpStartTime": 0,
+etherpad          |   "memoryUsage": 207646720,
+etherpad          |   "memoryUsageHeap": 92665736,
+etherpad          |   "ueberdb_lockAwaits": 0,
+etherpad          |   "ueberdb_lockAcquires": 0,
+etherpad          |   "ueberdb_lockReleases": 0,
+etherpad          |   "ueberdb_reads": 0,
+etherpad          |   "ueberdb_readsFailed": 0,
+etherpad          |   "ueberdb_readsFinished": 0,
+etherpad          |   "ueberdb_readsFromCache": 0,
+etherpad          |   "ueberdb_readsFromDb": 0,
+etherpad          |   "ueberdb_readsFromDbFailed": 0,
+etherpad          |   "ueberdb_readsFromDbFinished": 0,
+etherpad          |   "ueberdb_writes": 0,
+etherpad          |   "ueberdb_writesFailed": 0,
+etherpad          |   "ueberdb_writesFinished": 0,
+etherpad          |   "ueberdb_writesObsoleted": 0,
+etherpad          |   "ueberdb_writesToDb": 0,
+etherpad          |   "ueberdb_writesToDbFailed": 0,
+etherpad          |   "ueberdb_writesToDbFinished": 0,
+etherpad          |   "ueberdb_writesToDbRetried": 0
+etherpad          | }
+etherpad          | [2025-07-20T07:04:52.114] [ERROR] server - Error: EACCES: permission denied, open '/opt/etherpad-lite/var/dirty.db'
+etherpad          | [2025-07-20T07:04:52.115] [INFO] server - Exiting...
+etherpad          | [2025-07-20T07:04:52.171] [INFO] plugins - pnpm --version: 10.12.3
+etherpad          | [2025-07-20T07:04:52.180] [INFO] plugins - start migration of plugins in node_modules
+etherpad          | [2025-07-20T07:04:54.297] [ERROR] server - Error occurred while starting Etherpad
+etherpad          | [2025-07-20T07:04:54.298] [ERROR] server - Metrics at time of fatal error:
+etherpad          | {
+etherpad          |   "httpStartTime": 0,
+etherpad          |   "memoryUsage": 208314368,
+etherpad          |   "memoryUsageHeap": 83161592,
+etherpad          |   "ueberdb_lockAwaits": 0,
+etherpad          |   "ueberdb_lockAcquires": 0,
+etherpad          |   "ueberdb_lockReleases": 0,
+etherpad          |   "ueberdb_reads": 0,
+etherpad          |   "ueberdb_readsFailed": 0,
+etherpad          |   "ueberdb_readsFinished": 0,
+etherpad          |   "ueberdb_readsFromCache": 0,
+etherpad          |   "ueberdb_readsFromDb": 0,
+etherpad          |   "ueberdb_readsFromDbFailed": 0,
+etherpad          |   "ueberdb_readsFromDbFinished": 0,
+etherpad          |   "ueberdb_writes": 0,
+etherpad          |   "ueberdb_writesFailed": 0,
+etherpad          |   "ueberdb_writesFinished": 0,
+etherpad          |   "ueberdb_writesObsoleted": 0,
+etherpad          |   "ueberdb_writesToDb": 0,
+etherpad          |   "ueberdb_writesToDbFailed": 0,
+etherpad          |   "ueberdb_writesToDbFinished": 0,
+etherpad          |   "ueberdb_writesToDbRetried": 0
+etherpad          | }
+etherpad          | [2025-07-20T07:04:54.302] [ERROR] server - Error: EACCES: permission denied, open '/opt/etherpad-lite/var/installed_plugins.json'
+etherpad          |     at async open (node:internal/fs/promises:640:25)
+etherpad          |     at async Object.writeFile (node:internal/fs/promises:1214:14)
+etherpad          |     at async persistInstalledPlugins (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:140:3)
+etherpad          |     at async migratePluginsFromNodeModules (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:75:3)
+etherpad          |     at async checkForMigration (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:86:5)
+etherpad          |     at async Object.exports.start (/opt/etherpad-lite/src/node/server.ts:174:5)
+etherpad          | [2025-07-20T07:04:54.303] [ERROR] server - Error occurred while waiting to exit. Forcing an immediate unclean exit...
+etherpad          | /opt/etherpad-lite/src:
+etherpad          |  ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  ep_etherpad-lite@2.3.2 prod: `cross-env NODE_ENV=production node --require tsx/cjs node/server.ts`
+etherpad          | Exit status 1
+etherpad          |  ELIFECYCLE  Command failed with exit code 1.
+etherpad          | 
+etherpad          | > etherpad@2.3.2 prod /opt/etherpad-lite
+etherpad          | > pnpm --filter ep_etherpad-lite run prod
+etherpad          | 
+etherpad          | 
+etherpad          | > ep_etherpad-lite@2.3.2 prod /opt/etherpad-lite/src
+etherpad          | > cross-env NODE_ENV=production node --require tsx/cjs node/server.ts
+etherpad          | 
+etherpad          | [2025-07-20T07:05:01.393] [INFO] settings - All relative paths will be interpreted relative to the identified Etherpad base dir: /opt/etherpad-lite
+etherpad          | [2025-07-20T07:05:01.510] [INFO] settings - settings loaded from: /opt/etherpad-lite/settings.json
+etherpad          | [2025-07-20T07:05:01.523] [INFO] settings - No credentials file found in /opt/etherpad-lite/credentials.json. Ignoring.
+etherpad          | [2025-07-20T07:05:01.528] [WARN] settings - loglevel: INFO
+etherpad          | [2025-07-20T07:05:01.528] [WARN] settings - logLayoutType: colored
+etherpad          | [2025-07-20T07:05:01.531] [INFO] settings - Using skin "colibris" in dir: /opt/etherpad-lite/src/static/skins/colibris
+etherpad          | [2025-07-20T07:05:01.532] [WARN] settings - DirtyDB is used. This is not recommended for production. File location: /opt/etherpad-lite/var/dirty.db
+etherpad          | [2025-07-20T07:05:01.535] [INFO] settings - Random string used for versioning assets: 44d18f5a
+etherpad          | [2025-07-20T07:05:04.516] [INFO] server - Starting Etherpad...
+etherpad          | [2025-07-20T07:05:04.800] [ERROR] settings - Can not perform Etherpad update check: Error: getaddrinfo ENOTFOUND etherpad.org
+etherpad          | [2025-07-20T07:05:04.806] [INFO] plugins - check installed plugins for migration
+etherpad          | [2025-07-20T07:05:04.813] [ERROR] server - Metrics at time of fatal error:
+etherpad          | {
+etherpad          |   "httpStartTime": 0,
+etherpad          |   "memoryUsage": 205381632,
+etherpad          |   "memoryUsageHeap": 92310752,
+etherpad          |   "ueberdb_lockAwaits": 0,
+etherpad          |   "ueberdb_lockAcquires": 0,
+etherpad          |   "ueberdb_lockReleases": 0,
+etherpad          |   "ueberdb_reads": 0,
+etherpad          |   "ueberdb_readsFailed": 0,
+etherpad          |   "ueberdb_readsFinished": 0,
+etherpad          |   "ueberdb_readsFromCache": 0,
+etherpad          |   "ueberdb_readsFromDb": 0,
+etherpad          |   "ueberdb_readsFromDbFailed": 0,
+etherpad          |   "ueberdb_readsFromDbFinished": 0,
+etherpad          |   "ueberdb_writes": 0,
+etherpad          |   "ueberdb_writesFailed": 0,
+etherpad          |   "ueberdb_writesFinished": 0,
+etherpad          |   "ueberdb_writesObsoleted": 0,
+etherpad          |   "ueberdb_writesToDb": 0,
+etherpad          |   "ueberdb_writesToDbFailed": 0,
+etherpad          |   "ueberdb_writesToDbFinished": 0,
+etherpad          |   "ueberdb_writesToDbRetried": 0
+etherpad          | }
+etherpad          | [2025-07-20T07:05:04.814] [ERROR] server - Error: EACCES: permission denied, open '/opt/etherpad-lite/var/dirty.db'
+etherpad          | [2025-07-20T07:05:04.815] [INFO] server - Exiting...
+etherpad          | [2025-07-20T07:05:04.859] [INFO] plugins - pnpm --version: 10.12.3
+etherpad          | [2025-07-20T07:05:04.866] [INFO] plugins - start migration of plugins in node_modules
+etherpad          | [2025-07-20T07:05:06.968] [ERROR] server - Error occurred while starting Etherpad
+etherpad          | [2025-07-20T07:05:06.969] [ERROR] server - Metrics at time of fatal error:
+etherpad          | {
+etherpad          |   "httpStartTime": 0,
+etherpad          |   "memoryUsage": 208224256,
+etherpad          |   "memoryUsageHeap": 82733512,
+etherpad          |   "ueberdb_lockAwaits": 0,
+etherpad          |   "ueberdb_lockAcquires": 0,
+etherpad          |   "ueberdb_lockReleases": 0,
+etherpad          |   "ueberdb_reads": 0,
+etherpad          |   "ueberdb_readsFailed": 0,
+etherpad          |   "ueberdb_readsFinished": 0,
+etherpad          |   "ueberdb_readsFromCache": 0,
+etherpad          |   "ueberdb_readsFromDb": 0,
+etherpad          |   "ueberdb_readsFromDbFailed": 0,
+etherpad          |   "ueberdb_readsFromDbFinished": 0,
+etherpad          |   "ueberdb_writes": 0,
+etherpad          |   "ueberdb_writesFailed": 0,
+etherpad          |   "ueberdb_writesFinished": 0,
+etherpad          |   "ueberdb_writesObsoleted": 0,
+etherpad          |   "ueberdb_writesToDb": 0,
+etherpad          |   "ueberdb_writesToDbFailed": 0,
+etherpad          |   "ueberdb_writesToDbFinished": 0,
+etherpad          |   "ueberdb_writesToDbRetried": 0
+etherpad          | }
+etherpad          | [2025-07-20T07:05:06.974] [ERROR] server - Error: EACCES: permission denied, open '/opt/etherpad-lite/var/installed_plugins.json'
+etherpad          |     at async open (node:internal/fs/promises:640:25)
+etherpad          |     at async Object.writeFile (node:internal/fs/promises:1214:14)
+etherpad          |     at async persistInstalledPlugins (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:140:3)
+etherpad          |     at async migratePluginsFromNodeModules (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:75:3)
+etherpad          |     at async checkForMigration (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:86:5)
+etherpad          |     at async Object.exports.start (/opt/etherpad-lite/src/node/server.ts:174:5)
+etherpad          | [2025-07-20T07:05:06.974] [ERROR] server - Error occurred while waiting to exit. Forcing an immediate unclean exit...
+etherpad          | /opt/etherpad-lite/src:
+etherpad          |  ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  ep_etherpad-lite@2.3.2 prod: `cross-env NODE_ENV=production node --require tsx/cjs node/server.ts`
+etherpad          | Exit status 1
+etherpad          |  ELIFECYCLE  Command failed with exit code 1.
+etherpad          | 
+etherpad          | > etherpad@2.3.2 prod /opt/etherpad-lite
+etherpad          | > pnpm --filter ep_etherpad-lite run prod
+etherpad          | 
+etherpad          | 
+etherpad          | > ep_etherpad-lite@2.3.2 prod /opt/etherpad-lite/src
+etherpad          | > cross-env NODE_ENV=production node --require tsx/cjs node/server.ts
+etherpad          | 
+etherpad          | [2025-07-20T07:05:13.714] [INFO] settings - All relative paths will be interpreted relative to the identified Etherpad base dir: /opt/etherpad-lite
+etherpad          | [2025-07-20T07:05:13.837] [INFO] settings - settings loaded from: /opt/etherpad-lite/settings.json
+etherpad          | [2025-07-20T07:05:13.852] [INFO] settings - No credentials file found in /opt/etherpad-lite/credentials.json. Ignoring.
+etherpad          | [2025-07-20T07:05:13.855] [WARN] settings - loglevel: INFO
+etherpad          | [2025-07-20T07:05:13.856] [WARN] settings - logLayoutType: colored
+etherpad          | [2025-07-20T07:05:13.859] [INFO] settings - Using skin "colibris" in dir: /opt/etherpad-lite/src/static/skins/colibris
+etherpad          | [2025-07-20T07:05:13.861] [WARN] settings - DirtyDB is used. This is not recommended for production. File location: /opt/etherpad-lite/var/dirty.db
+etherpad          | [2025-07-20T07:05:13.864] [INFO] settings - Random string used for versioning assets: fb5afea0
+etherpad          | [2025-07-20T07:05:16.823] [INFO] server - Starting Etherpad...
+etherpad          | [2025-07-20T07:05:17.105] [ERROR] settings - Can not perform Etherpad update check: Error: getaddrinfo ENOTFOUND etherpad.org
+etherpad          | [2025-07-20T07:05:17.111] [INFO] plugins - check installed plugins for migration
+etherpad          | [2025-07-20T07:05:17.118] [ERROR] server - Metrics at time of fatal error:
+etherpad          | {
+etherpad          |   "httpStartTime": 0,
+etherpad          |   "memoryUsage": 205139968,
+etherpad          |   "memoryUsageHeap": 92563984,
+etherpad          |   "ueberdb_lockAwaits": 0,
+etherpad          |   "ueberdb_lockAcquires": 0,
+etherpad          |   "ueberdb_lockReleases": 0,
+etherpad          |   "ueberdb_reads": 0,
+etherpad          |   "ueberdb_readsFailed": 0,
+etherpad          |   "ueberdb_readsFinished": 0,
+etherpad          |   "ueberdb_readsFromCache": 0,
+etherpad          |   "ueberdb_readsFromDb": 0,
+etherpad          |   "ueberdb_readsFromDbFailed": 0,
+etherpad          |   "ueberdb_readsFromDbFinished": 0,
+etherpad          |   "ueberdb_writes": 0,
+etherpad          |   "ueberdb_writesFailed": 0,
+etherpad          |   "ueberdb_writesFinished": 0,
+etherpad          |   "ueberdb_writesObsoleted": 0,
+etherpad          |   "ueberdb_writesToDb": 0,
+etherpad          |   "ueberdb_writesToDbFailed": 0,
+etherpad          |   "ueberdb_writesToDbFinished": 0,
+etherpad          |   "ueberdb_writesToDbRetried": 0
+etherpad          | }
+etherpad          | [2025-07-20T07:05:17.118] [ERROR] server - Error: EACCES: permission denied, open '/opt/etherpad-lite/var/dirty.db'
+etherpad          | [2025-07-20T07:05:17.119] [INFO] server - Exiting...
+etherpad          | [2025-07-20T07:05:17.163] [INFO] plugins - pnpm --version: 10.12.3
+etherpad          | [2025-07-20T07:05:17.169] [INFO] plugins - start migration of plugins in node_modules
+etherpad          | [2025-07-20T07:05:19.508] [ERROR] server - Error occurred while starting Etherpad
+etherpad          | [2025-07-20T07:05:19.509] [ERROR] server - Metrics at time of fatal error:
+etherpad          | {
+etherpad          |   "httpStartTime": 0,
+etherpad          |   "memoryUsage": 207720448,
+etherpad          |   "memoryUsageHeap": 82793848,
+etherpad          |   "ueberdb_lockAwaits": 0,
+etherpad          |   "ueberdb_lockAcquires": 0,
+etherpad          |   "ueberdb_lockReleases": 0,
+etherpad          |   "ueberdb_reads": 0,
+etherpad          |   "ueberdb_readsFailed": 0,
+etherpad          |   "ueberdb_readsFinished": 0,
+etherpad          |   "ueberdb_readsFromCache": 0,
+etherpad          |   "ueberdb_readsFromDb": 0,
+etherpad          |   "ueberdb_readsFromDbFailed": 0,
+etherpad          |   "ueberdb_readsFromDbFinished": 0,
+etherpad          |   "ueberdb_writes": 0,
+etherpad          |   "ueberdb_writesFailed": 0,
+etherpad          |   "ueberdb_writesFinished": 0,
+etherpad          |   "ueberdb_writesObsoleted": 0,
+etherpad          |   "ueberdb_writesToDb": 0,
+etherpad          |   "ueberdb_writesToDbFailed": 0,
+etherpad          |   "ueberdb_writesToDbFinished": 0,
+etherpad          |   "ueberdb_writesToDbRetried": 0
+etherpad          | }
+etherpad          | [2025-07-20T07:05:19.512] [ERROR] server - Error: EACCES: permission denied, open '/opt/etherpad-lite/var/installed_plugins.json'
+etherpad          |     at async open (node:internal/fs/promises:640:25)
+etherpad          |     at async Object.writeFile (node:internal/fs/promises:1214:14)
+etherpad          |     at async persistInstalledPlugins (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:140:3)
+etherpad          |     at async migratePluginsFromNodeModules (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:75:3)
+etherpad          |     at async checkForMigration (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:86:5)
+etherpad          |     at async Object.exports.start (/opt/etherpad-lite/src/node/server.ts:174:5)
+etherpad          | [2025-07-20T07:05:19.513] [ERROR] server - Error occurred while waiting to exit. Forcing an immediate unclean exit...
+etherpad          | /opt/etherpad-lite/src:
+etherpad          |  ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  ep_etherpad-lite@2.3.2 prod: `cross-env NODE_ENV=production node --require tsx/cjs node/server.ts`
+etherpad          | Exit status 1
+etherpad          |  ELIFECYCLE  Command failed with exit code 1.
+etherpad          | 
+etherpad          | > etherpad@2.3.2 prod /opt/etherpad-lite
+etherpad          | > pnpm --filter ep_etherpad-lite run prod
+etherpad          | 
+etherpad          | 
+etherpad          | > ep_etherpad-lite@2.3.2 prod /opt/etherpad-lite/src
+etherpad          | > cross-env NODE_ENV=production node --require tsx/cjs node/server.ts
+etherpad          | 
+etherpad          | [2025-07-20T07:05:28.667] [INFO] settings - All relative paths will be interpreted relative to the identified Etherpad base dir: /opt/etherpad-lite
+etherpad          | [2025-07-20T07:05:28.794] [INFO] settings - settings loaded from: /opt/etherpad-lite/settings.json
+etherpad          | [2025-07-20T07:05:28.806] [INFO] settings - No credentials file found in /opt/etherpad-lite/credentials.json. Ignoring.
+etherpad          | [2025-07-20T07:05:28.811] [WARN] settings - loglevel: INFO
+etherpad          | [2025-07-20T07:05:28.812] [WARN] settings - logLayoutType: colored
+etherpad          | [2025-07-20T07:05:28.815] [INFO] settings - Using skin "colibris" in dir: /opt/etherpad-lite/src/static/skins/colibris
+etherpad          | [2025-07-20T07:05:28.816] [WARN] settings - DirtyDB is used. This is not recommended for production. File location: /opt/etherpad-lite/var/dirty.db
+etherpad          | [2025-07-20T07:05:28.819] [INFO] settings - Random string used for versioning assets: be08cbe1
+etherpad          | [2025-07-20T07:05:32.001] [INFO] server - Starting Etherpad...
+etherpad          | [2025-07-20T07:05:32.391] [ERROR] settings - Can not perform Etherpad update check: Error: getaddrinfo ENOTFOUND etherpad.org
+etherpad          | [2025-07-20T07:05:32.397] [INFO] plugins - check installed plugins for migration
+etherpad          | [2025-07-20T07:05:32.404] [ERROR] server - Metrics at time of fatal error:
+etherpad          | {
+etherpad          |   "httpStartTime": 0,
+etherpad          |   "memoryUsage": 216829952,
+etherpad          |   "memoryUsageHeap": 85215544,
+etherpad          |   "ueberdb_lockAwaits": 0,
+etherpad          |   "ueberdb_lockAcquires": 0,
+etherpad          |   "ueberdb_lockReleases": 0,
+etherpad          |   "ueberdb_reads": 0,
+etherpad          |   "ueberdb_readsFailed": 0,
+etherpad          |   "ueberdb_readsFinished": 0,
+etherpad          |   "ueberdb_readsFromCache": 0,
+etherpad          |   "ueberdb_readsFromDb": 0,
+etherpad          |   "ueberdb_readsFromDbFailed": 0,
+etherpad          |   "ueberdb_readsFromDbFinished": 0,
+etherpad          |   "ueberdb_writes": 0,
+etherpad          |   "ueberdb_writesFailed": 0,
+etherpad          |   "ueberdb_writesFinished": 0,
+etherpad          |   "ueberdb_writesObsoleted": 0,
+etherpad          |   "ueberdb_writesToDb": 0,
+etherpad          |   "ueberdb_writesToDbFailed": 0,
+etherpad          |   "ueberdb_writesToDbFinished": 0,
+etherpad          |   "ueberdb_writesToDbRetried": 0
+etherpad          | }
+etherpad          | [2025-07-20T07:05:32.405] [ERROR] server - Error: EACCES: permission denied, open '/opt/etherpad-lite/var/dirty.db'
+etherpad          | [2025-07-20T07:05:32.406] [INFO] server - Exiting...
+etherpad          | [2025-07-20T07:05:32.423] [INFO] plugins - pnpm --version: 10.12.3
+etherpad          | [2025-07-20T07:05:32.430] [INFO] plugins - start migration of plugins in node_modules
+etherpad          | [2025-07-20T07:05:34.668] [ERROR] server - Error occurred while starting Etherpad
+etherpad          | [2025-07-20T07:05:34.669] [ERROR] server - Metrics at time of fatal error:
+etherpad          | {
+etherpad          |   "httpStartTime": 0,
+etherpad          |   "memoryUsage": 214147072,
+etherpad          |   "memoryUsageHeap": 85675760,
+etherpad          |   "ueberdb_lockAwaits": 0,
+etherpad          |   "ueberdb_lockAcquires": 0,
+etherpad          |   "ueberdb_lockReleases": 0,
+etherpad          |   "ueberdb_reads": 0,
+etherpad          |   "ueberdb_readsFailed": 0,
+etherpad          |   "ueberdb_readsFinished": 0,
+etherpad          |   "ueberdb_readsFromCache": 0,
+etherpad          |   "ueberdb_readsFromDb": 0,
+etherpad          |   "ueberdb_readsFromDbFailed": 0,
+etherpad          |   "ueberdb_readsFromDbFinished": 0,
+etherpad          |   "ueberdb_writes": 0,
+etherpad          |   "ueberdb_writesFailed": 0,
+etherpad          |   "ueberdb_writesFinished": 0,
+etherpad          |   "ueberdb_writesObsoleted": 0,
+etherpad          |   "ueberdb_writesToDb": 0,
+etherpad          |   "ueberdb_writesToDbFailed": 0,
+etherpad          |   "ueberdb_writesToDbFinished": 0,
+etherpad          |   "ueberdb_writesToDbRetried": 0
+etherpad          | }
+etherpad          | [2025-07-20T07:05:34.671] [ERROR] server - Error: EACCES: permission denied, open '/opt/etherpad-lite/var/installed_plugins.json'
+etherpad          |     at async open (node:internal/fs/promises:640:25)
+etherpad          |     at async Object.writeFile (node:internal/fs/promises:1214:14)
+etherpad          |     at async persistInstalledPlugins (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:140:3)
+etherpad          |     at async migratePluginsFromNodeModules (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:75:3)
+etherpad          |     at async checkForMigration (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:86:5)
+etherpad          |     at async Object.exports.start (/opt/etherpad-lite/src/node/server.ts:174:5)
+etherpad          | [2025-07-20T07:05:34.672] [ERROR] server - Error occurred while waiting to exit. Forcing an immediate unclean exit...
+etherpad          | /opt/etherpad-lite/src:
+etherpad          |  ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  ep_etherpad-lite@2.3.2 prod: `cross-env NODE_ENV=production node --require tsx/cjs node/server.ts`
+etherpad          | Exit status 1
+etherpad          |  ELIFECYCLE  Command failed with exit code 1.
+etherpad          | 
+etherpad          | > etherpad@2.3.2 prod /opt/etherpad-lite
+etherpad          | > pnpm --filter ep_etherpad-lite run prod
+etherpad          | 
+etherpad          | 
+etherpad          | > ep_etherpad-lite@2.3.2 prod /opt/etherpad-lite/src
+etherpad          | > cross-env NODE_ENV=production node --require tsx/cjs node/server.ts
+etherpad          | 
+etherpad          | [2025-07-20T07:05:42.605] [INFO] settings - All relative paths will be interpreted relative to the identified Etherpad base dir: /opt/etherpad-lite
+etherpad          | [2025-07-20T07:05:42.729] [INFO] settings - settings loaded from: /opt/etherpad-lite/settings.json
+etherpad          | [2025-07-20T07:05:42.744] [INFO] settings - No credentials file found in /opt/etherpad-lite/credentials.json. Ignoring.
+etherpad          | [2025-07-20T07:05:42.748] [WARN] settings - loglevel: INFO
+etherpad          | [2025-07-20T07:05:42.749] [WARN] settings - logLayoutType: colored
+etherpad          | [2025-07-20T07:05:42.752] [INFO] settings - Using skin "colibris" in dir: /opt/etherpad-lite/src/static/skins/colibris
+etherpad          | [2025-07-20T07:05:42.753] [WARN] settings - DirtyDB is used. This is not recommended for production. File location: /opt/etherpad-lite/var/dirty.db
+etherpad          | [2025-07-20T07:05:42.757] [INFO] settings - Random string used for versioning assets: 0732d00f
+etherpad          | [2025-07-20T07:05:45.777] [INFO] server - Starting Etherpad...
+etherpad          | [2025-07-20T07:05:46.067] [ERROR] settings - Can not perform Etherpad update check: Error: getaddrinfo ENOTFOUND etherpad.org
+etherpad          | [2025-07-20T07:05:46.074] [INFO] plugins - check installed plugins for migration
+etherpad          | [2025-07-20T07:05:46.079] [ERROR] server - Metrics at time of fatal error:
+etherpad          | {
+etherpad          |   "httpStartTime": 0,
+etherpad          |   "memoryUsage": 206225408,
+etherpad          |   "memoryUsageHeap": 92203016,
+etherpad          |   "ueberdb_lockAwaits": 0,
+etherpad          |   "ueberdb_lockAcquires": 0,
+etherpad          |   "ueberdb_lockReleases": 0,
+etherpad          |   "ueberdb_reads": 0,
+etherpad          |   "ueberdb_readsFailed": 0,
+etherpad          |   "ueberdb_readsFinished": 0,
+etherpad          |   "ueberdb_readsFromCache": 0,
+etherpad          |   "ueberdb_readsFromDb": 0,
+etherpad          |   "ueberdb_readsFromDbFailed": 0,
+etherpad          |   "ueberdb_readsFromDbFinished": 0,
+etherpad          |   "ueberdb_writes": 0,
+etherpad          |   "ueberdb_writesFailed": 0,
+etherpad          |   "ueberdb_writesFinished": 0,
+etherpad          |   "ueberdb_writesObsoleted": 0,
+etherpad          |   "ueberdb_writesToDb": 0,
+etherpad          |   "ueberdb_writesToDbFailed": 0,
+etherpad          |   "ueberdb_writesToDbFinished": 0,
+etherpad          |   "ueberdb_writesToDbRetried": 0
+etherpad          | }
+etherpad          | [2025-07-20T07:05:46.080] [ERROR] server - Error: EACCES: permission denied, open '/opt/etherpad-lite/var/dirty.db'
+etherpad          | [2025-07-20T07:05:46.080] [INFO] server - Exiting...
+etherpad          | [2025-07-20T07:05:46.125] [INFO] plugins - pnpm --version: 10.12.3
+etherpad          | [2025-07-20T07:05:46.132] [INFO] plugins - start migration of plugins in node_modules
+etherpad          | [2025-07-20T07:05:48.233] [ERROR] server - Error occurred while starting Etherpad
+etherpad          | [2025-07-20T07:05:48.234] [ERROR] server - Metrics at time of fatal error:
+etherpad          | {
+etherpad          |   "httpStartTime": 0,
+etherpad          |   "memoryUsage": 207364096,
+etherpad          |   "memoryUsageHeap": 82818616,
+etherpad          |   "ueberdb_lockAwaits": 0,
+etherpad          |   "ueberdb_lockAcquires": 0,
+etherpad          |   "ueberdb_lockReleases": 0,
+etherpad          |   "ueberdb_reads": 0,
+etherpad          |   "ueberdb_readsFailed": 0,
+etherpad          |   "ueberdb_readsFinished": 0,
+etherpad          |   "ueberdb_readsFromCache": 0,
+etherpad          |   "ueberdb_readsFromDb": 0,
+etherpad          |   "ueberdb_readsFromDbFailed": 0,
+etherpad          |   "ueberdb_readsFromDbFinished": 0,
+etherpad          |   "ueberdb_writes": 0,
+etherpad          |   "ueberdb_writesFailed": 0,
+etherpad          |   "ueberdb_writesFinished": 0,
+etherpad          |   "ueberdb_writesObsoleted": 0,
+etherpad          |   "ueberdb_writesToDb": 0,
+etherpad          |   "ueberdb_writesToDbFailed": 0,
+etherpad          |   "ueberdb_writesToDbFinished": 0,
+etherpad          |   "ueberdb_writesToDbRetried": 0
+etherpad          | }
+etherpad          | [2025-07-20T07:05:48.238] [ERROR] server - Error: EACCES: permission denied, open '/opt/etherpad-lite/var/installed_plugins.json'
+etherpad          |     at async open (node:internal/fs/promises:640:25)
+etherpad          |     at async Object.writeFile (node:internal/fs/promises:1214:14)
+etherpad          |     at async persistInstalledPlugins (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:140:3)
+etherpad          |     at async migratePluginsFromNodeModules (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:75:3)
+etherpad          |     at async checkForMigration (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:86:5)
+etherpad          |     at async Object.exports.start (/opt/etherpad-lite/src/node/server.ts:174:5)
+etherpad          | [2025-07-20T07:05:48.239] [ERROR] server - Error occurred while waiting to exit. Forcing an immediate unclean exit...
+etherpad          | /opt/etherpad-lite/src:
+etherpad          |  ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  ep_etherpad-lite@2.3.2 prod: `cross-env NODE_ENV=production node --require tsx/cjs node/server.ts`
+etherpad          | Exit status 1
+etherpad          |  ELIFECYCLE  Command failed with exit code 1.
+etherpad          | 
+etherpad          | > etherpad@2.3.2 prod /opt/etherpad-lite
+etherpad          | > pnpm --filter ep_etherpad-lite run prod
+etherpad          | 
+etherpad          | 
+etherpad          | > ep_etherpad-lite@2.3.2 prod /opt/etherpad-lite/src
+etherpad          | > cross-env NODE_ENV=production node --require tsx/cjs node/server.ts
+etherpad          | 
+etherpad          | [2025-07-20T07:05:55.203] [INFO] settings - All relative paths will be interpreted relative to the identified Etherpad base dir: /opt/etherpad-lite
+etherpad          | [2025-07-20T07:05:55.322] [INFO] settings - settings loaded from: /opt/etherpad-lite/settings.json
+etherpad          | [2025-07-20T07:05:55.337] [INFO] settings - No credentials file found in /opt/etherpad-lite/credentials.json. Ignoring.
+etherpad          | [2025-07-20T07:05:55.341] [WARN] settings - loglevel: INFO
+etherpad          | [2025-07-20T07:05:55.341] [WARN] settings - logLayoutType: colored
+etherpad          | [2025-07-20T07:05:55.344] [INFO] settings - Using skin "colibris" in dir: /opt/etherpad-lite/src/static/skins/colibris
+etherpad          | [2025-07-20T07:05:55.346] [WARN] settings - DirtyDB is used. This is not recommended for production. File location: /opt/etherpad-lite/var/dirty.db
+etherpad          | [2025-07-20T07:05:55.349] [INFO] settings - Random string used for versioning assets: ffb63f64
+etherpad          | [2025-07-20T07:05:58.404] [INFO] server - Starting Etherpad...
+etherpad          | [2025-07-20T07:05:58.700] [ERROR] settings - Can not perform Etherpad update check: Error: getaddrinfo ENOTFOUND etherpad.org
+etherpad          | [2025-07-20T07:05:58.705] [INFO] plugins - check installed plugins for migration
+etherpad          | [2025-07-20T07:05:58.711] [ERROR] server - Metrics at time of fatal error:
+etherpad          | {
+etherpad          |   "httpStartTime": 0,
+etherpad          |   "memoryUsage": 205205504,
+etherpad          |   "memoryUsageHeap": 92060208,
+etherpad          |   "ueberdb_lockAwaits": 0,
+etherpad          |   "ueberdb_lockAcquires": 0,
+etherpad          |   "ueberdb_lockReleases": 0,
+etherpad          |   "ueberdb_reads": 0,
+etherpad          |   "ueberdb_readsFailed": 0,
+etherpad          |   "ueberdb_readsFinished": 0,
+etherpad          |   "ueberdb_readsFromCache": 0,
+etherpad          |   "ueberdb_readsFromDb": 0,
+etherpad          |   "ueberdb_readsFromDbFailed": 0,
+etherpad          |   "ueberdb_readsFromDbFinished": 0,
+etherpad          |   "ueberdb_writes": 0,
+etherpad          |   "ueberdb_writesFailed": 0,
+etherpad          |   "ueberdb_writesFinished": 0,
+etherpad          |   "ueberdb_writesObsoleted": 0,
+etherpad          |   "ueberdb_writesToDb": 0,
+etherpad          |   "ueberdb_writesToDbFailed": 0,
+etherpad          |   "ueberdb_writesToDbFinished": 0,
+etherpad          |   "ueberdb_writesToDbRetried": 0
+etherpad          | }
+etherpad          | [2025-07-20T07:05:58.712] [ERROR] server - Error: EACCES: permission denied, open '/opt/etherpad-lite/var/dirty.db'
+etherpad          | [2025-07-20T07:05:58.712] [INFO] server - Exiting...
+etherpad          | [2025-07-20T07:05:58.725] [INFO] plugins - pnpm --version: 10.12.3
+etherpad          | [2025-07-20T07:05:58.732] [INFO] plugins - start migration of plugins in node_modules
+etherpad          | [2025-07-20T07:06:00.966] [ERROR] server - Error occurred while starting Etherpad
+etherpad          | [2025-07-20T07:06:00.967] [ERROR] server - Metrics at time of fatal error:
+etherpad          | {
+etherpad          |   "httpStartTime": 0,
+etherpad          |   "memoryUsage": 203882496,
+etherpad          |   "memoryUsageHeap": 92520416,
+etherpad          |   "ueberdb_lockAwaits": 0,
+etherpad          |   "ueberdb_lockAcquires": 0,
+etherpad          |   "ueberdb_lockReleases": 0,
+etherpad          |   "ueberdb_reads": 0,
+etherpad          |   "ueberdb_readsFailed": 0,
+etherpad          |   "ueberdb_readsFinished": 0,
+etherpad          |   "ueberdb_readsFromCache": 0,
+etherpad          |   "ueberdb_readsFromDb": 0,
+etherpad          |   "ueberdb_readsFromDbFailed": 0,
+etherpad          |   "ueberdb_readsFromDbFinished": 0,
+etherpad          |   "ueberdb_writes": 0,
+etherpad          |   "ueberdb_writesFailed": 0,
+etherpad          |   "ueberdb_writesFinished": 0,
+etherpad          |   "ueberdb_writesObsoleted": 0,
+etherpad          |   "ueberdb_writesToDb": 0,
+etherpad          |   "ueberdb_writesToDbFailed": 0,
+etherpad          |   "ueberdb_writesToDbFinished": 0,
+etherpad          |   "ueberdb_writesToDbRetried": 0
+etherpad          | }
+etherpad          | [2025-07-20T07:06:00.969] [ERROR] server - Error: EACCES: permission denied, open '/opt/etherpad-lite/var/installed_plugins.json'
+etherpad          |     at async open (node:internal/fs/promises:640:25)
+etherpad          |     at async Object.writeFile (node:internal/fs/promises:1214:14)
+etherpad          |     at async persistInstalledPlugins (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:140:3)
+etherpad          |     at async migratePluginsFromNodeModules (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:75:3)
+etherpad          |     at async checkForMigration (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:86:5)
+etherpad          |     at async Object.exports.start (/opt/etherpad-lite/src/node/server.ts:174:5)
+etherpad          | [2025-07-20T07:06:00.969] [ERROR] server - Error occurred while waiting to exit. Forcing an immediate unclean exit...
+etherpad          | /opt/etherpad-lite/src:
+etherpad          |  ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  ep_etherpad-lite@2.3.2 prod: `cross-env NODE_ENV=production node --require tsx/cjs node/server.ts`
+etherpad          | Exit status 1
+etherpad          |  ELIFECYCLE  Command failed with exit code 1.
+etherpad          | 
+etherpad          | > etherpad@2.3.2 prod /opt/etherpad-lite
+etherpad          | > pnpm --filter ep_etherpad-lite run prod
+etherpad          | 
+etherpad          | 
+etherpad          | > ep_etherpad-lite@2.3.2 prod /opt/etherpad-lite/src
+etherpad          | > cross-env NODE_ENV=production node --require tsx/cjs node/server.ts
+etherpad          | 
+etherpad          | [2025-07-20T07:06:07.891] [INFO] settings - All relative paths will be interpreted relative to the identified Etherpad base dir: /opt/etherpad-lite
+etherpad          | [2025-07-20T07:06:08.009] [INFO] settings - settings loaded from: /opt/etherpad-lite/settings.json
+etherpad          | [2025-07-20T07:06:08.023] [INFO] settings - No credentials file found in /opt/etherpad-lite/credentials.json. Ignoring.
+etherpad          | [2025-07-20T07:06:08.028] [WARN] settings - loglevel: INFO
+etherpad          | [2025-07-20T07:06:08.028] [WARN] settings - logLayoutType: colored
+etherpad          | [2025-07-20T07:06:08.031] [INFO] settings - Using skin "colibris" in dir: /opt/etherpad-lite/src/static/skins/colibris
+etherpad          | [2025-07-20T07:06:08.032] [WARN] settings - DirtyDB is used. This is not recommended for production. File location: /opt/etherpad-lite/var/dirty.db
+etherpad          | [2025-07-20T07:06:08.037] [INFO] settings - Random string used for versioning assets: 75a1e184
+etherpad          | [2025-07-20T07:06:11.212] [INFO] server - Starting Etherpad...
+etherpad          | [2025-07-20T07:06:11.428] [INFO] plugins - check installed plugins for migration
+etherpad          | [2025-07-20T07:06:11.433] [ERROR] server - Metrics at time of fatal error:
+etherpad          | {
+etherpad          |   "httpStartTime": 0,
+etherpad          |   "memoryUsage": 187654144,
+etherpad          |   "memoryUsageHeap": 78536112,
+etherpad          |   "ueberdb_lockAwaits": 0,
+etherpad          |   "ueberdb_lockAcquires": 0,
+etherpad          |   "ueberdb_lockReleases": 0,
+etherpad          |   "ueberdb_reads": 0,
+etherpad          |   "ueberdb_readsFailed": 0,
+etherpad          |   "ueberdb_readsFinished": 0,
+etherpad          |   "ueberdb_readsFromCache": 0,
+etherpad          |   "ueberdb_readsFromDb": 0,
+etherpad          |   "ueberdb_readsFromDbFailed": 0,
+etherpad          |   "ueberdb_readsFromDbFinished": 0,
+etherpad          |   "ueberdb_writes": 0,
+etherpad          |   "ueberdb_writesFailed": 0,
+etherpad          |   "ueberdb_writesFinished": 0,
+etherpad          |   "ueberdb_writesObsoleted": 0,
+etherpad          |   "ueberdb_writesToDb": 0,
+etherpad          |   "ueberdb_writesToDbFailed": 0,
+etherpad          |   "ueberdb_writesToDbFinished": 0,
+etherpad          |   "ueberdb_writesToDbRetried": 0
+etherpad          | }
+etherpad          | [2025-07-20T07:06:11.433] [ERROR] server - Error: EACCES: permission denied, open '/opt/etherpad-lite/var/dirty.db'
+etherpad          | [2025-07-20T07:06:11.433] [INFO] server - Exiting...
+etherpad          | [2025-07-20T07:06:11.494] [ERROR] settings - Can not perform Etherpad update check: Error: getaddrinfo ENOTFOUND etherpad.org
+etherpad          | [2025-07-20T07:06:11.507] [INFO] plugins - pnpm --version: 10.12.3
+etherpad          | [2025-07-20T07:06:11.514] [INFO] plugins - start migration of plugins in node_modules
+etherpad          | [2025-07-20T07:06:13.668] [ERROR] server - Error occurred while starting Etherpad
+etherpad          | [2025-07-20T07:06:13.669] [ERROR] server - Metrics at time of fatal error:
+etherpad          | {
+etherpad          |   "httpStartTime": 0,
+etherpad          |   "memoryUsage": 192151552,
+etherpad          |   "memoryUsageHeap": 83193088,
+etherpad          |   "ueberdb_lockAwaits": 0,
+etherpad          |   "ueberdb_lockAcquires": 0,
+etherpad          |   "ueberdb_lockReleases": 0,
+etherpad          |   "ueberdb_reads": 0,
+etherpad          |   "ueberdb_readsFailed": 0,
+etherpad          |   "ueberdb_readsFinished": 0,
+etherpad          |   "ueberdb_readsFromCache": 0,
+etherpad          |   "ueberdb_readsFromDb": 0,
+etherpad          |   "ueberdb_readsFromDbFailed": 0,
+etherpad          |   "ueberdb_readsFromDbFinished": 0,
+etherpad          |   "ueberdb_writes": 0,
+etherpad          |   "ueberdb_writesFailed": 0,
+etherpad          |   "ueberdb_writesFinished": 0,
+etherpad          |   "ueberdb_writesObsoleted": 0,
+etherpad          |   "ueberdb_writesToDb": 0,
+etherpad          |   "ueberdb_writesToDbFailed": 0,
+etherpad          |   "ueberdb_writesToDbFinished": 0,
+etherpad          |   "ueberdb_writesToDbRetried": 0
+etherpad          | }
+etherpad          | [2025-07-20T07:06:13.670] [ERROR] server - Error: EACCES: permission denied, open '/opt/etherpad-lite/var/installed_plugins.json'
+etherpad          |     at async open (node:internal/fs/promises:640:25)
+etherpad          |     at async Object.writeFile (node:internal/fs/promises:1214:14)
+etherpad          |     at async persistInstalledPlugins (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:140:3)
+etherpad          |     at async migratePluginsFromNodeModules (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:75:3)
+etherpad          |     at async checkForMigration (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:86:5)
+etherpad          |     at async Object.exports.start (/opt/etherpad-lite/src/node/server.ts:174:5)
+etherpad          | [2025-07-20T07:06:13.670] [ERROR] server - Error occurred while waiting to exit. Forcing an immediate unclean exit...
+etherpad          | /opt/etherpad-lite/src:
+etherpad          |  ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  ep_etherpad-lite@2.3.2 prod: `cross-env NODE_ENV=production node --require tsx/cjs node/server.ts`
+etherpad          | Exit status 1
+etherpad          |  ELIFECYCLE  Command failed with exit code 1.
+filebrowser       | 2025/07/20 07:06:15 Using database: /database/filebrowser.db
+filebrowser       | 2025/07/20 07:06:15 open /database/filebrowser.db: permission denied
+filebrowser       | 2025/07/20 07:06:16 Using database: /database/filebrowser.db
+filebrowser       | 2025/07/20 07:06:16 open /database/filebrowser.db: permission denied
+element           | ::1 - - [20/Jul/2025:07:06:16 +0000] "GET /config.json HTTP/1.1" 200 1583 "-" "Wget" "-"
+etherpad          | 
+etherpad          | > etherpad@2.3.2 prod /opt/etherpad-lite
+etherpad          | > pnpm --filter ep_etherpad-lite run prod
+etherpad          | 
+etherpad          | 
+etherpad          | > etherpad@2.3.2 prod /opt/etherpad-lite
+etherpad          | > pnpm --filter ep_etherpad-lite run prod
+etherpad          | 
+filebrowser       | 2025/07/20 07:06:17 Using database: /database/filebrowser.db
+filebrowser       | 2025/07/20 07:06:17 open /database/filebrowser.db: permission denied
+filebrowser       | 2025/07/20 07:06:18 Using database: /database/filebrowser.db
+filebrowser       | 2025/07/20 07:06:18 open /database/filebrowser.db: permission denied
+etherpad          | 
+etherpad          | 
+etherpad          | > ep_etherpad-lite@2.3.2 prod /opt/etherpad-lite/src
+etherpad          | > cross-env NODE_ENV=production node --require tsx/cjs node/server.ts
+etherpad          | 
+etherpad          | > ep_etherpad-lite@2.3.2 prod /opt/etherpad-lite/src
+etherpad          | > cross-env NODE_ENV=production node --require tsx/cjs node/server.ts
+etherpad          | 
+filebrowser       | 2025/07/20 07:06:19 Using database: /database/filebrowser.db
+filebrowser       | 2025/07/20 07:06:19 open /database/filebrowser.db: permission denied
+etherpad          | [2025-07-20T07:06:20.732] [INFO] settings - All relative paths will be interpreted relative to the identified Etherpad base dir: /opt/etherpad-lite
+etherpad          | [2025-07-20T07:06:20.732] [INFO] settings - All relative paths will be interpreted relative to the identified Etherpad base dir: /opt/etherpad-lite
+etherpad          | [2025-07-20T07:06:20.852] [INFO] settings - settings loaded from: /opt/etherpad-lite/settings.json
+etherpad          | [2025-07-20T07:06:20.852] [INFO] settings - settings loaded from: /opt/etherpad-lite/settings.json
+etherpad          | [2025-07-20T07:06:20.866] [INFO] settings - No credentials file found in /opt/etherpad-lite/credentials.json. Ignoring.
+etherpad          | [2025-07-20T07:06:20.866] [INFO] settings - No credentials file found in /opt/etherpad-lite/credentials.json. Ignoring.
+etherpad          | [2025-07-20T07:06:20.871] [WARN] settings - loglevel: INFO
+etherpad          | [2025-07-20T07:06:20.871] [WARN] settings - logLayoutType: colored
+etherpad          | [2025-07-20T07:06:20.871] [WARN] settings - loglevel: INFO
+etherpad          | [2025-07-20T07:06:20.871] [WARN] settings - logLayoutType: colored
+etherpad          | [2025-07-20T07:06:20.874] [INFO] settings - Using skin "colibris" in dir: /opt/etherpad-lite/src/static/skins/colibris
+etherpad          | [2025-07-20T07:06:20.874] [INFO] settings - Using skin "colibris" in dir: /opt/etherpad-lite/src/static/skins/colibris
+etherpad          | [2025-07-20T07:06:20.876] [WARN] settings - DirtyDB is used. This is not recommended for production. File location: /opt/etherpad-lite/var/dirty.db
+etherpad          | [2025-07-20T07:06:20.876] [WARN] settings - DirtyDB is used. This is not recommended for production. File location: /opt/etherpad-lite/var/dirty.db
+etherpad          | [2025-07-20T07:06:20.879] [INFO] settings - Random string used for versioning assets: a44f3b45
+etherpad          | [2025-07-20T07:06:20.879] [INFO] settings - Random string used for versioning assets: a44f3b45
+filebrowser       | 2025/07/20 07:06:21 Using database: /database/filebrowser.db
+filebrowser       | 2025/07/20 07:06:21 open /database/filebrowser.db: permission denied
+filebrowser       | 2025/07/20 07:06:22 Using database: /database/filebrowser.db
+filebrowser       | 2025/07/20 07:06:22 open /database/filebrowser.db: permission denied
+filebrowser       | 2025/07/20 07:06:23 Using database: /database/filebrowser.db
+filebrowser       | 2025/07/20 07:06:23 open /database/filebrowser.db: permission denied
+etherpad          | [2025-07-20T07:06:23.844] [INFO] server - Starting Etherpad...
+etherpad          | [2025-07-20T07:06:23.844] [INFO] server - Starting Etherpad...
+etherpad          | [2025-07-20T07:06:24.191] [ERROR] settings - Can not perform Etherpad update check: Error: getaddrinfo ENOTFOUND etherpad.org
+etherpad          | [2025-07-20T07:06:24.191] [ERROR] settings - Can not perform Etherpad update check: Error: getaddrinfo ENOTFOUND etherpad.org
+etherpad          | [2025-07-20T07:06:24.198] [INFO] plugins - check installed plugins for migration
+etherpad          | [2025-07-20T07:06:24.198] [INFO] plugins - check installed plugins for migration
+etherpad          | [2025-07-20T07:06:24.207] [ERROR] server - Metrics at time of fatal error:
+etherpad          | {
+etherpad          |   "httpStartTime": 0,
+etherpad          |   "memoryUsage": 193204224,
+etherpad          |   "memoryUsageHeap": 89204520,
+etherpad          |   "ueberdb_lockAwaits": 0,
+etherpad          |   "ueberdb_lockAcquires": 0,
+etherpad          |   "ueberdb_lockReleases": 0,
+etherpad          |   "ueberdb_reads": 0,
+etherpad          |   "ueberdb_readsFailed": 0,
+etherpad          |   "ueberdb_readsFinished": 0,
+etherpad          |   "ueberdb_readsFromCache": 0,
+etherpad          |   "ueberdb_readsFromDb": 0,
+etherpad          |   "ueberdb_readsFromDbFailed": 0,
+etherpad          |   "ueberdb_readsFromDbFinished": 0,
+etherpad          |   "ueberdb_writes": 0,
+etherpad          |   "ueberdb_writesFailed": 0,
+etherpad          |   "ueberdb_writesFinished": 0,
+etherpad          |   "ueberdb_writesObsoleted": 0,
+etherpad          |   "ueberdb_writesToDb": 0,
+etherpad          |   "ueberdb_writesToDbFailed": 0,
+etherpad          |   "ueberdb_writesToDbFinished": 0,
+etherpad          |   "ueberdb_writesToDbRetried": 0
+etherpad          | }
+etherpad          | [2025-07-20T07:06:24.208] [ERROR] server - Error: EACCES: permission denied, open '/opt/etherpad-lite/var/dirty.db'
+etherpad          | [2025-07-20T07:06:24.207] [ERROR] server - Metrics at time of fatal error:
+etherpad          | {
+etherpad          |   "httpStartTime": 0,
+etherpad          |   "memoryUsage": 193204224,
+etherpad          |   "memoryUsageHeap": 89204520,
+etherpad          |   "ueberdb_lockAwaits": 0,
+etherpad          |   "ueberdb_lockAcquires": 0,
+etherpad          |   "ueberdb_lockReleases": 0,
+etherpad          |   "ueberdb_reads": 0,
+etherpad          |   "ueberdb_readsFailed": 0,
+etherpad          |   "ueberdb_readsFinished": 0,
+etherpad          |   "ueberdb_readsFromCache": 0,
+etherpad          |   "ueberdb_readsFromDb": 0,
+etherpad          |   "ueberdb_readsFromDbFailed": 0,
+etherpad          |   "ueberdb_readsFromDbFinished": 0,
+etherpad          |   "ueberdb_writes": 0,
+etherpad          |   "ueberdb_writesFailed": 0,
+etherpad          |   "ueberdb_writesFinished": 0,
+etherpad          |   "ueberdb_writesObsoleted": 0,
+etherpad          |   "ueberdb_writesToDb": 0,
+etherpad          |   "ueberdb_writesToDbFailed": 0,
+etherpad          |   "ueberdb_writesToDbFinished": 0,
+etherpad          |   "ueberdb_writesToDbRetried": 0
+etherpad          | }
+etherpad          | [2025-07-20T07:06:24.208] [ERROR] server - Error: EACCES: permission denied, open '/opt/etherpad-lite/var/dirty.db'
+etherpad          | [2025-07-20T07:06:24.209] [INFO] server - Exiting...
+etherpad          | [2025-07-20T07:06:24.209] [INFO] server - Exiting...
+etherpad          | [2025-07-20T07:06:24.302] [INFO] plugins - pnpm --version: 10.12.3
+etherpad          | [2025-07-20T07:06:24.302] [INFO] plugins - pnpm --version: 10.12.3
+etherpad          | [2025-07-20T07:06:24.314] [INFO] plugins - start migration of plugins in node_modules
+etherpad          | [2025-07-20T07:06:24.314] [INFO] plugins - start migration of plugins in node_modules
+filebrowser       | 2025/07/20 07:06:24 Using database: /database/filebrowser.db
+filebrowser       | 2025/07/20 07:06:24 open /database/filebrowser.db: permission denied
+filebrowser       | 2025/07/20 07:06:25 Using database: /database/filebrowser.db
+filebrowser       | 2025/07/20 07:06:25 open /database/filebrowser.db: permission denied
+etherpad          | [2025-07-20T07:06:26.520] [ERROR] server - Error occurred while starting Etherpad
+etherpad          | [2025-07-20T07:06:26.520] [ERROR] server - Error occurred while starting Etherpad
+etherpad          | [2025-07-20T07:06:26.521] [ERROR] server - Metrics at time of fatal error:
+etherpad          | [2025-07-20T07:06:26.521] [ERROR] server - Metrics at time of fatal error:
+etherpad          | {
+etherpad          |   "httpStartTime": 0,
+etherpad          |   "memoryUsage": 201023488,
+etherpad          |   "memoryUsageHeap": 78639968,
+etherpad          |   "ueberdb_lockAwaits": 0,
+etherpad          |   "ueberdb_lockAcquires": 0,
+etherpad          |   "ueberdb_lockReleases": 0,
+etherpad          |   "ueberdb_reads": 0,
+etherpad          |   "ueberdb_readsFailed": 0,
+etherpad          |   "ueberdb_readsFinished": 0,
+etherpad          |   "ueberdb_readsFromCache": 0,
+etherpad          |   "ueberdb_readsFromDb": 0,
+etherpad          |   "ueberdb_readsFromDbFailed": 0,
+etherpad          |   "ueberdb_readsFromDbFinished": 0,
+etherpad          |   "ueberdb_writes": 0,
+etherpad          |   "ueberdb_writesFailed": 0,
+etherpad          |   "ueberdb_writesFinished": 0,
+etherpad          |   "ueberdb_writesObsoleted": 0,
+etherpad          |   "ueberdb_writesToDb": 0,
+etherpad          |   "ueberdb_writesToDbFailed": 0,
+etherpad          |   "ueberdb_writesToDbFinished": 0,
+etherpad          |   "ueberdb_writesToDbRetried": 0
+etherpad          | }
+etherpad          | {
+etherpad          |   "httpStartTime": 0,
+etherpad          |   "memoryUsage": 201023488,
+etherpad          |   "memoryUsageHeap": 78639968,
+etherpad          |   "ueberdb_lockAwaits": 0,
+etherpad          |   "ueberdb_lockAcquires": 0,
+etherpad          |   "ueberdb_lockReleases": 0,
+etherpad          |   "ueberdb_reads": 0,
+etherpad          |   "ueberdb_readsFailed": 0,
+etherpad          |   "ueberdb_readsFinished": 0,
+etherpad          |   "ueberdb_readsFromCache": 0,
+etherpad          |   "ueberdb_readsFromDb": 0,
+etherpad          |   "ueberdb_readsFromDbFailed": 0,
+etherpad          |   "ueberdb_readsFromDbFinished": 0,
+etherpad          |   "ueberdb_writes": 0,
+etherpad          |   "ueberdb_writesFailed": 0,
+etherpad          |   "ueberdb_writesFinished": 0,
+etherpad          |   "ueberdb_writesObsoleted": 0,
+etherpad          |   "ueberdb_writesToDb": 0,
+etherpad          |   "ueberdb_writesToDbFailed": 0,
+etherpad          |   "ueberdb_writesToDbFinished": 0,
+etherpad          |   "ueberdb_writesToDbRetried": 0
+etherpad          | }
+etherpad          | [2025-07-20T07:06:26.526] [ERROR] server - Error: EACCES: permission denied, open '/opt/etherpad-lite/var/installed_plugins.json'
+etherpad          |     at async open (node:internal/fs/promises:640:25)
+etherpad          |     at async Object.writeFile (node:internal/fs/promises:1214:14)
+etherpad          |     at async persistInstalledPlugins (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:140:3)
+etherpad          |     at async migratePluginsFromNodeModules (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:75:3)
+etherpad          |     at async checkForMigration (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:86:5)
+etherpad          |     at async Object.exports.start (/opt/etherpad-lite/src/node/server.ts:174:5)
+etherpad          | [2025-07-20T07:06:26.527] [ERROR] server - Error occurred while waiting to exit. Forcing an immediate unclean exit...
+etherpad          | [2025-07-20T07:06:26.526] [ERROR] server - Error: EACCES: permission denied, open '/opt/etherpad-lite/var/installed_plugins.json'
+etherpad          |     at async open (node:internal/fs/promises:640:25)
+etherpad          |     at async Object.writeFile (node:internal/fs/promises:1214:14)
+etherpad          |     at async persistInstalledPlugins (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:140:3)
+etherpad          |     at async migratePluginsFromNodeModules (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:75:3)
+etherpad          |     at async checkForMigration (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:86:5)
+etherpad          |     at async Object.exports.start (/opt/etherpad-lite/src/node/server.ts:174:5)
+etherpad          | [2025-07-20T07:06:26.527] [ERROR] server - Error occurred while waiting to exit. Forcing an immediate unclean exit...
+etherpad          | /opt/etherpad-lite/src:
+etherpad          |  ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  ep_etherpad-lite@2.3.2 prod: `cross-env NODE_ENV=production node --require tsx/cjs node/server.ts`
+etherpad          | Exit status 1
+etherpad          | /opt/etherpad-lite/src:
+etherpad          |  ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  ep_etherpad-lite@2.3.2 prod: `cross-env NODE_ENV=production node --require tsx/cjs node/server.ts`
+etherpad          | Exit status 1
+filebrowser       | 2025/07/20 07:06:26 Using database: /database/filebrowser.db
+filebrowser       | 2025/07/20 07:06:26 open /database/filebrowser.db: permission denied
+etherpad          |  ELIFECYCLE  Command failed with exit code 1.
+etherpad          |  ELIFECYCLE  Command failed with exit code 1.
+filebrowser       | 2025/07/20 07:06:27 Using database: /database/filebrowser.db
+filebrowser       | 2025/07/20 07:06:27 open /database/filebrowser.db: permission denied
+etherpad exited with code 0
+filebrowser       | 2025/07/20 07:06:28 Using database: /database/filebrowser.db
+filebrowser       | 2025/07/20 07:06:28 open /database/filebrowser.db: permission denied
+etherpad          | 
+etherpad          | > etherpad@2.3.2 prod /opt/etherpad-lite
+etherpad          | > pnpm --filter ep_etherpad-lite run prod
+etherpad          | 
+filebrowser       | 2025/07/20 07:06:30 Using database: /database/filebrowser.db
+filebrowser       | 2025/07/20 07:06:30 open /database/filebrowser.db: permission denied
+filebrowser       | 2025/07/20 07:06:31 Using database: /database/filebrowser.db
+filebrowser       | 2025/07/20 07:06:31 open /database/filebrowser.db: permission denied
+etherpad          | 
+etherpad          | > ep_etherpad-lite@2.3.2 prod /opt/etherpad-lite/src
+etherpad          | > cross-env NODE_ENV=production node --require tsx/cjs node/server.ts
+etherpad          | 
+filebrowser       | 2025/07/20 07:06:32 Using database: /database/filebrowser.db
+filebrowser       | 2025/07/20 07:06:32 open /database/filebrowser.db: permission denied
+filebrowser       | 2025/07/20 07:06:33 Using database: /database/filebrowser.db
+filebrowser       | 2025/07/20 07:06:33 open /database/filebrowser.db: permission denied
+etherpad          | [2025-07-20T07:06:33.649] [INFO] settings - All relative paths will be interpreted relative to the identified Etherpad base dir: /opt/etherpad-lite
+etherpad          | [2025-07-20T07:06:33.769] [INFO] settings - settings loaded from: /opt/etherpad-lite/settings.json
+etherpad          | [2025-07-20T07:06:33.784] [INFO] settings - No credentials file found in /opt/etherpad-lite/credentials.json. Ignoring.
+etherpad          | [2025-07-20T07:06:33.788] [WARN] settings - loglevel: INFO
+etherpad          | [2025-07-20T07:06:33.789] [WARN] settings - logLayoutType: colored
+etherpad          | [2025-07-20T07:06:33.792] [INFO] settings - Using skin "colibris" in dir: /opt/etherpad-lite/src/static/skins/colibris
+etherpad          | [2025-07-20T07:06:33.793] [WARN] settings - DirtyDB is used. This is not recommended for production. File location: /opt/etherpad-lite/var/dirty.db
+etherpad          | [2025-07-20T07:06:33.796] [INFO] settings - Random string used for versioning assets: 3c4a54f5
+filebrowser       | 2025/07/20 07:06:34 Using database: /database/filebrowser.db
+filebrowser       | 2025/07/20 07:06:34 open /database/filebrowser.db: permission denied
+filebrowser       | 2025/07/20 07:06:35 Using database: /database/filebrowser.db
+filebrowser       | 2025/07/20 07:06:35 open /database/filebrowser.db: permission denied
+filebrowser       | 2025/07/20 07:06:36 Using database: /database/filebrowser.db
+filebrowser       | 2025/07/20 07:06:36 open /database/filebrowser.db: permission denied
+etherpad          | [2025-07-20T07:06:36.854] [INFO] server - Starting Etherpad...
+etherpad          | [2025-07-20T07:06:37.166] [ERROR] settings - Can not perform Etherpad update check: Error: getaddrinfo ENOTFOUND etherpad.org
+etherpad          | [2025-07-20T07:06:37.170] [INFO] plugins - check installed plugins for migration
+etherpad          | [2025-07-20T07:06:37.176] [ERROR] server - Metrics at time of fatal error:
+etherpad          | {
+etherpad          |   "httpStartTime": 0,
+etherpad          |   "memoryUsage": 216039424,
+etherpad          |   "memoryUsageHeap": 83241064,
+etherpad          |   "ueberdb_lockAwaits": 0,
+etherpad          |   "ueberdb_lockAcquires": 0,
+etherpad          |   "ueberdb_lockReleases": 0,
+etherpad          |   "ueberdb_reads": 0,
+etherpad          |   "ueberdb_readsFailed": 0,
+etherpad          |   "ueberdb_readsFinished": 0,
+etherpad          |   "ueberdb_readsFromCache": 0,
+etherpad          |   "ueberdb_readsFromDb": 0,
+etherpad          |   "ueberdb_readsFromDbFailed": 0,
+etherpad          |   "ueberdb_readsFromDbFinished": 0,
+etherpad          |   "ueberdb_writes": 0,
+etherpad          |   "ueberdb_writesFailed": 0,
+etherpad          |   "ueberdb_writesFinished": 0,
+etherpad          |   "ueberdb_writesObsoleted": 0,
+etherpad          |   "ueberdb_writesToDb": 0,
+etherpad          |   "ueberdb_writesToDbFailed": 0,
+etherpad          |   "ueberdb_writesToDbFinished": 0,
+etherpad          |   "ueberdb_writesToDbRetried": 0
+etherpad          | }
+etherpad          | [2025-07-20T07:06:37.176] [ERROR] server - Error: EACCES: permission denied, open '/opt/etherpad-lite/var/dirty.db'
+etherpad          | [2025-07-20T07:06:37.177] [INFO] server - Exiting...
+etherpad          | [2025-07-20T07:06:37.193] [INFO] plugins - pnpm --version: 10.12.3
+etherpad          | [2025-07-20T07:06:37.201] [INFO] plugins - start migration of plugins in node_modules
+filebrowser       | 2025/07/20 07:06:37 Using database: /database/filebrowser.db
+filebrowser       | 2025/07/20 07:06:37 open /database/filebrowser.db: permission denied
+vfilebrowser       | 2025/07/20 07:06:38 Using database: /database/filebrowser.db
+filebrowser       | 2025/07/20 07:06:38 open /database/filebrowser.db: permission denied
+etherpad          | [2025-07-20T07:06:39.342] [ERROR] server - Error occurred while starting Etherpad
+etherpad          | [2025-07-20T07:06:39.343] [ERROR] server - Metrics at time of fatal error:
+etherpad          | {
+etherpad          |   "httpStartTime": 0,
+etherpad          |   "memoryUsage": 213262336,
+etherpad          |   "memoryUsageHeap": 83701872,
+etherpad          |   "ueberdb_lockAwaits": 0,
+etherpad          |   "ueberdb_lockAcquires": 0,
+etherpad          |   "ueberdb_lockReleases": 0,
+etherpad          |   "ueberdb_reads": 0,
+etherpad          |   "ueberdb_readsFailed": 0,
+etherpad          |   "ueberdb_readsFinished": 0,
+etherpad          |   "ueberdb_readsFromCache": 0,
+etherpad          |   "ueberdb_readsFromDb": 0,
+etherpad          |   "ueberdb_readsFromDbFailed": 0,
+etherpad          |   "ueberdb_readsFromDbFinished": 0,
+etherpad          |   "ueberdb_writes": 0,
+etherpad          |   "ueberdb_writesFailed": 0,
+etherpad          |   "ueberdb_writesFinished": 0,
+etherpad          |   "ueberdb_writesObsoleted": 0,
+etherpad          |   "ueberdb_writesToDb": 0,
+etherpad          |   "ueberdb_writesToDbFailed": 0,
+etherpad          |   "ueberdb_writesToDbFinished": 0,
+etherpad          |   "ueberdb_writesToDbRetried": 0
+etherpad          | }
+etherpad          | [2025-07-20T07:06:39.346] [ERROR] server - Error: EACCES: permission denied, open '/opt/etherpad-lite/var/installed_plugins.json'
+etherpad          |     at async open (node:internal/fs/promises:640:25)
+etherpad          |     at async Object.writeFile (node:internal/fs/promises:1214:14)
+etherpad          |     at async persistInstalledPlugins (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:140:3)
+etherpad          |     at async migratePluginsFromNodeModules (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:75:3)
+etherpad          |     at async checkForMigration (/opt/etherpad-lite/src/static/js/pluginfw/installer.ts:86:5)
+etherpad          |     at async Object.exports.start (/opt/etherpad-lite/src/node/server.ts:174:5)
+etherpad          | [2025-07-20T07:06:39.347] [ERROR] server - Error occurred while waiting to exit. Forcing an immediate unclean exit...
+etherpad          | /opt/etherpad-lite/src:
+etherpad          |  ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  ep_etherpad-lite@2.3.2 prod: `cross-env NODE_ENV=production node --require tsx/cjs node/server.ts`
+etherpad          | Exit status 1
+etherpad          |  ELIFECYCLE  Command failed with exit code 1.
