@@ -66,5 +66,5 @@ cd "$INSTALL_DIR"
 echo
 echo "✅  Deployment complete!"
 echo "Browse: http://<your-pi-ip>/"
-echo "To manage PNK services, use: sudo systemctl start|stop|restart pnk-hamradio"
+echo "To manage PNK services, use: sudo systemctl start|stop|restart PNK-HAMradio"
 
