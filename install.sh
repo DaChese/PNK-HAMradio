@@ -28,20 +28,21 @@ apt install -y \
     lighttpd \
     python3-pip
 
-echo "2) Installing Docker & docker-compose plugin…"
-# add Docker’s signing key & repo
-mkdir -p /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
-  | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-
+echo "Adding Docker's official repository…"
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
-  https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" \
-  > /etc/apt/sources.list.d/docker.list
+echo "3) Cloning/updating repo…"
+if [ -n "$SUDO_USER" ]; then
+  TARGET_HOME=$(eval echo "~$SUDO_USER")
+else
+  TARGET_HOME="/root"
+fi
 
-apt update
-apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+if [ ! -d "$TARGET_HOME/PNK-HAMradio" ]; then
+  git clone https://github.com/DaChese/PNK-HAMradio.git "$TARGET_HOME/PNK-HAMradio"
+fi
+cd "$TARGET_HOME/PNK-HAMradio"
+git pull
 
 echo "3) Enabling & starting system services…"
 systemctl enable --now docker lighttpd
@@ -85,7 +86,7 @@ echo "======== PNK Deployment Summary ========"
 systemctl is-active --quiet docker  && echo "✔ docker running"        || echo "✖ docker not running"
 systemctl is-active --quiet lighttpd && echo "✔ lighttpd running"     || echo "✖ lighttpd not running"
 docker ps --filter "name=dendrite" --quiet | grep -q . && echo "✔ dendrite container" || echo "✖ dendrite container"
-# …you can add checks for each service container here…
+
 
 echo
 echo "🎉  All done!  Browse your PNK dashboard at http://<your-pi-ip>/"
