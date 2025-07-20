@@ -6,7 +6,7 @@ set -euo pipefail
 ###############################################################################
 
 REPO="https://github.com/DaChese/PNK-HAMradio.git"
-INSTALL_DIR="/opt/pnk-hamradio"
+INSTALL_DIR="$HOME/PNK-HAMradio"
 DEND="$INSTALL_DIR/matrix-pnk/dendrite"
 WWW_INDEX="/var/www/html/index.html"
 PI_USER="pi"
