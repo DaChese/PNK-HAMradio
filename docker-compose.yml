@@ -6,7 +6,7 @@ services:
     container_name: etherpad
     restart: unless-stopped
     ports:
-      - '80:9001'
+      - '9001:9001'
     volumes:
       # persist your pads & settings
       - ./matrix-pnk/etherpad/var:/opt/etherpad-lite/var
