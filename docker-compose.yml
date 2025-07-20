@@ -6,7 +6,7 @@ services:
     container_name: etherpad
     restart: unless-stopped
     ports:
-      - '9001:9001'
+      - '80:9001'
     volumes:
       # persist your pads & settings
       - ./matrix-pnk/etherpad/var:/opt/etherpad-lite/var
@@ -48,13 +48,13 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=America/Detroit
+      - TZ=UTC
       - MEM_LIMIT=1024
     volumes:
       - ./matrix-pnk/unifi/config:/config
 
   dendrite:
-    image: matrixdotorg/dendrite-monolith:main 
+    image: matrixdotorg/dendrite-monolith:v0.14.1"
     platform: linux/arm64
     container_name: dendrite
     restart: unless-stopped
