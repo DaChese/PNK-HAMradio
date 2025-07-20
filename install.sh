@@ -1,100 +1,92 @@
 #!/usr/bin/env bash
-set -eu
+set -euo pipefail
 
-if [ "$EUID" -ne 0 ]; then
-  echo "Please run this script as root (using sudo)."
+###############################################################################
+#  PNK-HAMradio installer
+#  - must be run as root (sudo)
+#  - idempotent: rerun will update, not re-clone
+###############################################################################
+
+REPO="https://github.com/DaChese/PNK-HAMradio.git"
+INSTALL_DIR="/opt/PNK-HAMradio"
+DEND="${INSTALL_DIR}/matrix-pnk/dendrite"
+WWW_INDEX="/var/www/html/index.html"
+
+if [[ $EUID -ne 0 ]]; then
+  echo "Please run as root: sudo ./install.sh"
   exit 1
 fi
 
-echo "1) Installing dependencies…"
-read -p "Do you want to run 'apt update' and 'apt upgrade -y'? (y/N): " RUN_UPGRADE
-if [[ "$RUN_UPGRADE" =~ ^[Yy]$ ]]; then
-  apt update
-  apt upgrade -y
-fi
-apt install -y git lighttpd python3-pip curl
+echo "1) Installing OS packages…"
+apt update
+apt install -y \
+    git \
+    curl \
+    ca-certificates \
+    gnupg \
+    lsb-release \
+    lighttpd \
+    python3-pip
 
-echo "Adding Docker's official repository…"
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo "2) Installing Docker & docker-compose plugin…"
+# add Docker’s signing key & repo
+mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
+  | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
 echo \
-echo "3) Cloning/updating repo…"
-if [ -n "$SUDO_USER" ]; then
-  TARGET_HOME=$(eval echo "~$SUDO_USER")
-else
-  TARGET_HOME="/root"
-fi
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
+  https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" \
+  > /etc/apt/sources.list.d/docker.list
 
-if [ ! -d "$TARGET_HOME/PNK-HAMradio" ]; then
-  git clone https://github.com/DaChese/PNK-HAMradio.git "$TARGET_HOME/PNK-HAMradio"
-fi
-cd "$TARGET_HOME/PNK-HAMradio"
-git pull
-echo "2) Starting services…"
+apt update
+apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+echo "3) Enabling & starting system services…"
 systemctl enable --now docker lighttpd
 
-echo "3) Cloning/updating repo…"
-if [ ! -d "$HOME/PNK-HAMradio" ]; then
-  git clone https://github.com/DaChese/PNK-HAMradio.git "$HOME/PNK-HAMradio"
+echo "4) Cloning/updating PNK-HAMradio into $INSTALL_DIR…"
+if [[ -d "$INSTALL_DIR/.git" ]]; then
+  cd "$INSTALL_DIR"
+  git pull --ff-only origin main
+else
+  rm -rf "$INSTALL_DIR"
+  git clone "$REPO" "$INSTALL_DIR"
 fi
-cd "$HOME/PNK-HAMradio"
-git pull
 
-echo "Checking for Dendrite server key…"
-DEND=`pwd`/matrix-pnk/dendrite
+echo "5) Generating Dendrite server key (if needed)…"
 mkdir -p "$DEND"/media
-
-if [ ! -f "$DEND"/media/server.key ]; then
-  echo "   Generating a fresh Matrix server key"
+if [[ ! -f "$DEND/media/server.key" ]]; then
   docker run --rm \
-    --entrypoint "/usr/bin/dendrite" \
+    --entrypoint /usr/bin/dendrite \
     -v "$DEND":/etc/dendrite:rw \
     matrixdotorg/dendrite-monolith:main \
     generate-keys \
-echo "5) Deploying dashboard…"
-if [ -f /var/www/html/index.html ]; then
-  cp /var/www/html/index.html /var/www/html/index.html.bak
-  echo "   Existing dashboard backed up to /var/www/html/index.html.bak"
-fi
-cp index.html /var/www/html/index.html
+      --config    /etc/dendrite/dendrite.yaml \
+      --private-key /etc/dendrite/media/server.key
 else
-  echo "   Server key already exists, skipping"
-fi
-echo "6) Launching PNK services…"
-if [ -f scripts/start.sh ]; then
-  chmod +x scripts/start.sh
-  ./scripts/start.sh
-else
-  echo "Error: scripts/start.sh not found. Skipping PNK service launch."
+  echo "   ✔ server.key already exists—skipping"
 fi
 
-echo "6) Launching PNK services…"
-echo ""
-echo "===== Deployment Summary ====="
-echo "Services started:"
-systemctl is-active --quiet docker && echo " - Docker: running" || echo " - Docker: ERROR"
-systemctl is-active --quiet lighttpd && echo " - Lighttpd: running" || echo " - Lighttpd: ERROR"
-if [ -f scripts/start.sh ]; then
-  echo " - PNK services: launched"
-else
-  echo " - PNK services: NOT launched (scripts/start.sh missing)"
+echo "6) Backing up & deploying dashboard…"
+if [[ -f "$WWW_INDEX" ]]; then
+  cp "$WWW_INDEX" "${WWW_INDEX}.bak.$(date +%Y%m%d%H%M)"
+  echo "   ✔ backed up existing index.html"
 fi
-if [ -f "$DEND/media/server.key" ]; then
-  echo " - Matrix Dendrite server key: present"
-else
-  echo " - Matrix Dendrite server key: ERROR (missing)"
-fi
-if [ -d "$HOME/73Linux" ]; then
-  echo " - 73Linux: installed"
-else
-  echo " - 73Linux: NOT installed"
-fi
-echo ""
-echo "starting PNK services…"
-echo "Please wait, this may take a few minutes…"
-echo "This will start the PNK services and the Matrix Dendrite server."
-./scripts/start.sh
+cp "$INSTALL_DIR/index.html" "$WWW_INDEX"
 
-echo "PNK is live at http://localhost/"
+echo "7) Launching PNK services…"
+chmod +x "$INSTALL_DIR/scripts/start.sh"
+cd "$INSTALL_DIR" && ./scripts/start.sh
+
+echo
+echo "======== PNK Deployment Summary ========"
+systemctl is-active --quiet docker  && echo "✔ docker running"        || echo "✖ docker not running"
+systemctl is-active --quiet lighttpd && echo "✔ lighttpd running"     || echo "✖ lighttpd not running"
+docker ps --filter "name=dendrite" --quiet | grep -q . && echo "✔ dendrite container" || echo "✖ dendrite container"
+# …you can add checks for each service container here…
 
 echo
 echo "🎉  All done!  Browse your PNK dashboard at http://<your-pi-ip>/"
+
