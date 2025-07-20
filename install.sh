@@ -1,19 +1,8 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -eu
 
-###############################################################################
-#  PNK-HAMradio installer
-#  - must be run as root (sudo)
-#  - idempotent: rerun will update, not re-clone
-###############################################################################
-
-REPO="https://github.com/DaChese/PNK-HAMradio.git"
-INSTALL_DIR="/opt/PNK-HAMradio"
-DEND="${INSTALL_DIR}/matrix-pnk/dendrite"
-WWW_INDEX="/var/www/html/index.html"
-
-if [[ $EUID -ne 0 ]]; then
-  echo "Please run as root: sudo ./install.sh"
+if [ "$EUID" -ne 0 ]; then
+  echo "Please run this script as root (using sudo)."
   exit 1
 fi
 
@@ -40,50 +29,72 @@ if [ ! -d "$TARGET_HOME/PNK-HAMradio" ]; then
 fi
 cd "$TARGET_HOME/PNK-HAMradio"
 git pull
-
-echo "3) Enabling & starting system services…"
+echo "2) Starting services…"
 systemctl enable --now docker lighttpd
 
-echo "4) Cloning/updating PNK-HAMradio into $INSTALL_DIR…"
-if [[ -d "$INSTALL_DIR/.git" ]]; then
-  cd "$INSTALL_DIR"
-  git pull --ff-only origin main
-else
-  rm -rf "$INSTALL_DIR"
-  git clone "$REPO" "$INSTALL_DIR"
+echo "3) Cloning/updating repo…"
+if [ ! -d "$HOME/PNK-HAMradio" ]; then
+  git clone https://github.com/DaChese/PNK-HAMradio.git "$HOME/PNK-HAMradio"
 fi
+cd "$HOME/PNK-HAMradio"
+git pull
 
-echo "5) Generating Dendrite server key (if needed)…"
+echo "Checking for Dendrite server key…"
+DEND=`pwd`/matrix-pnk/dendrite
 mkdir -p "$DEND"/media
-if [[ ! -f "$DEND/media/server.key" ]]; then
+
+if [ ! -f "$DEND"/media/server.key ]; then
+  echo "   Generating a fresh Matrix server key"
   docker run --rm \
-    --entrypoint /usr/bin/dendrite \
+    --entrypoint "/usr/bin/dendrite" \
     -v "$DEND":/etc/dendrite:rw \
     matrixdotorg/dendrite-monolith:main \
     generate-keys \
-      --config    /etc/dendrite/dendrite.yaml \
-      --private-key /etc/dendrite/media/server.key
+echo "5) Deploying dashboard…"
+if [ -f /var/www/html/index.html ]; then
+  cp /var/www/html/index.html /var/www/html/index.html.bak
+  echo "   Existing dashboard backed up to /var/www/html/index.html.bak"
+fi
+cp index.html /var/www/html/index.html
 else
-  echo "   ✔ server.key already exists—skipping"
+  echo "   Server key already exists, skipping"
+fi
+echo "6) Launching PNK services…"
+if [ -f scripts/start.sh ]; then
+  chmod +x scripts/start.sh
+  ./scripts/start.sh
+else
+  echo "Error: scripts/start.sh not found. Skipping PNK service launch."
 fi
 
-echo "6) Backing up & deploying dashboard…"
-if [[ -f "$WWW_INDEX" ]]; then
-  cp "$WWW_INDEX" "${WWW_INDEX}.bak.$(date +%Y%m%d%H%M)"
-  echo "   ✔ backed up existing index.html"
+echo "6) Launching PNK services…"
+echo ""
+echo "===== Deployment Summary ====="
+echo "Services started:"
+systemctl is-active --quiet docker && echo " - Docker: running" || echo " - Docker: ERROR"
+systemctl is-active --quiet lighttpd && echo " - Lighttpd: running" || echo " - Lighttpd: ERROR"
+if [ -f scripts/start.sh ]; then
+  echo " - PNK services: launched"
+else
+  echo " - PNK services: NOT launched (scripts/start.sh missing)"
 fi
-cp "$INSTALL_DIR/index.html" "$WWW_INDEX"
+if [ -f "$DEND/media/server.key" ]; then
+  echo " - Matrix Dendrite server key: present"
+else
+  echo " - Matrix Dendrite server key: ERROR (missing)"
+fi
+if [ -d "$HOME/73Linux" ]; then
+  echo " - 73Linux: installed"
+else
+  echo " - 73Linux: NOT installed"
+fi
+echo ""
+echo "starting PNK services…"
+echo "Please wait, this may take a few minutes…"
+echo "This will start the PNK services and the Matrix Dendrite server."
+./scripts/start.sh
 
-echo "7) Launching PNK services…"
-chmod +x "$INSTALL_DIR/scripts/start.sh"
-cd "$INSTALL_DIR" && ./scripts/start.sh
-
-echo
-echo "======== PNK Deployment Summary ========"
-systemctl is-active --quiet docker  && echo "✔ docker running"        || echo "✖ docker not running"
-systemctl is-active --quiet lighttpd && echo "✔ lighttpd running"     || echo "✖ lighttpd not running"
-docker ps --filter "name=dendrite" --quiet | grep -q . && echo "✔ dendrite container" || echo "✖ dendrite container"
-
+echo "PNK is live at http://localhost/"
 
 echo
 echo "🎉  All done!  Browse your PNK dashboard at http://<your-pi-ip>/"
