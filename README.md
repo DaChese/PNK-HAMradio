@@ -1,32 +1,71 @@
 # PNK-HAMradio
-project to making a raspberry pi into a portable network kit and ham radio.
 
-1. **Prerequisites**  
-   - Raspberry Pi OS Lite ( ARM64) or any Debian-based Linux  
-   - Docker & Docker Compose installed  
-   - (Optional) `docker` group membership so you can run without `sudo`  
+Turn your Raspberry Pi into a Portable Network Kit and HAM-radio hub.
 
-2. **Clone the repo**
+---
 
-   git clone https://github.com/DaChese/PNK-HAMradio.git
-   
-   cd PNK-HAMradio
+## 1. Prerequisites
 
-   chmod +x install.sh
-   
-   ./install.sh
+- **OS**: Raspberry Pi OS Lite (64-bit ARM) or any Debian-based Linux  
+- **Docker** & **Docker Compose** (or the Docker plugin) installed  
+- *Optional:* your user in the `docker` group so you can run containers without `sudo`
 
-Start everything:
+---
 
+## 2. Clone & Install
+
+```bash
+git clone https://github.com/DaChese/PNK-HAMradio.git
+cd PNK-HAMradio
+
+chmod +x install.sh
+sudo ./install.sh
+
+    The installer will:
+
+        Install system packages (Git, Lighttpd, etc.)
+
+        Install Docker via the official script
+
+        Clone or update PNK-HAMradio under /opt/pnk-hamradio
+
+        Generate a Dendrite (Matrix) server key if needed
+
+        Deploy your static dashboard to /var/www/html/index.html
+
+        Launch all PNK services (Etherpad, FileBrowser, Kolibri, UniFi, Matrix, Element)
+
+3. Start & Access
+
+Bring up your stack (if you ever need to restart):
+
+cd PNK-HAMradio
 docker compose up -d
 
-Access your dashboard
+Then point your browser at:
 
-http://<YOUR_PI_IP>:9001 or (http://localhost/)
+    Etherpad (dashboard root) http://<YOUR_PI_IP>/
 
-This repo was made by me and the ham radio software was derived from this repo below!
+    FileBrowser http://<YOUR_PI_IP>:8081
 
-Credits:
-check it out if you prefer just the ham radio software, the installer is easy to use and strightfoward.
-- **73Linux** by [km4ack](https://github.com/km4ack/73Linux)  
--  Used to install the ham-radio toolchain on Debian-based systems.
+    Kolibri http://<YOUR_PI_IP>:8082
+
+    UniFi Controller https://<YOUR_PI_IP>:8443
+
+    Matrix (Dendrite) http://<YOUR_PI_IP>:8008
+
+    Element (web chat) http://<YOUR_PI_IP>:8083
+
+(If you chose the reverse-proxy setup in Lighttpd, Etherpad will live at /pad instead of root.)
+
+4. Credits & Related Projects
+
+This project wouldn’t be possible without some awesome open-source work:
+
+    73Linux by km4ack
+    A lightweight installer for HAM-radio toolchains on Debian-based systems.
+
+    SDR++ via TekMaker/sdrplus
+    A modern, Qt-based SDR client for various radio front-ends.
+
+Feel free to explore those repos if you just want the radio-specific bits.
