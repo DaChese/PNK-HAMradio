@@ -10,7 +10,7 @@ INSTALL_DIR="$HOME/PNK-HAMradio"
 DEND="$INSTALL_DIR/matrix-pnk/dendrite"
 WWW_INDEX="/var/www/html/index.html"
 PI_USER="pi"
-DENDRITE_IMAGE="matrixdotorg/dendrite-monolith:v0.14.1"
+DENDRITE_IMAGE="matrixdotorg/dendrite-monolith:main"
 
 if [[ $EUID -ne 0 ]]; then
   echo "Please run as root: sudo $0"
