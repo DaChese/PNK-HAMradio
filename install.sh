@@ -8,7 +8,7 @@ set -euo pipefail
 ###############################################################################
 
 REPO="https://github.com/DaChese/PNK-HAMradio.git"
-INSTALL_DIR="/opt/PNK-HAMradio"
+INSTALL_DIR="/opt/pnk-hamradio"
 DEND="${INSTALL_DIR}/matrix-pnk/dendrite"
 WWW_INDEX="/var/www/html/index.html"
 PI_USER="pi"
@@ -55,7 +55,7 @@ systemctl enable --now docker lighttpd
 usermod -aG docker $PI_USER
 
 echo
-echo "4) Cloning/updating PNK-HAMradio into $INSTALL_DIR…"
+echo "4) Cloning/updating pnk-hamradio into $INSTALL_DIR…"
 if [[ -d "$INSTALL_DIR/.git" ]]; then
   cd "$INSTALL_DIR"
   git pull --ff-only origin main
