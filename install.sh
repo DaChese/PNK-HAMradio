@@ -17,16 +17,13 @@ if [[ $EUID -ne 0 ]]; then
   exit 1
 fi
 
-echo "1) Installing OS packages…"
-apt update
-apt install -y \
-    git \
-    curl \
-    ca-certificates \
-    gnupg \
-    lsb-release \
-    lighttpd \
-    python3-pip
+echo "1) Installing dependencies…"
+read -p "Do you want to run 'apt update' and 'apt upgrade -y'? (y/N): " RUN_UPGRADE
+if [[ "$RUN_UPGRADE" =~ ^[Yy]$ ]]; then
+  apt update
+  apt upgrade -y
+fi
+apt install -y git lighttpd python3-pip curl
 
 echo "Adding Docker's official repository…"
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
