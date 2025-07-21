@@ -37,8 +37,14 @@ else
   git clone "$REPO" "$INSTALL_DIR"
 fi
 
-echo "   → Fix ownership of PNK data…"
-chown -R "$PI_USER:docker" "$INSTALL_DIR"
+  echo "   → Fix ownership of PNK data…"
+  chown -R "$PI_USER:docker" "$INSTALL_DIR"
+
+  echo "   → Fix permissions for Etherpad & FileBrowser data…"
+  # from your project root (where matrix-pnk/ lives):
+  chmod -R a+rwX "$INSTALL_DIR/matrix-pnk/etherpad/var"
+  chmod -R a+rwX "$INSTALL_DIR/matrix-pnk/filebrowser"
+
 
 echo "5) Generate Dendrite key if missing…"
 mkdir -p "$DEND"/media
