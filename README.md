@@ -65,6 +65,7 @@ Matrix (Dendrite)	http://<YOUR_PI_IP>:8008
 Element (Web Chat)	http://<YOUR_PI_IP>:8083
 
     If you chose the Lighttpd reverse‑proxy setup, Etherpad will live at /pad instead of root.
+    Also Pat-Winlink uses the port 8080 which conflicts with the adoption process for the Unifi Controller for AC Meshes (bunny ears). So be mindful about it, I havent figured out how to change the port for Pat-Winlink. Although if you dont install 73Linux or dont choose the option to install Pat-Winlink through the installer for &#Linux then there should be no errors or issues for adopting Unifi devices.
 
 3. Credits & Related Projects
 
