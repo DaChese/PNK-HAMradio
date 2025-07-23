@@ -27,7 +27,6 @@ services:
     platform: linux/arm64
     container_name: kolibri
     restart: unless-stopped
-    network_mode: "host"
     ports:
       - '8082:8080'
     volumes:
@@ -38,14 +37,7 @@ services:
     platform: linux/arm64
     container_name: unifi-controller
     restart: unless-stopped
-    ports:
-      - '3478:3478/udp'   # STUN
-      - '6789:6789/tcp'   # Speed test
-      - '9080:8080/tcp'   # Device ↔ Controller
-      - '8443:8443/tcp'   # GUI/API
-      - '8880:8880/tcp'   # HTTP portal
-      - '8843:8843/tcp'   # HTTPS portal
-      - '10001:10001/udp' # AP discovery
+    network_mode: "host"
     environment:
       - PUID=1000
       - PGID=1000
