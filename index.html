@@ -36,7 +36,6 @@
   <header>
     <h1 data-key="title">📡 Portable Network Kit</h1>
     <select id="lang-select">
-      <!-- Placeholder option -->
       <option value="" disabled selected>Select Language</option>
     </select>
   </header>
@@ -62,35 +61,36 @@
         <div class="card-icon">📝</div>
         <div class="card-title" data-key="svc1_title">Etherpad</div>
         <div class="card-desc" data-key="svc1_desc">Collaborative notes and agendas.</div>
-        <a href="http://localhost:9001" data-key="svc1_link">Open Etherpad</a>
+        <a data-key="svc1_link">Open Etherpad</a>
       </div>
       <div class="card">
         <div class="card-icon">📁</div>
         <div class="card-title" data-key="svc2_title">FileBrowser</div>
         <div class="card-desc" data-key="svc2_desc">Upload, download, and share files.</div>
-        <a href="http://localhost:8081" data-key="svc2_link">Open FileBrowser</a>
+        <a data-key="svc2_link">Open FileBrowser</a>
       </div>
       <div class="card">
         <div class="card-icon">📘</div>
         <div class="card-title" data-key="svc3_title">Kolibri</div>
         <div class="card-desc" data-key="svc3_desc">Offline learning platform and resources.</div>
-        <a href="http://localhost:8082" data-key="svc3_link">Open Kolibri</a>
+        <a data-key="svc3_link">Open Kolibri</a>
       </div>
       <div class="card">
         <div class="card-icon">📡</div>
         <div class="card-title" data-key="svc4_title">UniFi Controller</div>
         <div class="card-desc" data-key="svc4_desc">Manage Ubiquiti devices and network settings.</div>
-        <a href="https://localhost:8443" data-key="svc4_link">Open UniFi</a>
+        <a data-key="svc4_link">Open UniFi</a>
       </div>
       <div class="card">
         <div class="card-icon">💬</div>
         <div class="card-title" data-key="svc5_title">Element Chat</div>
         <div class="card-desc" data-key="svc5_desc">Secure local messaging with Matrix.</div>
-        <a href="http://localhost:8083" data-key="svc5_link">Open Chat</a>
+        <a data-key="svc5_link">Open Chat</a>
       </div>
     </div>
   </main>
- <script>
+
+<script>
   async function fetchJSON(path) {
     const res = await fetch(path);
     return res.ok ? res.json() : {};
@@ -140,6 +140,26 @@
             if (translations[key]) el.textContent = translations[key];
           });
         });
+    });
+  </script>
+
+  <!-- DYNAMIC LINKS: rewrite each service link to use the host -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const host     = window.location.hostname;
+      const proto    = window.location.protocol;
+      const portMap  = {
+        svc1_link: '9001',
+        svc2_link: '8081',
+        svc3_link: '8082',
+        svc4_link: '8443',
+        svc5_link: '8083'
+      };
+
+      Object.entries(portMap).forEach(([key, port]) => {
+        const el = document.querySelector(`a[data-key="${key}"]`);
+        if (el) el.href = `${proto}//${host}:${port}`;
+      });
     });
   </script>
 </body>
