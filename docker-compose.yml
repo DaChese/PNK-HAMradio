@@ -33,7 +33,7 @@ services:
       - ./matrix-pnk/kolibri-content:/root/.kolibri
 
   unifi-controller:
-    image: lscr.io/linuxserver/unifi-controller:version-7.4.162
+    image: jacobalberty/unifi:latest 
     platform: linux/arm64
     container_name: unifi-controller
     restart: unless-stopped
@@ -52,6 +52,7 @@ services:
       - MEM_LIMIT=1024
     volumes:
       - ./matrix-pnk/unifi/config:/config
+      - ./matrix-pnk/unifi/data:/var/lib/unifi
 
   dendrite:
     image: matrixdotorg/dendrite-monolith:main
