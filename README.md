@@ -1,3 +1,4 @@
+: NOTE THIS IS STILL A WORK-IN-PROGRESS
 
 ## 1. Prerequisites
 
@@ -42,21 +43,21 @@ The installer will:
 
         Kolibri
 
-        UniFi Controller
+        UniFi Controller (keep port 8080 opened and unobstructed so the controller can adopt an AC Mesh) 
 
-        Matrix (Dendrite)
+        Matrix (Dendrite) (Work in progress server key issues) 
 
-        Element (Web Chat)
+        Element (Web Chat) (Work in progress)
 
 2. Start & Access
 
 If you need to restart or bring up the stack manually:
 
 cd PNK-HAMradio
-docker compose up -d
+docker compose up -d or sudo docker compose restart
 
 Then point your browser at:
-Service	URL
+Service	URL / local host or IP given by router or switch.
 Etherpad	http://<YOUR_PI_IP>/
 FileBrowser	http://<YOUR_PI_IP>:8081
 Kolibri	http://<YOUR_PI_IP>:8082
@@ -65,7 +66,7 @@ Matrix (Dendrite)	http://<YOUR_PI_IP>:8008
 Element (Web Chat)	http://<YOUR_PI_IP>:8083
 
     If you chose the Lighttpd reverse‑proxy setup, Etherpad will live at /pad instead of root.
-    Also Pat-Winlink uses the port 8080 which conflicts with the adoption process for the Unifi Controller for AC Meshes (bunny ears). So be mindful about it, I havent figured out how to change the port for Pat-Winlink. Although if you dont install 73Linux or dont choose the option to install Pat-Winlink through the installer for &#Linux then there should be no errors or issues for adopting Unifi devices.
+    Also Pat-Winlink uses the port 8080 which conflicts with the adoption process for the Unifi Controller for AC Meshes (bunny ears). So be mindful about it, I havent figured out how to change the port for Pat-Winlink. Although if you dont install 73Linux or dont choose the option to install Pat-Winlink through the installer ( be careful of what you install from 73Linux some of it could override some of the PNK stuff) for 73Linux then there should be no errors or issues for adopting Unifi devices.
 
 3. Credits & Related Projects
 
