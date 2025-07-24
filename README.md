@@ -75,7 +75,7 @@ This project wouldn’t be possible without some awesome open‑source work:
     73Linux by km4ack (YouTube channel https://youtube.com/@km4ack)
     A lightweight installer for HAM‑radio toolchains on Debian‑based systems.
 
-    SDR++ via TekMaker/sdrplus
+    SDR++ via TekMaker/sdrplus (https://github.com/TekMaker/SDRplus)
     A modern, Qt‑based SDR client for various radio front‑ends.
     Tested here with an RTL‑SDR USB dongle for receiving HF/VHF/UHF.
 
