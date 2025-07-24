@@ -72,7 +72,8 @@ Element (Web Chat)	http://<YOUR_PI_IP>:8083
 
 This project wouldn’t be possible without some awesome open‑source work:
 
-    73Linux by km4ack (YouTube channel https://youtube.com/@km4ack)
+    73Linux by km4ack (https://github.com/km4ack/73Linux)
+(YouTube channel https://youtube.com/@km4ack)
     A lightweight installer for HAM‑radio toolchains on Debian‑based systems.
 
     SDR++ via TekMaker/sdrplus (https://github.com/TekMaker/SDRplus)
