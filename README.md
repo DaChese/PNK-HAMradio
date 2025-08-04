@@ -60,7 +60,7 @@ Etherpad	http://<YOUR_PI_IP>/
 FileBrowser	http://<YOUR_PI_IP>:8081
 Kolibri	http://<YOUR_PI_IP>:8082
 UniFi Controller	https://<YOUR_PI_IP>:8443
-Hack-Chat	http://<YOUR_PI_IP>:6060
+Hack-Chat	http://<YOUR_PI_IP>:8083
 
     If you chose the Lighttpd reverse‑proxy setup, Etherpad will live at /pad instead of root.
     Also Pat-Winlink uses the port 8080 which conflicts with the adoption process for the Unifi Controller for AC Meshes (bunny ears). So be mindful about it, I havent figured out how to change the port for Pat-Winlink. Although if you dont install 73Linux or dont choose the option to install Pat-Winlink through the installer ( be careful of what you install from 73Linux some of it could override some of the PNK stuff) for 73Linux then there should be no errors or issues for adopting Unifi devices.
