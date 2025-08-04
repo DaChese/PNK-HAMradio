@@ -50,10 +50,13 @@ services:
   hackchat:
     build:
       context: ./matrix-pnk/hackchat
+      dockerfile: Dockerfile
     container_name: hackchat
     ports:
-      - "6060:6060"
+      - "6060:6060"   # WebSocket
+      - "8083:3000"     # HTTP static site (frontend UI)
     restart: unless-stopped
+
 
 
 
