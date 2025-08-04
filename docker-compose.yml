@@ -48,10 +48,12 @@ services:
       - ./matrix-pnk/unifi/data:/var/lib/unifi
 
   hackchat:
-    image: ghcr.io/hack-chat/main:latest
+    build:
+      context: ./matrix-pnk/hackchat
     container_name: hackchat
     ports:
       - "6060:6060"
-    volumes:
-      - ./matrix-pnk/custom-hackchat:/usr/share/nginx/html
     restart: unless-stopped
+
+
+
