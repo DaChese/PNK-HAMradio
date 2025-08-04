@@ -29,9 +29,7 @@ The installer will:
 
     Install Docker via the official script
 
-    Clone or update PNK‑HAMradio under /opt/pnk-hamradio
-
-    Generate a Dendrite (Matrix) server key if needed
+    Clone or update PNK‑HAMradio under cd PNK-HAMradio
 
     Deploy your static dashboard to /var/www/html/index.html
 
@@ -78,3 +76,29 @@ This project wouldn’t be possible without some awesome open‑source work:
     Tested here with an RTL‑SDR USB dongle for receiving HF/VHF/UHF.
 
 Feel free to explore those repos if you just want the radio‑specific bits.
+
+Also Features Added
+
+Hack.Chat: A secure, minimal chatroom interface for local/offline messaging.
+
+modBot: A customizable moderation bot that can issue bans, respond to commands, and filter users.
+
+Potential Plans for adding AI-powered chatbots for offline use.
+
+Hack.Chat
+
+GitHub: https://github.com/hack-chat/main
+
+Lightweight self-hosted chat platform using WebSocket + static frontend
+
+modBot by ToastyStoemp
+
+GitHub: https://github.com/ToastyStoemp/modBot
+
+A moderation and command bot built for Hack.Chat
+
+WebFreak001's API Tools
+
+Used by modBot for various web utilities and URL parsing
+
+This project is part of an ongoing effort to build offline-ready, resilient community internet infrastructure using the Raspberry Pi. Contributions welcome!
