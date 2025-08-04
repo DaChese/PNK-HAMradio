@@ -1,0 +1,31 @@
+{
+  "name": "modBot",
+  "version": "1.0.0",
+  "description": "A moderator bot, in this case specifically designed for hack.chat",
+  "main": "main.js",
+  "dependencies": {
+    "hack-chat": "^1.2.0",
+    "http": "0.0.0",
+    "nude": "0.0.1",
+    "phantom-render-stream": "^2.1.0",
+    "request": "^2.69.0",
+    "url-unshort": "^1.1.3",
+    "ws": "~0.7.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ToastyStoemp/modBot"
+  },
+  "keywords": [
+    "hack.chat",
+    "hackchat",
+    "moderator",
+    "modBot"
+  ],
+  "author": "ToastyStoemp",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/toastystoemp/modbot/issues"
+  },
+  "homepage": "https://github.com/toastystoemp/modbot#readme"
+}

@@ -1,0 +1,14 @@
+{
+    "botName": "modBot",
+    "botPass": "",
+    "botChannel": "programming",
+    "commandPrefix": ".",
+    "mods": [],
+    "ignore": [],
+    "nickIgnore": [],
+    "banIgnore": [],
+    "gooleApiKey": "",
+    "domain": "domain_here",
+    "path": "./i/",
+    "previewSettings": { "format": "jpg", "quality": 100, "width": 1280, "height": 960, "timeout": 1000 }
+}
