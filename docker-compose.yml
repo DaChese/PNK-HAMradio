@@ -47,32 +47,11 @@ services:
       - ./matrix-pnk/unifi/config:/config
       - ./matrix-pnk/unifi/data:/var/lib/unifi
 
-  dendrite:
-    image: matrixdotorg/dendrite-monolith:main
-    platform: linux/arm64
-    container_name: dendrite
-    restart: unless-stopped
+  hackchat:
+    image: ghcr.io/hack-chat/main:latest
+    container_name: hackchat
     ports:
-      - '8008:8008'  # client-server API
-      - '8448:8448'  # federation API
+      - "6060:6060"
     volumes:
-      - ./matrix-pnk/dendrite/dendrite.yaml:/etc/dendrite/dendrite.yaml:ro
-      - ./matrix-pnk/dendrite/media:/etc/dendrite/media
-      - ./matrix-pnk/dendrite/dendrite.db:/etc/dendrite/dendrite.db
-    command:
-      [
-        "/usr/bin/dendrite-monolith-server",
-        "--config", "/etc/dendrite/dendrite.yaml"
-      ]
-  element:
-    image: vectorim/element-web:latest
-    platform: linux/arm64
-    container_name: element
+      - ./matrix-pnk/custom-hackchat:/usr/share/nginx/html
     restart: unless-stopped
-    ports:
-      - '8083:80'  
-    environment:
-      - DEFAULT_HOMESERVER_URL=http://localhost:8008
-    volumes:
-      # Element config to skip the “pick a server” prompt
-      - ./matrix-pnk/element-config.json:/config.json:ro
