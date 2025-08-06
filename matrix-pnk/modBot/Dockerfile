@@ -7,7 +7,7 @@ COPY . .
 # Install dependencies and update
 RUN npm install \
     && npm update \
-    && npm install -g npm@latest
+    && npm install -g npm@11.5.2
 
 CMD ["node", "main.js"]
 
