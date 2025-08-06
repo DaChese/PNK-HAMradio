@@ -4,8 +4,10 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm install
+# Install dependencies and update
+RUN npm install \
+    && npm update \
+    && npm install -g npm@latest
 
-
-# Start the app
 CMD ["node", "main.js"]
+
