@@ -19,6 +19,7 @@
     "clear": "pm2 flush",
     "status": "pm2 list",
     "refresh": "pm2 flush && pm2 stop pm2.config.cjs && pm2 delete pm2.config.cjs",
+    "postinstall": "npm run config",
     "config": "node ./scripts/config.js",
     "lint": "eslint -- . ",
     "lint:fix": "eslint --fix -- . ",
