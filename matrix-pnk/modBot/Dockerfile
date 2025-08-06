@@ -6,8 +6,6 @@ COPY . .
 
 RUN npm install
 
-CMD ["node", "main.js"]
-
 
 # Start the app
 CMD ["node", "main.js"]
