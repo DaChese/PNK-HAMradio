@@ -81,8 +81,6 @@ Also Features Added
 
 Hack.Chat: A secure, minimal chatroom interface for local/offline messaging.
 
-modBot: A customizable moderation bot that can issue bans, respond to commands, and filter users.
-
 Potential Plans for adding AI-powered chatbots for offline use.
 
 Hack.Chat
@@ -91,14 +89,5 @@ GitHub: https://github.com/hack-chat/main
 
 Lightweight self-hosted chat platform using WebSocket + static frontend
 
-modBot by ToastyStoemp
-
-GitHub: https://github.com/ToastyStoemp/modBot
-
-A moderation and command bot built for Hack.Chat
-
-WebFreak001's API Tools
-
-Used by modBot for various web utilities and URL parsing
 
 This project is part of an ongoing effort to build offline-ready, resilient community internet infrastructure using the Raspberry Pi. Contributions welcome!
