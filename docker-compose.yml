@@ -63,6 +63,11 @@ services:
     ports:
       - "3000:3000"   # HTTP client
       - "6060:6060"   # WebSocket
+    volumes:
+      - ./matrix-pnk/hackchat/session.key:/app/session.key:ro
+      - ./matrix-pnk/hackchat/salt.key:/app/salt.key:ro
+      - ./matrix-pnk/hackchat/.hcserver.json:/app/.hcserver.json:ro
+      - ./matrix-pnk/hackchat/config.json:/app/config.json
     restart: unless-stopped
 
 
