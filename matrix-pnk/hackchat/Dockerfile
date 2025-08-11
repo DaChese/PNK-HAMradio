@@ -1,14 +1,19 @@
 FROM node:18-bullseye-slim
 
 WORKDIR /app
+
+# Copy package manifests first for better caching
 COPY package*.json ./
+
+# Copy the non-interactive config files BEFORE install so postinstall doesn't prompt
+COPY sessionKey.txt tripSalt.txt ./
+
+# Install deps (postinstall will see the files and skip prompting)
 RUN npm ci || npm install
 
-# bring the app in (make sure your working hackchat repo is here)
+# Now bring in the rest of the app
 COPY . .
 
-# expose WS and HTTP ports used by pm2 config (adjust if your pm2 config differs)
-EXPOSE 6060 3000
-
-# run the pm2 config that starts websocket + http server
+EXPOSE 3000 6060
 CMD ["npm", "start"]
+
