@@ -54,6 +54,18 @@ services:
       - ./matrix-pnk/unifi/config:/config
       - ./matrix-pnk/unifi/data:/var/lib/unifi
 
+
+  hackchat:
+    build:
+      context: ./matrix-pnk/hackchat
+      dockerfile: Dockerfile
+    container_name: hackchat
+    ports:
+      - "6060:6060"   # WebSocket
+      - "3000:3000"   # HTTP UI (your earlier logs showed http-server on 3000)
+    restart: unless-stopped
+
+
   pnk-logs:
     build:
       context: ./scripts/logserver
@@ -63,6 +75,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
+
 
 
     
