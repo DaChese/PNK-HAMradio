@@ -3,14 +3,16 @@ services:
   etherpad:
     image: etherpad/etherpad:latest
     platform: linux/arm64
-    user: "1000:1000"
     container_name: etherpad
-    restart: unless-stopped
+    user: "5000:5000"     
+    environment:
+      - NODE_ENV=production
     ports:
-      - '9001:9001'
+      - "9001:9001"
     volumes:
-      # persist your pads & settings
       - ./matrix-pnk/etherpad/var:/opt/etherpad-lite/var
+    restart: unless-stopped
+
 
   filebrowser:
     image: filebrowser/filebrowser:v2-arm64-s6
