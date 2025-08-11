@@ -3,6 +3,7 @@ services:
   etherpad:
     image: etherpad/etherpad:latest
     platform: linux/arm64
+    user: "1000:1000"
     container_name: etherpad
     restart: unless-stopped
     ports:
@@ -28,12 +29,13 @@ services:
     container_name: kolibri
     restart: unless-stopped
     ports:
-      - "8082:8070"    # host:container — clients continue to use :8082
+    - "8082:8070"   # host:container — clients still use host:8082
     volumes:
-      - ./matrix-pnk/kolibri-content:/kolibri_home
+    - ./matrix-pnk/kolibri-content:/root/.kolibri
     environment:
-      - TZ=UTC
+    - TZ=UTC
     mem_limit: 1536m
+    command: ["kolibri", "start", "--port", "8070", "--foreground"]
 
   unifi-controller:
     image: jacobalberty/unifi:latest 

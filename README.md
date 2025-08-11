@@ -58,7 +58,7 @@ Etherpad	http://<YOUR_PI_IP>/
 FileBrowser	http://<YOUR_PI_IP>:8081
 Kolibri	http://<YOUR_PI_IP>:8082
 UniFi Controller	https://<YOUR_PI_IP>:8443
-Hack-Chat	http://<YOUR_PI_IP>:8083 (needs work)
+Hack-Chat	http://<YOUR_PI_IP>:6040/?pnk (needs work)
 
     If you chose the Lighttpd reverse‑proxy setup, Etherpad will live at /pad instead of root.
     Also Pat-Winlink uses the port 8080 which conflicts with the adoption process for the Unifi Controller for AC Meshes (bunny ears). So be mindful about it, I havent figured out how to change the port for Pat-Winlink. Although if you dont install 73Linux or dont choose the option to install Pat-Winlink through the installer ( be careful of what you install from 73Linux some of it could override some of the PNK stuff) for 73Linux then there should be no errors or issues for adopting Unifi devices.
@@ -81,8 +81,6 @@ Also Features Added
 
 Hack.Chat: A secure, minimal chatroom interface for local/offline messaging.
 
-modBot: A customizable moderation bot that can issue bans, respond to commands, and filter users.
-
 Potential Plans for adding AI-powered chatbots for offline use.
 
 Hack.Chat
@@ -91,14 +89,5 @@ GitHub: https://github.com/hack-chat/main
 
 Lightweight self-hosted chat platform using WebSocket + static frontend
 
-modBot by ToastyStoemp
-
-GitHub: https://github.com/ToastyStoemp/modBot
-
-A moderation and command bot built for Hack.Chat
-
-WebFreak001's API Tools
-
-Used by modBot for various web utilities and URL parsing
 
 This project is part of an ongoing effort to build offline-ready, resilient community internet infrastructure using the Raspberry Pi. Contributions welcome!
