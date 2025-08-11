@@ -2,28 +2,30 @@ FROM node:18-bullseye-slim
 
 WORKDIR /app
 
-# copy manifests first
+# Copy manifests first
 COPY package*.json ./
 
-# provide non-interactive keys before install so postinstall doesn't prompt
+# Copy non-interactive key files BEFORE install so postinstall won't prompt
 COPY sessionKey.txt tripSalt.txt ./
 
-# install deps without running postinstall scripts
+# Install deps WITHOUT running postinstall scripts (which asks for keys)
 RUN npm ci --ignore-scripts || npm install --ignore-scripts
 
-# install pm2 globally (provides pm2-runtime)
+# Install pm2 (provides pm2-runtime)
 RUN npm install -g pm2
 
-# bring in the rest of the app
+# Generate config.json from the key files
+RUN node -e "const fs=require('fs'); const cfg={ sessionKey:fs.readFileSync('sessionKey.txt','utf8').trim(), tripSalt:fs.readFileSync('tripSalt.txt','utf8').trim(), port:6060 }; fs.writeFileSync('config.json', JSON.stringify(cfg,null,2));"
+
+# Bring in the rest of the app
 COPY . .
 
 EXPOSE 3000 6060
 
-# IMPORTANT: disable Node's default entrypoint so we can run a non-node binary
+# Run PM2 in foreground (avoid container exit)
 ENTRYPOINT []
-
-# keep pm2 in foreground so container stays up
 CMD ["pm2-runtime", "pm2.config.cjs"]
+
 
 
 
