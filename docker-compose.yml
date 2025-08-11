@@ -67,14 +67,13 @@ services:
 
 
   pnk-logs:
-    build:
-      context: ./scripts/logserver
+    build: { context: ./scripts/logserver }
     container_name: pnk-logs
-    ports:
-      - "6061:6061"
+    ports: ["6061:6061"]
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
+
 
 
 
