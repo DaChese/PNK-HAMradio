@@ -1,28 +1,28 @@
 FROM node:18-bullseye-slim
-
 WORKDIR /app
 
-# Copy manifests first
+# Copy package manifests first
 COPY package*.json ./
 
-# Copy non-interactive key files BEFORE install so postinstall won't prompt
-COPY sessionKey.txt tripSalt.txt ./
+# If you keep keys in repo: copy them and name as expected
+# (or mount them with volumes in compose; your call)
+COPY session.key salt.key ./
 
-# Install deps WITHOUT running postinstall scripts (which asks for keys)
+# Install deps WITHOUT postinstall (avoids interactive config)
 RUN npm ci --ignore-scripts || npm install --ignore-scripts
 
-# Install pm2 (provides pm2-runtime)
+# PM2 in foreground
 RUN npm install -g pm2
 
-# Generate config.json from the key files
-RUN node -e "const fs=require('fs'); const cfg={ sessionKey:fs.readFileSync('sessionKey.txt','utf8').trim(), tripSalt:fs.readFileSync('tripSalt.txt','utf8').trim(), port:6060 }; fs.writeFileSync('config.json', JSON.stringify(cfg,null,2));"
+# Provide default configs the server expects
+# (you can also COPY real files instead)
+RUN node -e "const fs=require('fs');fs.writeFileSync('.hcserver.json', JSON.stringify({modulesPath:'./commands', websocketPort:'6060', rateLimit:{halflife:'30000',threshold:'25'}, pulseSpeed:'16000'}, null, 2));" \
+ && node -e "const fs=require('fs'); if(!fs.existsSync('config.json')) fs.writeFileSync('config.json', JSON.stringify({channels:{},bans:[],mods:[]}, null, 2));"
 
-# Bring in the rest of the app
+# Bring in the rest
 COPY . .
 
 EXPOSE 3000 6060
-
-# Run PM2 in foreground (avoid container exit)
 ENTRYPOINT []
 CMD ["pm2-runtime", "pm2.config.cjs"]
 
