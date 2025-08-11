@@ -25,4 +25,3 @@ CMD ["sh","-lc","rm -rf /tmp/commands && cp -a /app/commands /tmp/commands && pm
 
 
 
-
