@@ -162,5 +162,24 @@
       });
     });
   </script>
+  <h2>Service Logs</h2>
+<select id="serviceSelect">
+  <option value="filebrowser">FileBrowser</option>
+  <option value="etherpad">Etherpad</option>
+  <option value="kolibri">Kolibri</option>
+  <option value="unifi-controller">UniFi Controller</option>
+  <option value="hackchat-httpd">HackChat HTTP</option>
+  <option value="hackchat-websocket">HackChat WebSocket</option>
+</select>
+<button onclick="loadLogs()">Load Logs</button>
+<pre id="logOutput" style="background:black; color:lime; padding:10px;"></pre>
+
+<script>
+async function loadLogs() {
+  const service = document.getElementById("serviceSelect").value;
+  const res = await fetch(`http://<127.0.0.1>:6061/logs/${service}`);
+  document.getElementById("logOutput").textContent = await res.text();
+}
+</script>
 </body>
 </html>
