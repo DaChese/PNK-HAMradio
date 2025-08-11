@@ -55,18 +55,18 @@ services:
       - ./matrix-pnk/unifi/data:/var/lib/unifi
 
 
-hackchat:
-  build:
-    context: ./matrix-pnk/hackchat
-    dockerfile: Dockerfile
-  container_name: hackchat
-  ports:
-    - "3000:3000"   # HTTP client
-    - "6060:6060"   # WebSocket
-  volumes:
-    - ./matrix-pnk/hackchat/sessionKey.txt:/app/sessionKey.txt:ro
-    - ./matrix-pnk/hackchat/tripSalt.txt:/app/tripSalt.txt:ro
-  restart: unless-stopped
+  hackchat:
+    build:
+      context: ./matrix-pnk/hackchat
+      dockerfile: Dockerfile
+    container_name: hackchat
+    ports:
+      - "3000:3000"   # HTTP client
+      - "6060:6060"   # WebSocket
+    volumes:
+      - ./matrix-pnk/hackchat/sessionKey.txt:/app/sessionKey.txt:ro
+      - ./matrix-pnk/hackchat/tripSalt.txt:/app/tripSalt.txt:ro
+    restart: unless-stopped
 
 
 
