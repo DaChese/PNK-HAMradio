@@ -15,7 +15,8 @@ COPY tripSalt.txt   ./tripSalt.txt
 RUN npm ci --ignore-scripts || npm install --ignore-scripts
 
 EXPOSE 3000 6060
-CMD ["npm", "start"]
+CMD ["pm2-runtime", "pm2.config.cjs"]
+
 
 
 
