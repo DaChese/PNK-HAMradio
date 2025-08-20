@@ -55,30 +55,6 @@ services:
       - ./matrix-pnk/unifi/data:/var/lib/unifi
 
 
-  hackchat:
-    build:
-      context: ./matrix-pnk/hackchat
-      dockerfile: Dockerfile
-    container_name: hackchat
-    ports:
-      - "3000:3000"   # HTTP client
-      - "6060:6060"   # WebSocket
-    volumes:
-      - ./matrix-pnk/hackchat/session.key:/app/session.key:ro
-      - ./matrix-pnk/hackchat/salt.key:/app/salt.key:ro
-      - ./matrix-pnk/hackchat/.hcserver.json:/app/.hcserver.json:ro
-      - ./matrix-pnk/hackchat/config.json:/app/config.json
-    restart: unless-stopped
-
-
-
-  pnk-logs:
-    build: { context: ./scripts/logserver }
-    container_name: pnk-logs
-    ports: ["6061:6061"]
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    restart: unless-stopped
 
 
 
