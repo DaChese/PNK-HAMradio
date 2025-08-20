@@ -3,11 +3,12 @@ set -euo pipefail
 
 ###############################################################################
 #  PNK-HAMradio installer/updater (Pi OS 64-bit)
-#  - Keeps Docker stack (Etherpad/FileBrowser/Kolibri/UniFi)
-#  - Installs HackChat bare-metal + Lighttpd proxy /chat-ws
-#  - Patches dashboard (status panel + fixed links) once
-#  - Optional: --logs-api installs PNK Logs API (+ /status, /logs/)
-#  - Optional: --sdrpp installs SDR++ server mode (built as non-root) + systemd
+#  - Docker stack (Etherpad/FileBrowser/Kolibri/UniFi)
+#  - HackChat bare-metal + Lighttpd /chat-ws proxy
+#  - Dashboard patch (status panel + fixed links)
+#  - Optional: --logs-api (adds /status + /logs/* via Lighttpd)
+#  - Optional: --sdrpp (SDR++ server, built as non-root) + systemd
+#  - Optional: --openwebrx (browser SDR waterfall) proxied at /radio
 #  - Flags: --patch-dashboard-only (HTML only), --no-docker (skip Docker)
 ###############################################################################
 
@@ -15,6 +16,7 @@ REPO="https://github.com/DaChese/PNK-HAMradio.git"
 INSTALL_DIR="${INSTALL_DIR:-/home/pi/PNK-HAMradio}"
 WWW_INDEX="/var/www/html/index.html"
 
+# HackChat
 HC_DIR="/opt/hackchat"
 HC_PORT="6060"
 HC_UNIT="hackchat"
@@ -28,25 +30,31 @@ LOGSAPI_UNIT="pnk-logs-api"
 SDRPP_UNIT="sdrpp-server"
 SDRPP_PORT="5259"
 
+# OpenWebRX (optional)
+OPENWEBRX_UNIT=""
+OPENWEBRX_PORT="8073"
+
 PI_USER="${PI_USER:-${SUDO_USER:-pi}}"
 
 ACTION=""
 WITH_LOGS_API="false"
+WITH_SDRPP="false"
+WITH_OPENWEBRX="false"
 PATCH_DASH_ONLY="false"
 SKIP_DOCKER="false"
-WITH_SDRPP="false"
 
 usage() {
   cat <<USAGE
 Usage:
-  sudo $0 --install [--logs-api] [--sdrpp] [--no-docker] [--patch-dashboard-only]
-  sudo $0 --update  [--logs-api] [--sdrpp] [--no-docker] [--patch-dashboard-only]
+  sudo $0 --install [--logs-api] [--sdrpp] [--openwebrx] [--no-docker] [--patch-dashboard-only]
+  sudo $0 --update  [--logs-api] [--sdrpp] [--openwebrx] [--no-docker] [--patch-dashboard-only]
   sudo $0 --uninstall
 
 Flags:
   --logs-api              Install/refresh the PNK Logs API (status + logs + live tail)
-  --sdrpp                 Install SDR++ in server mode (headless) on port ${SDRPP_PORT}
-  --no-docker             Skip Docker install and docker compose up/down/pull
+  --sdrpp                 Install SDR++ server mode (headless) on port ${SDRPP_PORT}
+  --openwebrx             Install OpenWebRX (browser SDR UI) and proxy at /radio
+  --no-docker             Skip Docker install and docker compose actions
   --patch-dashboard-only  Only patch /var/www/html/index.html (no services touched)
 
 Env overrides:
@@ -60,6 +68,7 @@ while [[ $# -gt 0 ]]; do
     --install|--update|--uninstall) ACTION="${1#--}"; shift;;
     --logs-api) WITH_LOGS_API="true"; shift;;
     --sdrpp) WITH_SDRPP="true"; shift;;
+    --openwebrx) WITH_OPENWEBRX="true"; shift;;
     --no-docker) SKIP_DOCKER="true"; shift;;
     --patch-dashboard-only) PATCH_DASH_ONLY="true"; shift;;
     -h|--help) usage; exit 0;;
@@ -133,6 +142,7 @@ patch_dashboard_once() {
     <div><span id="st-unifi">⏳</span><div>UniFi UI</div></div>
     <div><span id="st-hackchat">⏳</span><div>HackChat WS</div></div>
     <div><span id="st-sdrpp">⏳</span><div>SDR++</div></div>
+    <div><span id="st-owrx">⏳</span><div>SDR WebRX</div></div>
     <div><span id="st-logs">⏳</span><div>Logs API</div></div>
   </div>
 </section>
@@ -153,7 +163,8 @@ patch_dashboard_once() {
     svc2_link: `${proto}//${host}:8081`,      // FileBrowser
     svc3_link: `${proto}//${host}:8082`,      // Kolibri
     svc4_link: `https://${host}:8443`,        // UniFi UI
-    svc5_link: `https://hack.chat/?pnk&ws=${encodeURIComponent(HC_WS)}`
+    svc5_link: `https://hack.chat/?pnk&ws=${encodeURIComponent(HC_WS)}`,
+    svc6_link: `/radio`                       // OpenWebRX via proxy
   };
 
   Object.entries(links).forEach(([k, href]) => {
@@ -175,9 +186,10 @@ patch_dashboard_once() {
       mark("st-unifi",       okOr(s["unifi-controller"]?.systemd?.active, s["unifi-controller"]?.http?.ok));
       mark("st-hackchat",    okOr(s["hackchat-websocket"]?.systemd?.active, s["hackchat-websocket"]?.tcp));
       mark("st-sdrpp",       okOr(s["sdrpp"]?.systemd?.active,              s["sdrpp"]?.tcp));
+      mark("st-owrx",        okOr(s["openwebrx"]?.systemd?.active,          s["openwebrx"]?.http?.ok));
       mark("st-logs", true);
     } catch {
-      ["st-etherpad","st-filebrowser","st-kolibri","st-unifi","st-hackchat","st-sdrpp","st-logs"].forEach(id=>mark(id,false));
+      ["st-etherpad","st-filebrowser","st-kolibri","st-unifi","st-hackchat","st-sdrpp","st-owrx","st-logs"].forEach(id=>mark(id,false));
     }
   }
   refresh(); setInterval(refresh, 10000);
@@ -194,19 +206,29 @@ patch_dashboard_once() {
 }
 
 setup_lighttpd_proxy() {
-  log "Lighttpd: enable proxy + wstunnel and proxy /chat-ws…"
+  log "Lighttpd: enable proxy + wstunnel and proxy /chat-ws & /radio…"
   lighttpd-enable-mod proxy >/dev/null 2>&1 || true
   lighttpd-enable-mod wstunnel >/dev/null 2>&1 || true
 
   local conf="/etc/lighttpd/conf-available/99-pnk-proxy.conf"
   touch "$conf"
 
-  # Ensure /chat-ws proxy exists
+  # /chat-ws for HackChat
   if ! grep -q '^\$HTTP\["url"\] =~ "\^/chat-ws"' "$conf"; then
     cat >> "$conf" <<'CONF'
 # PNK HackChat WebSocket
 $HTTP["url"] =~ "^/chat-ws" {
   wstunnel.server = ( "" => ( ( "host" => "127.0.0.1", "port" => 6060 ) ) )
+}
+CONF
+  fi
+
+  # /radio for OpenWebRX
+  if ! grep -q '^\$HTTP\["url"\] =~ "\^/radio"' "$conf"; then
+    cat >> "$conf" <<'CONF'
+# PNK OpenWebRX proxy
+$HTTP["url"] =~ "^/radio" {
+  proxy.server = ( "" => ( ( "host" => "127.0.0.1", "port" => 8073 ) ) )
 }
 CONF
   fi
@@ -229,17 +251,6 @@ install_hackchat() {
   if ! npm -C "$HC_DIR" ci --omit=dev; then
     npm -C "$HC_DIR" install --omit=dev
   fi
-
-  # config (kept for compatibility—even if main.mjs doesn’t read it, harmless)
-  cat > "$HC_DIR/.hcserver.json" <<JSON
-{
-  "host": "0.0.0.0",
-  "port": ${HC_PORT},
-  "msgRateLimit": 2,
-  "msgRateWindow": 1000,
-  "maxMessageLength": 2048
-}
-JSON
 
   # systemd unit
   cat > "/etc/systemd/system/${HC_UNIT}.service" <<UNIT
@@ -274,14 +285,12 @@ UNIT
 install_sdrpp_server() {
   log "Installing SDR++ (server mode)…"
 
-  # 1) Root: install build/runtime deps and USB rules
+  # 1) Root: build/runtime deps + USB groups
   apt-get update
   apt-get install -y \
     git cmake build-essential pkg-config \
     libfftw3-dev libusb-1.0-0-dev librtlsdr-dev \
     libglfw3-dev libvolk2-dev
-
-  # Ensure user has access to USB radio devices
   usermod -aG plugdev "${PI_USER}" || true
 
   # Optional: prevent DVB kernel driver from grabbing RTL-SDR dongles
@@ -293,7 +302,7 @@ blacklist rtl2830
 EOF
   fi
 
-  # 2) Non-root: clone & build SDR++ from source in the user's home
+  # 2) Non-root: clone & build SDR++ in the user's home
   sudo -u "${PI_USER}" -H bash -lc '
     set -e
     mkdir -p "$HOME/src"
@@ -308,10 +317,10 @@ EOF
     cmake --build build -j"$(nproc)"
   '
 
-  # 3) Root: install the built binaries to /usr/local
+  # 3) Root: install built binaries to /usr/local
   cmake --install "/home/${PI_USER}/src/SDRPlusPlus/build"
 
-  # 4) systemd unit (runs as the normal user)
+  # 4) systemd unit
   cat >/etc/systemd/system/${SDRPP_UNIT}.service <<UNIT
 [Unit]
 Description=SDR++ Server (headless)
@@ -339,12 +348,59 @@ UNIT
   log "SDR++ installed. Service: ${SDRPP_UNIT} on port ${SDRPP_PORT}"
 }
 
+install_openwebrx() {
+  log "Installing OpenWebRX (browser SDR)…"
+  apt-get update
+  if ! apt-get install -y openwebrx rtl-sdr sox csdr; then
+    echo "Could not install openwebrx from apt. Aborting this step."; return 1
+  fi
+
+  # Detect service name shipped by the package
+  if systemctl list-unit-files | grep -q '^openwebrx\.service'; then
+    OPENWEBRX_UNIT="openwebrx"
+  elif systemctl list-unit-files | grep -q '^openwebrx-plus\.service'; then
+    OPENWEBRX_UNIT="openwebrx-plus"
+  else
+    # Fallback systemd unit (runs /usr/bin/openwebrx)
+    OPENWEBRX_UNIT="openwebrx"
+    cat >/etc/systemd/system/openwebrx.service <<'UNIT'
+[Unit]
+Description=OpenWebRX
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+ExecStart=/usr/bin/openwebrx
+Restart=on-failure
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
+UNIT
+    systemctl daemon-reload
+  fi
+
+  # Enable & start
+  systemctl enable --now "$OPENWEBRX_UNIT"
+
+  # USB access for RTL-SDR user
+  usermod -aG plugdev "${PI_USER}" || true
+
+  # Lighttpd proxy is set up in setup_lighttpd_proxy()
+  lighttpd -tt -f /etc/lighttpd/lighttpd.conf && systemctl reload lighttpd
+
+  log "OpenWebRX running. Visit: http://<pi-ip>/radio (port ${OPENWEBRX_PORT})"
+}
+
 install_logs_api() {
   [[ "$WITH_LOGS_API" == "true" ]] || return 0
   log "Installing/Updating PNK Logs API…"
   mkdir -p "$LOGSAPI_DIR"
 
-  # server.js (status + logs + SSE)
+  # server.js
   cat > "${LOGSAPI_DIR}/server.js" <<'JS'
 #!/usr/bin/env node
 const http = require('http');
@@ -457,12 +513,20 @@ srv.listen(cfg.port||6061,'127.0.0.1',()=>console.log(`PNK Logs API on 127.0.0.1
 JS
   chmod +x "${LOGSAPI_DIR}/server.js"
 
-  # Extend Logs API config when SDR++ is installed in this run
+  # Build optional inserts for SDR++ and OpenWebRX
   local extra_unit=''
   local extra_tcp=''
   if [[ "$WITH_SDRPP" == "true" ]]; then
     extra_unit=',\n    "sdrpp": "'"${SDRPP_UNIT}"'"'
     extra_tcp=',\n    "sdrpp": { "host": "127.0.0.1", "port": '"${SDRPP_PORT}"', "timeoutMs": 1500 }'
+  fi
+
+  local extra_unit2=''
+  local extra_http=''
+  if [[ "$WITH_OPENWEBRX" == "true" || -n "${OPENWEBRX_UNIT:-}" ]]; then
+    [[ -z "${OPENWEBRX_UNIT:-}" ]] && OPENWEBRX_UNIT="openwebrx"
+    extra_unit2=',\n    "openwebrx": "'"${OPENWEBRX_UNIT}"'"'
+    extra_http=',\n    "openwebrx": { "url": "http://127.0.0.1:8073/", "timeoutMs": 5000 }'
   fi
 
   # config.json
@@ -476,13 +540,13 @@ JS
     "etherpad": "etherpad",
     "filebrowser": "filebrowser",
     "kolibri": "kolibri",
-    "unifi-controller": "unifi"${extra_unit}
+    "unifi-controller": "unifi"${extra_unit}${extra_unit2}
   },
   "httpChecks": {
     "etherpad": { "url": "http://127.0.0.1:9001/", "timeoutMs": 3000 },
     "filebrowser": { "url": "http://127.0.0.1:8081/", "timeoutMs": 3000 },
     "kolibri": { "url": "http://127.0.0.1:8082/", "timeoutMs": 5000 },
-    "unifi-controller": { "url": "https://127.0.0.1:8443/", "insecure": true, "timeoutMs": 5000 }
+    "unifi-controller": { "url": "https://127.0.0.1:8443/", "insecure": true, "timeoutMs": 5000 }${extra_http}
   },
   "tcpChecks": {
     "hackchat-websocket": { "host": "127.0.0.1", "port": 6060, "timeoutMs": 1500 }${extra_tcp}
@@ -517,7 +581,7 @@ UNIT
   systemctl daemon-reload
   systemctl enable --now "${LOGSAPI_UNIT}.service"
 
-  # Lighttpd proxy blocks for /logs/ and /status
+  # Lighttpd proxy blocks for /logs and /status
   local conf="/etc/lighttpd/conf-available/99-pnk-proxy.conf"
   if ! grep -q '^\$HTTP\["url"\] =~ "\^/logs/"' "$conf"; then
     cat >> "$conf" <<'CONF'
@@ -572,11 +636,13 @@ case "$ACTION" in
     setup_lighttpd_proxy
     install_hackchat
     [[ "$WITH_SDRPP" == "true" ]] && install_sdrpp_server
+    [[ "$WITH_OPENWEBRX" == "true" ]] && install_openwebrx
     [[ "$WITH_LOGS_API" == "true" ]] && install_logs_api
     start_compose_stack
     echo -e "\n✅ Done! Open:  http://<pi-ip>/"
     echo "   HackChat WS: ws(s)://<pi-host>/chat-ws"
     [[ "$WITH_SDRPP" == "true" ]] && echo "   SDR++:       Connect via SDR++ client → ${SDRPP_PORT} (Source: \"SDR++ Server\")"
+    [[ "$WITH_OPENWEBRX" == "true" ]] && echo "   OpenWebRX:   http://<pi-ip>/radio"
     [[ "$WITH_LOGS_API" == "true" ]] && echo "   Status JSON: http://<pi-ip>/status    Logs: http://<pi-ip>/logs/<service>"
     ;;
   uninstall)
@@ -595,7 +661,14 @@ case "$ACTION" in
       rm -f "/etc/systemd/system/${SDRPP_UNIT}.service"
     fi
 
+    if systemctl list-unit-files | grep -q '^openwebrx' ; then
+      systemctl disable --now openwebrx 2>/dev/null || true
+    fi
+    if systemctl list-unit-files | grep -q '^openwebrx-plus' ; then
+      systemctl disable --now openwebrx-plus 2>/dev/null || true
+    fi
+
     systemctl daemon-reload
-    echo "Uninstalled HackChat and (if present) Logs API + SDR++ (proxies remain)."
+    echo "Uninstalled HackChat and (if present) Logs API + SDR++ + OpenWebRX (proxies remain)."
     ;;
 esac
