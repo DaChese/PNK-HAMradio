@@ -66,9 +66,6 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-[[ -n "${ACTION:-}" ]] || { usage; exit 1; }
-[[ $EUID -eq 0 ]] || { echo "Please run as root: sudo $0 ..."; exit 1; }
-
 log(){ echo -e "\n==> $*\n"; }
 
 ensure_pkgs() {
