@@ -3,73 +3,121 @@ set -euo pipefail
 
 ###############################################################################
 #  PNK-HAMradio installer/updater (Pi OS 64-bit)
-#  - Keeps Docker stack for Etherpad/FileBrowser/Kolibri/UniFi
-#  - Installs HackChat bare-metal with systemd
-#  - Proxies HackChat WS via Lighttpd at /chat-ws
-#  - Patches dashboard links + status panel (once, safely)
+#  - Keeps Docker stack (Etherpad/FileBrowser/Kolibri/UniFi)
+#  - Installs HackChat bare-metal + Lighttpd proxy /chat-ws
+#  - Patches dashboard (status panel + fixed links) once
+#  - Optional: --logs-api installs PNK Logs API (+ /status, /logs/)
+#  - NEW: --patch-dashboard-only (HTML only), --no-docker (skip Docker steps)
 ###############################################################################
 
 REPO="https://github.com/DaChese/PNK-HAMradio.git"
 INSTALL_DIR="${INSTALL_DIR:-/home/pi/PNK-HAMradio}"
 WWW_INDEX="/var/www/html/index.html"
+
 HC_DIR="/opt/hackchat"
 HC_PORT="6060"
-SYSTEMD_HC="hackchat"
+HC_UNIT="hackchat"
+
+# Logs API (optional)
+LOGSAPI_DIR="/opt/pnk-logs-api"
+LOGSAPI_PORT="6061"
+LOGSAPI_UNIT="pnk-logs-api"
+
 PI_USER="${PI_USER:-${SUDO_USER:-pi}}"
 
-need_root() { [[ $EUID -eq 0 ]] || { echo "Please run as root: sudo $0"; exit 1; }; }
-msg() { echo -e "\n==> $*\n"; }
+ACTION=""
+WITH_LOGS_API="false"
+PATCH_DASH_ONLY="false"
+SKIP_DOCKER="false"
 
-need_root
+usage() {
+  cat <<USAGE
+Usage:
+  sudo $0 --install [--logs-api] [--no-docker] [--patch-dashboard-only]
+  sudo $0 --update  [--logs-api] [--no-docker] [--patch-dashboard-only]
+  sudo $0 --uninstall
 
-msg "1) Installing system packages…"
-apt update
-apt install -y git curl lighttpd python3-pip
+Flags:
+  --logs-api              Install/refresh the PNK Logs API (status + logs + live tail)
+  --no-docker             Skip Docker install and docker compose up/down/pull
+  --patch-dashboard-only  Only patch /var/www/html/index.html (no services touched)
 
-if ! command -v node >/dev/null 2>&1; then
-  msg "Installing Node.js 20 LTS…"
-  curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-  apt install -y nodejs
-fi
+Env overrides:
+  INSTALL_DIR=/home/pi/PNK-HAMradio   PI_USER=pi
 
-msg "2) Installing Docker (for existing PNK services)…"
-if ! command -v docker >/dev/null 2>&1; then
-  curl -fsSL https://get.docker.com | sh
-fi
+Notes:
+  --patch-dashboard-only ignores other service flags (no Docker/HackChat/Logs API changes).
+USAGE
+}
 
-msg "3) Enable services & add '${PI_USER}' to docker group…"
-systemctl enable --now docker lighttpd
-id -u "$PI_USER" >/dev/null 2>&1 || useradd -m "$PI_USER"
-usermod -aG docker "$PI_USER"
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --install|--update|--uninstall) ACTION="${1#--}"; shift;;
+    --logs-api) WITH_LOGS_API="true"; shift;;
+    --no-docker) SKIP_DOCKER="true"; shift;;
+    --patch-dashboard-only) PATCH_DASH_ONLY="true"; shift;;
+    -h|--help) usage; exit 0;;
+    *) echo "Unknown arg: $1"; usage; exit 1;;
+  esac
+done
 
-msg "4) Clone or update PNK-HAMradio repo…"
-if [[ -d "$INSTALL_DIR/.git" ]]; then
-  git -C "$INSTALL_DIR" pull --ff-only origin main
-else
-  rm -rf "$INSTALL_DIR"
-  sudo -u "$PI_USER" git clone "$REPO" "$INSTALL_DIR"
-fi
+[[ -n "${ACTION:-}" ]] || { usage; exit 1; }
+[[ $EUID -eq 0 ]] || { echo "Please run as root: sudo $0 ..."; exit 1; }
 
-echo "   → Fix ownership of PNK data…"
-chown -R "$PI_USER:docker" "$INSTALL_DIR"
+log(){ echo -e "\n==> $*\n"; }
 
-echo "   → Fix permissions for Etherpad & FileBrowser data…"
-chmod -R a+rwX "$INSTALL_DIR/matrix-pnk/etherpad/var" || true
-chmod -R a+rwX "$INSTALL_DIR/matrix-pnk/filebrowser" || true
+ensure_pkgs() {
+  log "Installing system packages…"
+  apt update
+  apt install -y git curl lighttpd python3-pip ca-certificates
+}
 
-msg "5) Deploy/patch dashboard…"
-if [[ -f "$WWW_INDEX" && ! -f "${WWW_INDEX}.bak" ]]; then
-  cp "$WWW_INDEX" "${WWW_INDEX}.bak"
-fi
-# Use repo index if present; else keep existing
-if [[ -f "$INSTALL_DIR/index.html" ]]; then
-  cp "$INSTALL_DIR/index.html" "$WWW_INDEX"
-fi
+ensure_node() {
+  if ! command -v node >/dev/null 2>&1; then
+    log "Installing Node.js 20 LTS…"
+    curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+    apt install -y nodejs
+  fi
+}
 
-# Append PNK patch once (adds status panel + corrected links)
-if ! grep -q "PNK PATCH: Status panel" "$WWW_INDEX"; then
-  awk -v add='
-<!-- ===== PNK PATCH: Status panel + improved HackChat link ===== -->
+ensure_docker() {
+  [[ "$SKIP_DOCKER" == "true" ]] && { log "Skipping Docker (--no-docker)."; return 0; }
+  if ! command -v docker >/dev/null 2>&1; then
+    log "Installing Docker…"
+    curl -fsSL https://get.docker.com | sh
+  fi
+  systemctl enable --now docker
+  id -u "$PI_USER" >/dev/null 2>&1 || useradd -m "$PI_USER"
+  usermod -aG docker "$PI_USER" || true
+}
+
+clone_or_update_repo() {
+  log "Clone/update PNK-HAMradio repo…"
+  if [[ -d "$INSTALL_DIR/.git" ]]; then
+    git -C "$INSTALL_DIR" pull --ff-only origin main
+  else
+    rm -rf "$INSTALL_DIR"
+    sudo -u "$PI_USER" git clone "$REPO" "$INSTALL_DIR"
+  fi
+  chown -R "$PI_USER:docker" "$INSTALL_DIR"
+  chmod -R a+rwX "$INSTALL_DIR/matrix-pnk/etherpad/var" || true
+  chmod -R a+rwX "$INSTALL_DIR/matrix-pnk/filebrowser"   || true
+}
+
+patch_dashboard_once() {
+  log "Deploy/patch dashboard…"
+  systemctl enable --now lighttpd
+
+  # Only copy repo index during normal install/update flows (not in --patch-dashboard-only)
+  if [[ "$PATCH_DASH_ONLY" != "true" && -f "$INSTALL_DIR/index.html" ]]; then
+    [[ -f "$WWW_INDEX" && ! -f "${WWW_INDEX}.bak" ]] && cp "$WWW_INDEX" "${WWW_INDEX}.bak"
+    cp "$INSTALL_DIR/index.html" "$WWW_INDEX"
+  fi
+
+  # Inject status panel + link fixer only if not present
+  if ! grep -q "PNK PATCH v2: Status via /status" "$WWW_INDEX" 2>/dev/null; then
+    awk -v add='
+<!-- ===== PNK PATCH v2: Status via /status + HackChat link ===== -->
 <section class="goals" style="margin:2rem 0">
   <h2>🩺 Service Status</h2>
   <div id="svc-status" class="goals-list">
@@ -81,79 +129,103 @@ if ! grep -q "PNK PATCH: Status panel" "$WWW_INDEX"; then
     <div><span id="st-logs">⏳</span><div>Logs API</div></div>
   </div>
 </section>
+
 <script>
 (function(){
   const host = location.hostname;
   const http = location.protocol;
-  const isTLS = (http === "https:");
+  const isTLS = http === "https:";
   const wsProto = isTLS ? "wss" : "ws";
 
-  // Using Lighttpd proxy at /chat-ws (set below)
+  // We proxy HackChat at /chat-ws (configured in Lighttpd)
   const HC_WS = `${wsProto}://${host}/chat-ws`;
 
-  // Rewrite tiles (open in new tab)
+  // Rewrite tile links (new tab)
   const links = {
-    svc1_link: `${http}//${host}:9001`,        // Etherpad
-    svc2_link: `${http)//${host}:8081`,        // FileBrowser
-    svc3_link: `${http}//${host}:8082`,        // Kolibri
-    svc4_link: `https://${host}:8443`,         // UniFi UI (UI is 8443, not 8080)
+    svc1_link: `${http}//${host}:9001`,       // Etherpad
+    svc2_link: `${http)//${host}:8081`,       // FileBrowser
+    svc3_link: `${http}//${host}:8082`,       // Kolibri
+    svc4_link: `https://${host}:8443`,        // UniFi UI
     svc5_link: `https://hack.chat/?pnk&ws=${encodeURIComponent(HC_WS)}`
   };
-  Object.entries(links).forEach(([key, href]) => {
-    const el = document.querySelector(`a[data-key="${key}"]`);
+  // fix minor typo in svc2_link (`)`), then assign:
+  links.svc2_link = `${http}//${host}:8081`;
+
+  Object.entries(links).forEach(([k, href]) => {
+    const el = document.querySelector(`a[data-key="${k}"]`);
     if (el) { el.href = href; el.target = "_blank"; el.rel = "noopener"; }
   });
 
-  // Status checks
-  const endpoints = {
-    etherpad:  `${http}//${host}:9001/`,
-    filebrowser:`${http}//${host}:8081/`,
-    kolibri:   `${http)//${host}:8082/`,
-    unifi:     `https://${host}:8443/`,
-    logs:      `${http}//${host}/logs/hackchat-websocket?lines=1`
-  };
+  // Status via /status (proxied to Logs API if installed)
   const mark = (id, ok) => { const el = document.getElementById(id); if (el) el.textContent = ok ? "✅" : "❌"; };
-  const ping = (url, id) => fetch(url, { method:"GET", mode:"no-cors" })
-      .then(()=>mark(id,true)).catch(()=>mark(id,false));
-  const pingImg = (url, id) => { const img=new Image(); img.onload=()=>mark(id,true); img.onerror=()=>mark(id,false); img.src=url; };
-
-  ping(endpoints.etherpad, "st-etherpad");
-  ping(endpoints.filebrowser, "st-filebrowser");
-  ping(endpoints.kolibri, "st-kolibri");
-  fetch(endpoints.unifi, { mode:"no-cors" }).then(()=>mark("st-unifi",true)).catch(()=>pingImg(endpoints.unifi,"st-unifi"));
-  fetch(endpoints.logs).then(r=>mark("st-logs",r.ok)).catch(()=>mark("st-logs",false));
-
-  try {
-    const ws = new WebSocket(HC_WS);
-    const t = setTimeout(()=>{ try{ws.close()}catch(e){}; mark("st-hackchat", false); }, 3000);
-    ws.onopen = ()=>{ clearTimeout(t); mark("st-hackchat", true); ws.close(); };
-    ws.onerror = ()=>{ clearTimeout(t); mark("st-hackchat", false); };
-  } catch { mark("st-hackchat", false); }
+  async function refresh() {
+    try {
+      const r = await fetch("/status");
+      if (!r.ok) throw new Error();
+      const data = await r.json(); const s = data.services || {};
+      const okOr = (a,b) => (a === "active") || !!b; // accept HTTP/TCP success OR active systemd
+      mark("st-etherpad",    okOr(s["etherpad"]?.systemd?.active,         s["etherpad"]?.http?.ok));
+      mark("st-filebrowser", okOr(s["filebrowser"]?.systemd?.active,      s["filebrowser"]?.http?.ok));
+      mark("st-kolibri",     okOr(s["kolibri"]?.systemd?.active,          s["kolibri"]?.http?.ok));
+      mark("st-unifi",       okOr(s["unifi-controller"]?.systemd?.active, s["unifi-controller"]?.http?.ok));
+      mark("st-hackchat",    okOr(s["hackchat-websocket"]?.systemd?.active, s["hackchat-websocket"]?.tcp));
+      mark("st-logs", true);
+    } catch {
+      ["st-etherpad","st-filebrowser","st-kolibri","st-unifi","st-hackchat","st-logs"].forEach(id=>mark(id,false));
+    }
+  }
+  refresh(); setInterval(refresh, 10000);
 })();
 </script>
-<!-- ===== /PNK PATCH ===== -->
+<!-- ===== /PNK PATCH v2 ===== -->
 ' '
-  BEGIN{done=0}
-  /<\/body>/ && !done { gsub(/<\/body>/, add "\n</body>"); done=1 }
-  { print }
+    BEGIN{done=0}
+    /<\/body>/ && !done { gsub(/<\/body>/, add "\n</body>"); done=1 }
+    { print }
 ' "$WWW_INDEX" > /tmp/index.html.patched
-  mv /tmp/index.html.patched "$WWW_INDEX"
-fi
+    mv /tmp/index.html.patched "$WWW_INDEX"
+  fi
+}
 
-msg "6) Install/Update HackChat (bare-metal)…"
-mkdir -p "$HC_DIR"
-if [[ ! -d "$HC_DIR/.git" ]]; then
-  git clone https://github.com/hack-chat/main.git "$HC_DIR"
-fi
-git -C "$HC_DIR" fetch --all
-git -C "$HC_DIR" reset --hard origin/master
-# install deps (omit dev)
-if ! npm -C "$HC_DIR" ci --omit=dev; then
-  npm -C "$HC_DIR" install --omit=dev
-fi
+setup_lighttpd_proxy() {
+  log "Lighttpd: enable proxy + wstunnel and proxy /chat-ws…"
+  lighttpd-enable-mod proxy >/dev/null 2>&1 || true
+  lighttpd-enable-mod wstunnel >/dev/null 2>&1 || true
 
-# Basic server config
-cat > "$HC_DIR/.hcserver.json" <<JSON
+  local conf="/etc/lighttpd/conf-available/99-pnk-proxy.conf"
+  touch "$conf"
+
+  # Ensure /chat-ws proxy exists
+  if ! grep -q '^\$HTTP\["url"\] =~ "\^/chat-ws"' "$conf"; then
+    cat >> "$conf" <<'CONF'
+# PNK HackChat WebSocket
+$HTTP["url"] =~ "^/chat-ws" {
+  wstunnel.server = ( "" => ( ( "host" => "127.0.0.1", "port" => 6060 ) ) )
+}
+CONF
+  fi
+
+  ln -sf "$conf" "/etc/lighttpd/conf-enabled/99-pnk-proxy.conf"
+  lighttpd -tt -f /etc/lighttpd/lighttpd.conf
+  systemctl reload lighttpd
+}
+
+install_hackchat() {
+  log "Install/Update HackChat (bare-metal)…"
+  mkdir -p "$HC_DIR"
+  if [[ ! -d "$HC_DIR/.git" ]]; then
+    git clone https://github.com/hack-chat/main.git "$HC_DIR"
+  fi
+  git -C "$HC_DIR" fetch --all
+  git -C "$HC_DIR" reset --hard origin/master
+
+  # deps
+  if ! npm -C "$HC_DIR" ci --omit=dev; then
+    npm -C "$HC_DIR" install --omit=dev
+  fi
+
+  # config
+  cat > "$HC_DIR/.hcserver.json" <<JSON
 {
   "host": "0.0.0.0",
   "port": ${HC_PORT},
@@ -163,8 +235,8 @@ cat > "$HC_DIR/.hcserver.json" <<JSON
 }
 JSON
 
-# Systemd unit
-cat > /etc/systemd/system/${SYSTEMD_HC}.service <<UNIT
+  # systemd unit
+  cat > "/etc/systemd/system/${HC_UNIT}.service" <<UNIT
 [Unit]
 Description=HackChat WebSocket Server
 After=network-online.target
@@ -188,40 +260,253 @@ PrivateTmp=true
 WantedBy=multi-user.target
 UNIT
 
-chown -R "${PI_USER}:${PI_USER}" "$HC_DIR"
-systemctl daemon-reload
-systemctl enable --now "${SYSTEMD_HC}.service"
-
-msg "7) Lighttpd: enable WebSocket + proxy to HackChat…"
-# Enable modules (idempotent)
-lighttpd-enable-mod proxy >/dev/null 2>&1 || true
-lighttpd-enable-mod wstunnel >/dev/null 2>&1 || true
-
-# Proxy config file
-CONF_AVAIL="/etc/lighttpd/conf-available/99-pnk-proxy.conf"
-cat > "$CONF_AVAIL" <<'CONF'
-# PNK: proxy endpoints
-# WebSocket tunnel to HackChat
-$HTTP["url"] =~ "^/chat-ws" {
-  wstunnel.server = ( "" => ( ( "host" => "127.0.0.1", "port" => 6060 ) ) )
+  chown -R "${PI_USER}:${PI_USER}" "$HC_DIR"
+  systemctl daemon-reload
+  systemctl enable --now "${HC_UNIT}.service"
 }
 
-# (Optional) Logs API if installed at 127.0.0.1:6061
+install_logs_api() {
+  log "Installing/Updating PNK Logs API…"
+  mkdir -p "$LOGSAPI_DIR"
+
+  # server.js (richer version with /status, /logs, SSE)
+  cat > "${LOGSAPI_DIR}/server.js" <<'JS'
+#!/usr/bin/env node
+const http = require('http');
+const https = require('https');
+const net = require('net');
+const { spawn } = require('child_process');
+const fs = require('fs');
+const path = require('path');
+const url = require('url');
+
+const CONFIG_PATH = path.join(__dirname, 'config.json');
+if (!fs.existsSync(CONFIG_PATH)) { console.error('Missing config.json'); process.exit(1); }
+let cfg = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
+const PORT = cfg.port || 6061;
+const MAX_LINES = Math.max(1, Math.min(5000, parseInt(cfg.maxLines || '200', 10)));
+const UNIT_MAP = cfg.unitMap || {};
+const HTTP_CHECKS = cfg.httpChecks || {};
+const TCP_CHECKS  = cfg.tcpChecks  || {};
+const CORS = (cfg.corsAllowedOrigins || []);
+
+function setCORS(req, res){
+  if (!CORS.length) return;
+  const origin = req.headers.origin;
+  if (CORS.includes('*')) res.setHeader('Access-Control-Allow-Origin', '*');
+  else if (origin && CORS.includes(origin)) { res.setHeader('Access-Control-Allow-Origin', origin); res.setHeader('Vary','Origin'); }
+  res.setHeader('Access-Control-Allow-Methods','GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers','Content-Type');
+}
+function ok(res, body, type='application/json'){ res.statusCode=200; res.setHeader('Content-Type', type+'; charset=utf-8'); res.end(body); }
+function bad(res, code, msg){ res.statusCode=code; res.setHeader('Content-Type','text/plain; charset=utf-8'); res.end(msg); }
+
+function sysdStatus(unit){
+  return new Promise((resolve)=>{
+    const p = spawn('systemctl', ['show', unit, '--no-page','-p','ActiveState','-p','SubState','-p','MainPID']);
+    let out=''; p.stdout.on('data',d=>out+=d.toString());
+    p.on('close',()=>{ const m=Object.fromEntries(out.trim().split('\n').map(l=>l.split('='))); resolve({active:m.ActiveState||'unknown',sub:m.SubState||'unknown',pid:m.MainPID||'0'}); });
+  });
+}
+function httpProbe(target,insecure=false,timeoutMs=3000){
+  return new Promise((resolve)=>{
+    try{
+      const u=new URL(target); const lib=u.protocol==='https:'?https:http; const opts={method:'GET',timeout:timeoutMs};
+      if(u.protocol==='https:'&&insecure) opts.rejectUnauthorized=false;
+      const req=lib.request(u,(r)=>{ resolve({ok:(r.statusCode>=200&&r.statusCode<400),code:r.statusCode}); r.resume(); });
+      req.on('timeout',()=>{ req.destroy(new Error('timeout')); });
+      req.on('error',()=>resolve({ok:false,code:0}));
+      req.end();
+    }catch{ resolve({ok:false,code:0}); }
+  });
+}
+function tcpProbe(host,port,timeoutMs=1500){
+  return new Promise((resolve)=>{
+    const s=net.createConnection({host,port});
+    const t=setTimeout(()=>{ s.destroy(); resolve(false); },timeoutMs);
+    s.on('connect',()=>{ clearTimeout(t); s.end(); resolve(true); });
+    s.on('error',()=>{ clearTimeout(t); resolve(false); });
+  });
+}
+function journal(unit,lines){
+  return new Promise((resolve,reject)=>{
+    const n=Math.max(1,Math.min(5000,parseInt(lines,10)||200));
+    const args=['-u',unit,'-n',String(n),'--no-pager','--output','short-iso'];
+    const jc=spawn('journalctl',args);
+    let out='',err=''; jc.stdout.on('data',d=>out+=d.toString()); jc.stderr.on('data',d=>err+=d.toString());
+    jc.on('close',c=> c===0?resolve(out||'(no logs)'):reject(err||`journalctl exited ${c}`));
+  });
+}
+function sseLogs(req,res,unit,since){
+  const args=['-u',unit,'-f','--output','short-iso']; if(since) args.push('--since',since);
+  const jc=spawn('journalctl',args);
+  res.writeHead(200,{'Content-Type':'text/event-stream; charset=utf-8','Cache-Control':'no-cache','Connection':'keep-alive'});
+  res.write(':ok\n\n');
+  const send=line=>res.write(`data: ${line.replace(/\r?\n/g,'')}\n\n`);
+  jc.stdout.on('data',d=>d.toString().split('\n').filter(Boolean).forEach(send));
+  jc.stderr.on('data',d=>d.toString().split('\n').filter(Boolean).forEach(l=>res.write(`event: err\ndata: ${l}\n\n`)));
+  req.on('close',()=>{ try{jc.kill('SIGTERM');}catch{}; });
+}
+async function allStatus(){
+  const keys=Object.keys(UNIT_MAP);
+  const items=await Promise.all(keys.map(async k=>{
+    const unit=UNIT_MAP[k];
+    const sys=await sysdStatus(unit);
+    let http=null,tcp=null;
+    if(HTTP_CHECKS[k]){ const {url,insecure=false,timeoutMs=3000}=HTTP_CHECKS[k]; http=await httpProbe(url,insecure,timeoutMs); }
+    if(TCP_CHECKS[k]){ const {host='127.0.0.1',port,timeoutMs=1500}=TCP_CHECKS[k]; tcp=await tcpProbe(host,port,timeoutMs); }
+    return [k,{unit,systemd:sys,http,tcp}];
+  }));
+  return Object.fromEntries(items);
+}
+
+const srv=http.createServer(async (req,res)=>{
+  const u=url.parse(req.url,true);
+  if(req.method==='OPTIONS'){ setCORS(req,res); res.statusCode=204; return res.end(); }
+  if(u.pathname==='/healthz'){ setCORS(req,res); return ok(res,'ok','text/plain'); }
+  if(u.pathname==='/units'){ setCORS(req,res); return ok(res,JSON.stringify({units:UNIT_MAP},null,2)); }
+  if(u.pathname==='/status'){
+    try{ const data=await allStatus(); setCORS(req,res); return ok(res,JSON.stringify({ts:Date.now(),services:data},null,2)); }
+    catch(e){ setCORS(req,res); return bad(res,500,String(e)); }
+  }
+  if(u.pathname && u.pathname.startsWith('/logs/')){
+    const parts=u.pathname.split('/'); const key=decodeURIComponent(parts[2]||''); const unit=UNIT_MAP[key];
+    if(!unit){ setCORS(req,res); return bad(res,404,`Unknown service key: ${key}`); }
+    if(parts[3]==='stream'){ setCORS(req,res); const since=u.query.since||null; return sseLogs(req,res,unit,since); }
+    try{ const body=await journal(unit,u.query.lines||200); setCORS(req,res); return ok(res,body,'text/plain'); }
+    catch(e){ setCORS(req,res); return bad(res,500,String(e)); }
+  }
+  setCORS(req,res); return bad(res,404,'Not found');
+});
+srv.listen(cfg.port||6061,'127.0.0.1',()=>console.log(`PNK Logs API on 127.0.0.1:${cfg.port||6061}`));
+JS
+  chmod +x "${LOGSAPI_DIR}/server.js"
+
+  # config.json
+  cat > "${LOGSAPI_DIR}/config.json" <<JSON
+{
+  "port": ${LOGSAPI_PORT},
+  "maxLines": 200,
+  "corsAllowedOrigins": [],
+  "unitMap": {
+    "hackchat-websocket": "hackchat",
+    "etherpad": "etherpad",
+    "filebrowser": "filebrowser",
+    "kolibri": "kolibri",
+    "unifi-controller": "unifi"
+  },
+  "httpChecks": {
+    "etherpad": { "url": "http://127.0.0.1:9001/", "timeoutMs": 3000 },
+    "filebrowser": { "url": "http://127.0.0.1:8081/", "timeoutMs": 3000 },
+    "kolibri": { "url": "http://127.0.0.1:8082/", "timeoutMs": 5000 },
+    "unifi-controller": { "url": "https://127.0.0.1:8443/", "insecure": true, "timeoutMs": 5000 }
+  },
+  "tcpChecks": {
+    "hackchat-websocket": { "host": "127.0.0.1", "port": 6060, "timeoutMs": 1500 }
+  }
+}
+JSON
+
+  # systemd for Logs API
+  cat > "/etc/systemd/system/${LOGSAPI_UNIT}.service" <<UNIT
+[Unit]
+Description=PNK Logs API (journald proxy)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+WorkingDirectory=${LOGSAPI_DIR}
+ExecStart=/usr/bin/node ${LOGSAPI_DIR}/server.js
+Restart=on-failure
+User=${PI_USER}
+Group=${PI_USER}
+SupplementaryGroups=systemd-journal
+NoNewPrivileges=true
+ProtectSystem=full
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+UNIT
+
+  chown -R "${PI_USER}:${PI_USER}" "$LOGSAPI_DIR"
+  systemctl daemon-reload
+  systemctl enable --now "${LOGSAPI_UNIT}.service"
+
+  # Lighttpd proxy blocks for /logs/ and /status
+  local conf="/etc/lighttpd/conf-available/99-pnk-proxy.conf"
+  if ! grep -q '^\$HTTP\["url"\] =~ "\^/logs/"' "$conf"; then
+    cat >> "$conf" <<'CONF'
+# PNK Logs API proxy
 $HTTP["url"] =~ "^/logs/" {
   proxy.server = ( "" => ( ( "host" => "127.0.0.1", "port" => 6061 ) ) )
 }
 CONF
+  fi
+  if ! grep -q '^\$HTTP\["url"\] =~ "\^/status\$"' "$conf"; then
+    cat >> "$conf" <<'CONF'
+# PNK Status API proxy
+$HTTP["url"] =~ "^/status$" {
+  proxy.server = ( "" => ( ( "host" => "127.0.0.1", "port" => 6061 ) ) )
+}
+CONF
+  fi
+  ln -sf "$conf" "/etc/lighttpd/conf-enabled/99-pnk-proxy.conf"
+  lighttpd -tt -f /etc/lighttpd/lighttpd.conf
+  systemctl reload lighttpd
+}
 
-ln -sf "$CONF_AVAIL" "/etc/lighttpd/conf-enabled/99-pnk-proxy.conf"
-lighttpd -tt -f /etc/lighttpd/lighttpd.conf
-systemctl reload lighttpd
+start_compose_stack() {
+  [[ "$SKIP_DOCKER" == "true" ]] && { log "Skipping compose stack (--no-docker)."; return 0; }
+  log "Start/Update Docker services (detached)…"
+  local compose_cmd="docker compose"
+  $compose_cmd down --remove-orphans || true
+  $compose_cmd pull
+  $compose_cmd up -d --remove-orphans
 
-msg "8) Start/Update Docker-based PNK services…"
-chmod +x "$INSTALL_DIR/scripts/start.sh" || true
-su - "$PI_USER" -c "cd '$INSTALL_DIR' && ./scripts/start.sh" || true
+  echo -e "\nContainers:"
+  docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+}
 
-msg "✅ Deployment complete!"
-echo "Browse Dashboard:   http://<pi-ip>/"
-echo "HackChat WS via:    ws(s)://<pi-host>/chat-ws  (proxied by Lighttpd)"
-echo "HackChat service:   systemctl status ${SYSTEMD_HC}"
-echo "Logs API (optional): proxied at /logs/ if you install it later"
+# -------------------- MAIN ACTIONS --------------------
+
+case "$ACTION" in
+  install|update)
+    ensure_pkgs
+
+    # If patch-only, just patch HTML and bail out early
+    if [[ "$PATCH_DASH_ONLY" == "true" ]]; then
+      log "Running in --patch-dashboard-only mode (no services will be changed)…"
+      patch_dashboard_once
+      echo "✅ Dashboard patched. Browse: http://<pi-ip>/"
+      exit 0
+    fi
+
+    ensure_node
+    ensure_docker
+    clone_or_update_repo
+    patch_dashboard_once
+    setup_lighttpd_proxy
+    install_hackchat
+    [[ "$WITH_LOGS_API" == "true" ]] && install_logs_api
+    start_compose_stack
+    echo -e "\n✅ Done! Open:  http://<pi-ip>/"
+    echo "   HackChat WS: ws(s)://<pi-host>/chat-ws"
+    [[ "$WITH_LOGS_API" == "true" ]] && echo "   Status JSON:  http://<pi-ip>/status    Logs: http://<pi-ip>/logs/<service>"
+    ;;
+  uninstall)
+    systemctl disable --now "$HC_UNIT" 2>/dev/null || true
+    rm -f "/etc/systemd/system/${HC_UNIT}.service"
+    rm -rf "$HC_DIR"
+
+    if systemctl list-unit-files | grep -q "^${LOGSAPI_UNIT}\.service"; then
+      systemctl disable --now "$LOGSAPI_UNIT" || true
+      rm -f "/etc/systemd/system/${LOGSAPI_UNIT}.service"
+      rm -rf "$LOGSAPI_DIR"
+    fi
+    systemctl daemon-reload
+    echo "Uninstalled HackChat and (if present) Logs API. Lighttpd proxies remain."
+    ;;
+esac
+

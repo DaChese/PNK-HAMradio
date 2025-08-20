@@ -1,97 +1,199 @@
-: NOTE THIS IS STILL A WORK-IN-PROGRESS!
+# PNK-HAMradio
 
-## 1. Prerequisites
+> **Status:** Work-in-progress. Expect rough edges
 
-- **OS**: Raspberry Pi OS Lite (64-bit ARM) or any Debian-based Linux  
-- **Docker** & **Docker Compose** (or the Docker plugin) installed  
-- *Optional:* your user in the `docker` group so you can run containers without `sudo`
-
----
-
-# PNK‑HAMradio
-
-Turn a Raspberry Pi into a Portable Network Kit **and** HAM‑radio platform.
+Turn a Raspberry Pi into a Portable Network Kit (PNK) **and** HAM-radio platform.  
+Ships with a lightweight web dashboard plus offline-friendly services (Etherpad, FileBrowser, Kolibri, UniFi Controller) and a minimal local chat (HackChat).
 
 ---
 
-## 1. Quick Install
+**Quick nav**
+- [Prerequisites](#0-prerequisites)
+- [Quick Start](#1-quick-start)
+- [Install Modes](#2-install-modes)
+- [Services & URLs](#3-services--urls)
+- [Helpful Commands](#4-helpful-commands)
+- [Updating](#5-updating)
+- [Troubleshooting](#6-troubleshooting)
+- [Credits & Related Projects](#7-credits--related-projects)
+
+---
+
+## 0. Prerequisites
+
+- **Hardware/OS:** Raspberry Pi (64-bit) on **Raspberry Pi OS Lite** or any Debian-based Linux.
+- **Network:** Basic LAN access. If adopting UniFi devices, keep **TCP 8080** unobstructed.
+- **Docker:** Optional — installer can set this up for you (omit with `--no-docker`).
+
+---
+
+## 1. Quick Start
 
 ```bash
 git clone https://github.com/DaChese/PNK-HAMradio.git
 cd PNK-HAMradio
 
-chmod +x install.sh
-sudo ./install.sh
+# Full stack (Docker apps + HackChat + dashboard)
+sudo bash pnk-ham-install.sh --install
 
-The installer will:
+# Include Status/Logs API (adds /status and /logs/)
+sudo bash pnk-ham-install.sh --install --logs-api
 
-    Install system packages (Git, Lighttpd, etc.)
+What the installer does:
 
-    Install Docker via the official script
+    Installs base packages (Git, Lighttpd, etc.)
 
-    Clone or update PNK‑HAMradio under cd PNK-HAMradio
+    Installs Docker (unless you pass --no-docker)
 
-    Deploy your static dashboard to /var/www/html/index.html
+    Clones/updates the repo into ~/PNK-HAMradio
 
-    Launch all PNK services:
+    Deploys the dashboard to /var/www/html/index.html
 
-        Etherpad
+    Sets up HackChat bare-metal under systemd and proxies WS at /chat-ws
 
-        FileBrowser
+    (Optional) Installs the PNK Logs API and proxies /status + /logs/
 
-        Kolibri
+    Starts Docker services (Etherpad, FileBrowser, Kolibri, UniFi)
 
-        UniFi Controller (keep port 8080 opened and unobstructed so the controller can adopt an AC Mesh) 
+Browse to: http://<pi-ip>/
+2. Install Modes
 
-        Hack-Chat (Local Chat room)
-            (Install / upgrade: sudo ./pnk-hackchat.sh --install
-            Update only: sudo ./pnk-hackchat.sh --update
-            Uninstall: sudo ./pnk-hackchat.sh --uninstall
-            Logs: journalctl -u hackchat -f)
+# Standard (Docker apps + HackChat + dashboard)
+sudo bash pnk-ham-install.sh --install
 
-2. Start & Access
+# Add Status/Logs API (exposes /status + /logs/)
+sudo bash pnk-ham-install.sh --install --logs-api
 
-If you need to restart or bring up the stack manually:
+# Bare-metal only (no Docker compose)
+sudo bash pnk-ham-install.sh --install --logs-api --no-docker
 
-cd PNK-HAMradio
-docker compose up -d or sudo docker compose restart
+# Patch only the dashboard HTML (no services touched)
+sudo bash pnk-ham-install.sh --update --patch-dashboard-only
 
-Then point your browser at:
-Service	URL / local host or IP given by router or switch.
-Etherpad	http://<YOUR_PI_IP>/
-FileBrowser	http://<YOUR_PI_IP>:8081
-Kolibri	http://<YOUR_PI_IP>:8082
-UniFi Controller	https://<YOUR_PI_IP>:8443
-Hack-Chat	http://<YOUR_PI_IP>:6040/?pnk (needs work)
+# Update everything in place
+sudo bash pnk-ham-install.sh --update
 
-    If you chose the Lighttpd reverse‑proxy setup, Etherpad will live at /pad instead of root.
-    Also Pat-Winlink uses the port 8080 which conflicts with the adoption process for the Unifi Controller for AC Meshes (bunny ears). So be mindful about it, I havent figured out how to change the port for Pat-Winlink. Although if you dont install 73Linux or dont choose the option to install Pat-Winlink through the installer ( be careful of what you install from 73Linux some of it could override some of the PNK stuff) for 73Linux then there should be no errors or issues for adopting Unifi devices.
+# Uninstall HackChat and Logs API (proxies remain)
+sudo bash pnk-ham-install.sh --uninstall
 
-3. Credits & Related Projects
+3. Services & URLs
+Service	Default URL	Notes
+Dashboard	http://<pi-ip>/	Static HTML via Lighttpd
+Etherpad	http://<pi-ip>:9001/	Collaborative notes
+FileBrowser	http://<pi-ip>:8081/	File manager
+Kolibri	http://<pi-ip>:8082/	Offline learning
+UniFi UI	https://<pi-ip>:8443/	UI is 8443; adoption/inform uses port 8080
+HackChat (client)	https://hack.chat/?pnk&ws=wss://<pi-host>/chat-ws	Dashboard “Open Chat” points here
+HackChat (WS)	ws(s)://<pi-host>/chat-ws → 127.0.0.1:6060	Proxied by Lighttpd
+Status JSON opt.	http://<pi-ip>/status	Aggregated systemd + HTTP/TCP checks
+Logs API opt.	http://<pi-ip>/logs/<service>?lines=200	Live tail via SSE at /logs/<service>/stream
 
-This project wouldn’t be possible without some awesome open‑source work:
+    ⚠️ UniFi vs. Pat-Winlink: UniFi adoption needs TCP 8080 free. If Pat-Winlink claims 8080, stop it during adoption or change its port.
 
-    73Linux by km4ack (https://github.com/km4ack/73Linux)
-(YouTube channel https://youtube.com/@km4ack)
-    A lightweight installer for HAM‑radio toolchains on Debian‑based systems.
+4. Helpful Commands
+Installer & Dashboard
 
-    SDR++ via TekMaker/sdrplus (https://github.com/TekMaker/SDRplus)
-    A modern, Qt‑based SDR client for various radio front‑ends.
-    Tested here with an RTL‑SDR USB dongle for receiving HF/VHF/UHF.
+# Full install (+ Logs API)
+sudo bash pnk-ham-install.sh --install --logs-api
 
-Feel free to explore those repos if you just want the radio‑specific bits.
+# Patch only the dashboard HTML (safe anytime)
+sudo bash pnk-ham-install.sh --update --patch-dashboard-only
 
-Also Features Added
+Docker Apps (Etherpad, FileBrowser, Kolibri, UniFi)
 
-Hack.Chat: A secure, minimal chatroom interface for local/offline messaging.
+cd ~/PNK-HAMradio
 
-Potential Plans for adding AI-powered chatbots for offline use.
+# Start/Update stack (pull latest images)
+docker compose up -d --remove-orphans
 
-Hack.Chat
+# Restart a single container
+docker compose restart etherpad
 
-GitHub: https://github.com/hack-chat/main
+# View container logs
+docker logs -f etherpad
 
-Lightweight self-hosted chat platform using WebSocket + static frontend
+HackChat (bare-metal via systemd)
+
+# Status / live logs / restart
+systemctl status hackchat --no-pager
+journalctl -u hackchat -f
+sudo systemctl restart hackchat
+
+Logs API & Status (if enabled)
+
+# Service status
+systemctl status pnk-logs-api --no-pager
+journalctl -u pnk-logs-api -n 200 --no-pager
+sudo systemctl restart pnk-logs-api
+
+# API checks (local)
+curl -s http://127.0.0.1:6061/healthz
+curl -s http://127.0.0.1:6061/status | jq | head
+curl -s "http://127.0.0.1:6061/logs/hackchat-websocket?lines=50"
+
+# Via Lighttpd (LAN clients)
+curl -s http://<pi-ip>/status | jq | head
+curl -s "http://<pi-ip>/logs/hackchat-websocket?lines=50"
+
+# Live log tail (SSE) from a browser:
+# new EventSource('/logs/hackchat-websocket/stream?since=1m')
+
+Lighttpd (web/proxy)
+
+# Test config and reload
+sudo lighttpd -tt -f /etc/lighttpd/lighttpd.conf
+sudo systemctl reload lighttpd
+
+Health Check Script (optional)
+
+# From repo root; tests dashboard + services quickly
+bash pnk-health.sh
+
+Paths
+
+/var/www/html/index.html        # Dashboard
+/opt/hackchat                   # HackChat checkout + .hcserver.json
+/opt/pnk-logs-api               # Logs API (server.js + config.json)
+/home/<user>/PNK-HAMradio       # Repo & docker compose
+
+5. Updating
+
+    Re-run the installer with --update (idempotent).
+
+    Docker services only:
+
+cd ~/PNK-HAMradio
+docker compose pull && docker compose up -d --remove-orphans
+
+HackChat only:
+
+    sudo systemctl restart hackchat
+
+6. Troubleshooting
+
+    Dashboard not updating: hard refresh (Ctrl+F5) after running the installer.
+
+    HackChat not connecting: ensure hackchat systemd service is active and /chat-ws proxy is present.
+
+    UniFi adoption failing: make sure TCP 8080 is free (stop Pat-Winlink temporarily if needed).
+
+    CORS issues: use same-origin paths /status and /logs/ (Lighttpd proxies to 127.0.0.1:6061).
+
+7. Credits & Related Projects
+
+    Hack.Chat — https://github.com/hack-chat/main
 
 
-This project is part of an ongoing effort to build offline-ready, resilient community internet infrastructure using the Raspberry Pi. Contributions welcome!
+Minimal WebSocket chat server + static client.
+
+73Linux (km4ack) — https://github.com/km4ack/73Linux
+
+
+HAM-radio toolchain installer for Debian-based systems.
+
+SDR++ (TekMaker/SDRplus) — https://github.com/TekMaker/SDRplus
+
+
+    Modern SDR client; tested with RTL-SDR.
+
+This project supports offline-ready, resilient community networking with Raspberry Pi. Contributions welcome!
