@@ -7,7 +7,7 @@ set -euo pipefail
 #  - Installs HackChat bare-metal + Lighttpd proxy /chat-ws
 #  - Patches dashboard (status panel + fixed links) once
 #  - Optional: --logs-api installs PNK Logs API (+ /status, /logs/)
-#  - Optional: --sdrpp installs SDR++ server mode + systemd unit
+#  - Optional: --sdrpp installs SDR++ server mode (built as non-root) + systemd
 #  - Flags: --patch-dashboard-only (HTML only), --no-docker (skip Docker)
 ###############################################################################
 
@@ -54,6 +54,7 @@ Env overrides:
 USAGE
 }
 
+# -------------------- Arg parsing --------------------
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --install|--update|--uninstall) ACTION="${1#--}"; shift;;
@@ -65,6 +66,9 @@ while [[ $# -gt 0 ]]; do
     *) echo "Unknown arg: $1"; usage; exit 1;;
   esac
 done
+
+[[ -n "${ACTION:-}" ]] || { usage; exit 1; }
+[[ $EUID -eq 0 ]] || { echo "Please run as root: sudo $0 ..."; exit 1; }
 
 log(){ echo -e "\n==> $*\n"; }
 
@@ -136,8 +140,8 @@ patch_dashboard_once() {
 <script>
 (function(){
   const host = location.hostname;
-  const http = location.protocol;
-  const isTLS = http === "https:";
+  const proto = location.protocol;
+  const isTLS = proto === "https:";
   const wsProto = isTLS ? "wss" : "ws";
 
   // We proxy HackChat at /chat-ws (configured in Lighttpd)
@@ -145,14 +149,12 @@ patch_dashboard_once() {
 
   // Rewrite tile links (new tab)
   const links = {
-    svc1_link: `${http}//${host}:9001`,       // Etherpad
-    svc2_link: `${http)//${host}:8081`,       // FileBrowser
-    svc3_link: `${http}//${host}:8082`,       // Kolibri
+    svc1_link: `${proto}//${host}:9001`,      // Etherpad
+    svc2_link: `${proto}//${host}:8081`,      // FileBrowser
+    svc3_link: `${proto}//${host}:8082`,      // Kolibri
     svc4_link: `https://${host}:8443`,        // UniFi UI
     svc5_link: `https://hack.chat/?pnk&ws=${encodeURIComponent(HC_WS)}`
   };
-  // fix minor typo in svc2_link (`)`), then assign:
-  links.svc2_link = `${http}//${host}:8081`;
 
   Object.entries(links).forEach(([k, href]) => {
     const el = document.querySelector(`a[data-key="${k}"]`);
@@ -228,7 +230,7 @@ install_hackchat() {
     npm -C "$HC_DIR" install --omit=dev
   fi
 
-  # config
+  # config (kept for compatibility—even if main.mjs doesn’t read it, harmless)
   cat > "$HC_DIR/.hcserver.json" <<JSON
 {
   "host": "0.0.0.0",
@@ -271,16 +273,45 @@ UNIT
 
 install_sdrpp_server() {
   log "Installing SDR++ (server mode)…"
+
+  # 1) Root: install build/runtime deps and USB rules
   apt-get update
-  apt-get install -y git cmake build-essential libfftw3-dev libusb-1.0-0-dev librtlsdr-dev
+  apt-get install -y \
+    git cmake build-essential pkg-config \
+    libfftw3-dev libusb-1.0-0-dev librtlsdr-dev \
+    libglfw3-dev libvolk2-dev
 
-  # Build via TekMaker helpers (installs sdrpp to /usr/local/bin)
-  if [[ ! -d /opt/SDRplus ]]; then
-    git clone https://github.com/TekMaker/SDRplus /opt/SDRplus
+  # Ensure user has access to USB radio devices
+  usermod -aG plugdev "${PI_USER}" || true
+
+  # Optional: prevent DVB kernel driver from grabbing RTL-SDR dongles
+  if ! grep -q 'dvb_usb_rtl28xxu' /etc/modprobe.d/blacklist-rtl.conf 2>/dev/null; then
+    cat >/etc/modprobe.d/blacklist-rtl.conf <<'EOF'
+blacklist dvb_usb_rtl28xxu
+blacklist rtl2832
+blacklist rtl2830
+EOF
   fi
-  bash /opt/SDRplus/rpi-install.sh
 
-  # systemd unit
+  # 2) Non-root: clone & build SDR++ from source in the user's home
+  sudo -u "${PI_USER}" -H bash -lc '
+    set -e
+    mkdir -p "$HOME/src"
+    cd "$HOME/src"
+    if [ ! -d SDRPlusPlus ]; then
+      git clone --recursive https://github.com/AlexandreRouma/SDRPlusPlus.git
+    fi
+    cd SDRPlusPlus
+    git pull --ff-only || true
+    git submodule update --init --recursive
+    cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+    cmake --build build -j"$(nproc)"
+  '
+
+  # 3) Root: install the built binaries to /usr/local
+  cmake --install "/home/${PI_USER}/src/SDRPlusPlus/build"
+
+  # 4) systemd unit (runs as the normal user)
   cat >/etc/systemd/system/${SDRPP_UNIT}.service <<UNIT
 [Unit]
 Description=SDR++ Server (headless)
@@ -304,6 +335,8 @@ UNIT
 
   systemctl daemon-reload
   systemctl enable --now ${SDRPP_UNIT}.service
+
+  log "SDR++ installed. Service: ${SDRPP_UNIT} on port ${SDRPP_PORT}"
 }
 
 install_logs_api() {
@@ -311,7 +344,7 @@ install_logs_api() {
   log "Installing/Updating PNK Logs API…"
   mkdir -p "$LOGSAPI_DIR"
 
-  # server.js (richer version with /status, /logs, SSE)
+  # server.js (status + logs + SSE)
   cat > "${LOGSAPI_DIR}/server.js" <<'JS'
 #!/usr/bin/env node
 const http = require('http');
@@ -424,7 +457,7 @@ srv.listen(cfg.port||6061,'127.0.0.1',()=>console.log(`PNK Logs API on 127.0.0.1
 JS
   chmod +x "${LOGSAPI_DIR}/server.js"
 
-  # Build unitMap/tcpChecks, optionally including SDR++
+  # Extend Logs API config when SDR++ is installed in this run
   local extra_unit=''
   local extra_tcp=''
   if [[ "$WITH_SDRPP" == "true" ]]; then
@@ -520,7 +553,6 @@ start_compose_stack() {
 }
 
 # -------------------- MAIN ACTIONS --------------------
-
 case "$ACTION" in
   install|update)
     ensure_pkgs
@@ -544,7 +576,7 @@ case "$ACTION" in
     start_compose_stack
     echo -e "\n✅ Done! Open:  http://<pi-ip>/"
     echo "   HackChat WS: ws(s)://<pi-host>/chat-ws"
-    [[ "$WITH_SDRPP" == "true" ]] && echo "   SDR++:       <client> → ${SDRPP_PORT} (Source: \"SDR++ Server\")"
+    [[ "$WITH_SDRPP" == "true" ]] && echo "   SDR++:       Connect via SDR++ client → ${SDRPP_PORT} (Source: \"SDR++ Server\")"
     [[ "$WITH_LOGS_API" == "true" ]] && echo "   Status JSON: http://<pi-ip>/status    Logs: http://<pi-ip>/logs/<service>"
     ;;
   uninstall)
