@@ -87,6 +87,8 @@
         <div class="card-desc" data-key="svc5_desc">Local Chat-Room</div>
         <a data-key="svc5_link">Open Chat</a>
       </div>
+
+      <!-- SDR++ Remote -->
       <div class="card">
         <div class="card-icon">📻</div>
         <div class="card-title">SDR++ Remote</div>
@@ -110,7 +112,38 @@
           }
         </script>
       </div>
+
+      <!-- SDR Web Receiver (OpenWebRX) -->
+      <div class="card">
+        <div class="card-icon">🌐</div>
+        <div class="card-title" data-key="svc6_title">SDR Web Receiver</div>
+        <div class="card-desc" data-key="svc6_desc">In-browser waterfall & audio (OpenWebRX).</div>
+        <a data-key="svc6_link">Open SDR Web</a>
+      </div>
     </div>
+
+    <!-- Service Logs UI -->
+    <h2 style="margin-top:2rem;">Service Logs</h2>
+    <div style="margin: 0.5rem 0;">
+      <label for="serviceSelect">Service:</label>
+      <select id="serviceSelect">
+        <option value="filebrowser">FileBrowser</option>
+        <option value="etherpad">Etherpad</option>
+        <option value="kolibri">Kolibri</option>
+        <option value="unifi-controller">UniFi Controller</option>
+        <option value="hackchat-websocket">HackChat WebSocket</option>
+        <option value="sdrpp">SDR++ Server</option>
+        <option value="openwebrx">OpenWebRX</option>
+      </select>
+
+      <label for="linesInput" style="margin-left: 0.5rem;">Lines:</label>
+      <input id="linesInput" type="number" min="1" max="5000" value="200" style="width:6rem">
+
+      <button onclick="loadLogs()">Load Logs</button>
+      <button onclick="startLive()">Live Tail</button>
+      <button onclick="stopLive()">Stop</button>
+    </div>
+    <pre id="logOutput" style="background:black; color:lime; padding:10px; max-height:300px; overflow:auto;"></pre>
   </main>
 
 <script>
@@ -171,8 +204,7 @@
   document.addEventListener('DOMContentLoaded', initI18n);
 </script>
 
-
-  <!-- DYNAMIC LINKS: rewrite each service link to use the host -->
+<!-- DYNAMIC LINKS: rewrite each service link to use the host -->
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const host    = location.hostname;
@@ -190,10 +222,11 @@
     // Service tiles (match your data-key values)
     const links = {
       svc1_link: `${proto}//${host}:9001`,      // Etherpad
-      svc2_link: `${proto}//${host}:8081`,      // FileBrowser (fixed)
+      svc2_link: `${proto}//${host}:8081`,      // FileBrowser
       svc3_link: `${proto}//${host}:8082`,      // Kolibri
       svc4_link: `https://${host}:8443`,        // UniFi UI (always HTTPS on 8443)
-      svc5_link: `https://hack.chat/?pnk&ws=${encodeURIComponent(wsTarget)}` // Hack.Chat client
+      svc5_link: `https://hack.chat/?pnk&ws=${encodeURIComponent(wsTarget)}`, // Hack.Chat client
+      svc6_link: `/radio`                       // OpenWebRX via Lighttpd proxy
     };
 
     Object.entries(links).forEach(([key, href]) => {
@@ -203,11 +236,12 @@
         el.target = '_blank';
         el.rel = 'noopener';
       }
-    }); // ← close forEach ✅
+    });
 
-    // Optional SDR++ helper button
+    // SDR++ helper button (duplicate-safe)
     const sdrBtn = document.getElementById('sdrpp-info');
-    if (sdrBtn) {
+    if (sdrBtn && !sdrBtn.dataset.bound) {
+      sdrBtn.dataset.bound = '1';
       sdrBtn.addEventListener('click', (e) => {
         e.preventDefault();
         alert(
@@ -221,7 +255,6 @@
     }
   });
 </script>
-
 
 <script>
   // Simple load of recent logs (respects <input id="linesInput"> if present)
@@ -244,7 +277,7 @@
     }
   }
 
-  // Optional: live tail using Server-Sent Events (requires Logs API >= our version)
+  // live tail using Server-Sent Events (requires Logs API >= our version)
   function startLive() {
     const service = document.getElementById('serviceSelect').value;
     // close any existing stream
@@ -278,3 +311,4 @@
 </script>
 </body>
 </html>
+
