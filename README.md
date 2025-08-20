@@ -144,11 +144,6 @@ Lighttpd (web/proxy)
 sudo lighttpd -tt -f /etc/lighttpd/lighttpd.conf
 sudo systemctl reload lighttpd
 
-Health Check Script (optional)
-
-# From repo root; tests dashboard + services quickly
-bash pnk-health.sh
-
 Paths
 
 /var/www/html/index.html        # Dashboard
