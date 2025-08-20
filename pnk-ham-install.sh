@@ -7,7 +7,8 @@ set -euo pipefail
 #  - Installs HackChat bare-metal + Lighttpd proxy /chat-ws
 #  - Patches dashboard (status panel + fixed links) once
 #  - Optional: --logs-api installs PNK Logs API (+ /status, /logs/)
-#  - NEW: --patch-dashboard-only (HTML only), --no-docker (skip Docker steps)
+#  - Optional: --sdrpp installs SDR++ server mode + systemd unit
+#  - Flags: --patch-dashboard-only (HTML only), --no-docker (skip Docker)
 ###############################################################################
 
 REPO="https://github.com/DaChese/PNK-HAMradio.git"
@@ -23,30 +24,33 @@ LOGSAPI_DIR="/opt/pnk-logs-api"
 LOGSAPI_PORT="6061"
 LOGSAPI_UNIT="pnk-logs-api"
 
+# SDR++ (optional)
+SDRPP_UNIT="sdrpp-server"
+SDRPP_PORT="5259"
+
 PI_USER="${PI_USER:-${SUDO_USER:-pi}}"
 
 ACTION=""
 WITH_LOGS_API="false"
 PATCH_DASH_ONLY="false"
 SKIP_DOCKER="false"
+WITH_SDRPP="false"
 
 usage() {
   cat <<USAGE
 Usage:
-  sudo $0 --install [--logs-api] [--no-docker] [--patch-dashboard-only]
-  sudo $0 --update  [--logs-api] [--no-docker] [--patch-dashboard-only]
+  sudo $0 --install [--logs-api] [--sdrpp] [--no-docker] [--patch-dashboard-only]
+  sudo $0 --update  [--logs-api] [--sdrpp] [--no-docker] [--patch-dashboard-only]
   sudo $0 --uninstall
 
 Flags:
   --logs-api              Install/refresh the PNK Logs API (status + logs + live tail)
+  --sdrpp                 Install SDR++ in server mode (headless) on port ${SDRPP_PORT}
   --no-docker             Skip Docker install and docker compose up/down/pull
   --patch-dashboard-only  Only patch /var/www/html/index.html (no services touched)
 
 Env overrides:
   INSTALL_DIR=/home/pi/PNK-HAMradio   PI_USER=pi
-
-Notes:
-  --patch-dashboard-only ignores other service flags (no Docker/HackChat/Logs API changes).
 USAGE
 }
 
@@ -54,6 +58,7 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --install|--update|--uninstall) ACTION="${1#--}"; shift;;
     --logs-api) WITH_LOGS_API="true"; shift;;
+    --sdrpp) WITH_SDRPP="true"; shift;;
     --no-docker) SKIP_DOCKER="true"; shift;;
     --patch-dashboard-only) PATCH_DASH_ONLY="true"; shift;;
     -h|--help) usage; exit 0;;
@@ -126,6 +131,7 @@ patch_dashboard_once() {
     <div><span id="st-kolibri">⏳</span><div>Kolibri</div></div>
     <div><span id="st-unifi">⏳</span><div>UniFi UI</div></div>
     <div><span id="st-hackchat">⏳</span><div>HackChat WS</div></div>
+    <div><span id="st-sdrpp">⏳</span><div>SDR++</div></div>
     <div><span id="st-logs">⏳</span><div>Logs API</div></div>
   </div>
 </section>
@@ -169,9 +175,10 @@ patch_dashboard_once() {
       mark("st-kolibri",     okOr(s["kolibri"]?.systemd?.active,          s["kolibri"]?.http?.ok));
       mark("st-unifi",       okOr(s["unifi-controller"]?.systemd?.active, s["unifi-controller"]?.http?.ok));
       mark("st-hackchat",    okOr(s["hackchat-websocket"]?.systemd?.active, s["hackchat-websocket"]?.tcp));
+      mark("st-sdrpp",       okOr(s["sdrpp"]?.systemd?.active,              s["sdrpp"]?.tcp));
       mark("st-logs", true);
     } catch {
-      ["st-etherpad","st-filebrowser","st-kolibri","st-unifi","st-hackchat","st-logs"].forEach(id=>mark(id,false));
+      ["st-etherpad","st-filebrowser","st-kolibri","st-unifi","st-hackchat","st-sdrpp","st-logs"].forEach(id=>mark(id,false));
     }
   }
   refresh(); setInterval(refresh, 10000);
@@ -265,7 +272,45 @@ UNIT
   systemctl enable --now "${HC_UNIT}.service"
 }
 
+install_sdrpp_server() {
+  log "Installing SDR++ (server mode)…"
+  apt-get update
+  apt-get install -y git cmake build-essential libfftw3-dev libusb-1.0-0-dev librtlsdr-dev
+
+  # Build via TekMaker helpers (installs sdrpp to /usr/local/bin)
+  if [[ ! -d /opt/SDRplus ]]; then
+    git clone https://github.com/TekMaker/SDRplus /opt/SDRplus
+  fi
+  bash /opt/SDRplus/rpi-install.sh
+
+  # systemd unit
+  cat >/etc/systemd/system/${SDRPP_UNIT}.service <<UNIT
+[Unit]
+Description=SDR++ Server (headless)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=${PI_USER}
+Group=${PI_USER}
+ExecStart=/usr/local/bin/sdrpp --server --addr 0.0.0.0 --port ${SDRPP_PORT}
+Restart=on-failure
+NoNewPrivileges=true
+ProtectSystem=full
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+UNIT
+
+  systemctl daemon-reload
+  systemctl enable --now ${SDRPP_UNIT}.service
+}
+
 install_logs_api() {
+  [[ "$WITH_LOGS_API" == "true" ]] || return 0
   log "Installing/Updating PNK Logs API…"
   mkdir -p "$LOGSAPI_DIR"
 
@@ -382,6 +427,14 @@ srv.listen(cfg.port||6061,'127.0.0.1',()=>console.log(`PNK Logs API on 127.0.0.1
 JS
   chmod +x "${LOGSAPI_DIR}/server.js"
 
+  # Build unitMap/tcpChecks, optionally including SDR++
+  local extra_unit=''
+  local extra_tcp=''
+  if [[ "$WITH_SDRPP" == "true" ]]; then
+    extra_unit=',\n    "sdrpp": "'"${SDRPP_UNIT}"'"'
+    extra_tcp=',\n    "sdrpp": { "host": "127.0.0.1", "port": '"${SDRPP_PORT}"', "timeoutMs": 1500 }'
+  fi
+
   # config.json
   cat > "${LOGSAPI_DIR}/config.json" <<JSON
 {
@@ -393,7 +446,7 @@ JS
     "etherpad": "etherpad",
     "filebrowser": "filebrowser",
     "kolibri": "kolibri",
-    "unifi-controller": "unifi"
+    "unifi-controller": "unifi"${extra_unit}
   },
   "httpChecks": {
     "etherpad": { "url": "http://127.0.0.1:9001/", "timeoutMs": 3000 },
@@ -402,7 +455,7 @@ JS
     "unifi-controller": { "url": "https://127.0.0.1:8443/", "insecure": true, "timeoutMs": 5000 }
   },
   "tcpChecks": {
-    "hackchat-websocket": { "host": "127.0.0.1", "port": 6060, "timeoutMs": 1500 }
+    "hackchat-websocket": { "host": "127.0.0.1", "port": 6060, "timeoutMs": 1500 }${extra_tcp}
   }
 }
 JSON
@@ -489,11 +542,13 @@ case "$ACTION" in
     patch_dashboard_once
     setup_lighttpd_proxy
     install_hackchat
+    [[ "$WITH_SDRPP" == "true" ]] && install_sdrpp_server
     [[ "$WITH_LOGS_API" == "true" ]] && install_logs_api
     start_compose_stack
     echo -e "\n✅ Done! Open:  http://<pi-ip>/"
     echo "   HackChat WS: ws(s)://<pi-host>/chat-ws"
-    [[ "$WITH_LOGS_API" == "true" ]] && echo "   Status JSON:  http://<pi-ip>/status    Logs: http://<pi-ip>/logs/<service>"
+    [[ "$WITH_SDRPP" == "true" ]] && echo "   SDR++:       <client> → ${SDRPP_PORT} (Source: \"SDR++ Server\")"
+    [[ "$WITH_LOGS_API" == "true" ]] && echo "   Status JSON: http://<pi-ip>/status    Logs: http://<pi-ip>/logs/<service>"
     ;;
   uninstall)
     systemctl disable --now "$HC_UNIT" 2>/dev/null || true
@@ -505,8 +560,13 @@ case "$ACTION" in
       rm -f "/etc/systemd/system/${LOGSAPI_UNIT}.service"
       rm -rf "$LOGSAPI_DIR"
     fi
+
+    if systemctl list-unit-files | grep -q "^${SDRPP_UNIT}\.service"; then
+      systemctl disable --now "$SDRPP_UNIT" || true
+      rm -f "/etc/systemd/system/${SDRPP_UNIT}.service"
+    fi
+
     systemctl daemon-reload
-    echo "Uninstalled HackChat and (if present) Logs API. Lighttpd proxies remain."
+    echo "Uninstalled HackChat and (if present) Logs API + SDR++ (proxies remain)."
     ;;
 esac
-

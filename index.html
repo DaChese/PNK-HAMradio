@@ -87,21 +87,56 @@
         <div class="card-desc" data-key="svc5_desc">Local Chat-Room</div>
         <a data-key="svc5_link">Open Chat</a>
       </div>
+      <div class="card">
+        <div class="card-icon">📻</div>
+        <div class="card-title">SDR++ Remote</div>
+        <div class="card-desc">Use the SDR++ client to connect to this Pi.</div>
+        <a id="sdrpp-info" href="#">Show Connect Info</a>
+        <script>
+          // Small helper: show SDR++ client connection details
+          const sdrppBtn = document.getElementById('sdrpp-info');
+          if (sdrppBtn) {
+            sdrppBtn.addEventListener('click', (e) => {
+              e.preventDefault();
+              const host = location.hostname;
+              alert(
+                'SDR++ Client setup:\\n' +
+                '- Source: "SDR++ Server"\\n' +
+                `- Host:   ${host}\\n` +
+                '- Port:   5259\\n' +
+                '- (optional) Sample type: Int8'
+              );
+            });
+          }
+        </script>
+      </div>
     </div>
   </main>
 
 <script>
-  async function fetchJSON(path) {
-    const res = await fetch(path);
-    return res.ok ? res.json() : {};
-  }
-  async function initI18n() {
-    const config = await fetchJSON('i18n/languages.json');
-    // config.languages is an array of { code, label }
-    const languages = config.languages || [{ code: 'en', label: 'English' }];
-    const select = document.getElementById('lang-select');
+  // --- i18n helpers ---
+  const i18nCache = new Map();
 
-    // Keep the placeholder, then append real options:
+  async function fetchJSON(path, fallback = {}) {
+    try {
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), 5000);
+      const res = await fetch(path, { signal: ctrl.signal, cache: 'no-store' });
+      clearTimeout(t);
+      return res.ok ? res.json() : fallback;
+    } catch {
+      return fallback;
+    }
+  }
+
+  async function initI18n() {
+    const config = await fetchJSON('i18n/languages.json', { languages: [{ code: 'en', label: 'English' }] });
+    const languages = Array.isArray(config.languages) && config.languages.length
+      ? config.languages
+      : [{ code: 'en', label: 'English' }];
+
+    const select = document.getElementById('lang-select');
+    // keep placeholder option, then add choices
     languages.forEach(({ code, label }) => {
       const opt = document.createElement('option');
       opt.value = code;
@@ -109,46 +144,56 @@
       select.appendChild(opt);
     });
 
-    select.addEventListener('change', async () => {
-      const translations = await fetchJSON(`i18n/${select.value}.json`);
+    async function applyLang(code) {
+      if (!i18nCache.has(code)) {
+        i18nCache.set(code, await fetchJSON(`i18n/${code}.json`, {}));
+      }
+      const translations = i18nCache.get(code) || {};
       document.querySelectorAll('[data-key]').forEach(el => {
         const key = el.getAttribute('data-key');
-        if (translations[key]) el.textContent = translations[key];
+        if (translations[key]) {
+          // only swap text, never attributes like href
+          el.textContent = translations[key];
+        }
       });
-    });
-
-    // Try browser locale, fallback to first real code
-    const browserLang = navigator.language.split('-')[0];
-    if (languages.some(l => l.code === browserLang)) {
-      select.value = browserLang;
     }
-    if (!select.value) select.value = languages[0].code;
-    select.dispatchEvent(new Event('change'));
+
+    select.addEventListener('change', () => applyLang(select.value));
+
+    // prefer browser locale if available, else first listed language
+    const browserLang = (navigator.language || 'en').split('-')[0];
+    select.value = languages.some(l => l.code === browserLang) ? browserLang : languages[0].code;
+
+    // kick it off
+    await applyLang(select.value);
   }
-  window.onload = initI18n;
+
+  document.addEventListener('DOMContentLoaded', initI18n);
 </script>
+
+
   <!-- DYNAMIC LINKS: rewrite each service link to use the host -->
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const host   = window.location.hostname;
-    const isTLS  = window.location.protocol === 'https:';
+    const host    = location.hostname;
+    const proto   = location.protocol;                 // 'http:' | 'https:'
+    const isTLS   = proto === 'https:';
     const wsProto = isTLS ? 'wss' : 'ws';
 
-    // Toggle this if you didn't enable --nginx in the installer:
-    const USE_NGINX_PROXY = true;   // true => /chat-ws ; false => :6060
+    // We use Lighttpd's wstunnel at /chat-ws (set false to hit :6060 directly)
+    const USE_PROXY_FOR_WS = true;
 
-    const wsTarget = USE_NGINX_PROXY
+    const wsTarget = USE_PROXY_FOR_WS
       ? `${wsProto}://${host}/chat-ws`
       : `${wsProto}://${host}:6060`;
 
-    // Service links (same host, dynamic ports)
+    // Service tiles (match your data-key values)
     const links = {
-      svc1_link: `${location.protocol}//${host}:9001`,        // Etherpad
-      svc2_link: `${location.protocol}//${host}:8081`,        // FileBrowser
-      svc3_link: `${location.protocol}//${host}:8082`,        // Kolibri
-      svc4_link: `${location.protocol}//${host}:8080`,        // UniFi
-      // Hack.Chat client with default room `pnk`, pointing to your WS target:
-      svc5_link: `https://hack.chat/?pnk&ws=${encodeURIComponent(wsTarget)}`
+      svc1_link: `${proto}//${host}:9001`,      // Etherpad
+      svc2_link: `${proto}//${host}:8081`,      // FileBrowser (fixed)
+      svc3_link: `${proto}//${host}:8082`,      // Kolibri
+      svc4_link: `https://${host}:8443`,        // UniFi UI (always HTTPS on 8443)
+      svc5_link: `https://hack.chat/?pnk&ws=${encodeURIComponent(wsTarget)}` // Hack.Chat client
     };
 
     Object.entries(links).forEach(([key, href]) => {
@@ -158,17 +203,78 @@
         el.target = '_blank';
         el.rel = 'noopener';
       }
-    });
+    }); // ← close forEach ✅
+
+    // Optional SDR++ helper button
+    const sdrBtn = document.getElementById('sdrpp-info');
+    if (sdrBtn) {
+      sdrBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert(
+          'SDR++ Client setup:\\n' +
+          '- Source: "SDR++ Server"\\n' +
+          `- Host:   ${host}\\n` +
+          '- Port:   5259\\n' +
+          '- (optional) Sample type: Int8'
+        );
+      });
+    }
   });
 </script>
-<script>
-async function loadLogs() {
-  const service = document.getElementById("serviceSelect").value;
-  // Same-origin path to avoid CORS headaches:
-  const res = await fetch(`/logs/${encodeURIComponent(service)}`);
-  document.getElementById("logOutput").textContent = await res.text();
-}
-</script>
 
+
+<script>
+  // Simple load of recent logs (respects <input id="linesInput"> if present)
+  let liveES = null;
+
+  async function loadLogs() {
+    // stop live stream if running
+    if (liveES) { liveES.close(); liveES = null; }
+
+    const service = document.getElementById('serviceSelect').value;
+    const linesEl = document.getElementById('linesInput');
+    const lines = linesEl && linesEl.value ? Math.max(1, Math.min(5000, parseInt(linesEl.value))) : 200;
+
+    try {
+      const res = await fetch(`/logs/${encodeURIComponent(service)}?lines=${lines}`, { cache: 'no-store' });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      document.getElementById('logOutput').textContent = await res.text();
+    } catch (e) {
+      document.getElementById('logOutput').textContent = `Failed to load logs: ${e}`;
+    }
+  }
+
+  // Optional: live tail using Server-Sent Events (requires Logs API >= our version)
+  function startLive() {
+    const service = document.getElementById('serviceSelect').value;
+    // close any existing stream
+    if (liveES) { liveES.close(); }
+    document.getElementById('logOutput').textContent = '';
+
+    liveES = new EventSource(`/logs/${encodeURIComponent(service)}/stream?since=1m`);
+    liveES.onmessage = (ev) => {
+      const pre = document.getElementById('logOutput');
+      pre.textContent += ev.data + '\n';
+      pre.scrollTop = pre.scrollHeight;
+    };
+    liveES.addEventListener('err', (ev) => {
+      const pre = document.getElementById('logOutput');
+      pre.textContent += '[err] ' + ev.data + '\n';
+    });
+    liveES.onerror = () => {
+      // keep default auto-retry; comment next line if you want infinite retry
+      // liveES && liveES.close();
+    };
+  }
+
+  function stopLive() {
+    if (liveES) { liveES.close(); liveES = null; }
+  }
+
+  // Expose to window if you call from inline buttons
+  window.loadLogs = loadLogs;
+  window.startLive = startLive;
+  window.stopLive  = stopLive;
+</script>
 </body>
 </html>
