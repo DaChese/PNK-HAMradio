@@ -44,6 +44,10 @@ The installer will:
         UniFi Controller (keep port 8080 opened and unobstructed so the controller can adopt an AC Mesh) 
 
         Hack-Chat (Local Chat room)
+            (Install / upgrade: sudo ./pnk-hackchat.sh --install
+            Update only: sudo ./pnk-hackchat.sh --update
+            Uninstall: sudo ./pnk-hackchat.sh --uninstall
+            Logs: journalctl -u hackchat -f)
 
 2. Start & Access
 

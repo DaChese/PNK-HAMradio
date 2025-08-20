@@ -127,59 +127,48 @@
   }
   window.onload = initI18n;
 </script>
-  <script>
-    // Handle language selection
-    document.getElementById('lang-select').addEventListener('change', (event) => {
-      const selectedLang = event.target.value;
-      // Load translations based on selected language
-      fetch(`i18n/${selectedLang}.json`)
-        .then(response => response.json())
-        .then(translations => {
-          document.querySelectorAll('[data-key]').forEach(el => {
-            const key = el.getAttribute('data-key');
-            if (translations[key]) el.textContent = translations[key];
-          });
-        });
-    });
-  </script>
-
   <!-- DYNAMIC LINKS: rewrite each service link to use the host -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const host     = window.location.hostname;
-      const proto    = window.location.protocol;
-      const portMap  = {
-        svc1_link: '9001',
-        svc2_link: '8081',
-        svc3_link: '8082',
-        svc4_link: '8080',
-        svc5_link: '3000/?pnk'
-      };
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const host   = window.location.hostname;
+    const isTLS  = window.location.protocol === 'https:';
+    const wsProto = isTLS ? 'wss' : 'ws';
 
-      Object.entries(portMap).forEach(([key, port]) => {
-        const el = document.querySelector(`a[data-key="${key}"]`);
-        if (el) el.href = `${proto}//${host}:${port}`;
-      });
+    // Toggle this if you didn't enable --nginx in the installer:
+    const USE_NGINX_PROXY = true;   // true => /chat-ws ; false => :6060
+
+    const wsTarget = USE_NGINX_PROXY
+      ? `${wsProto}://${host}/chat-ws`
+      : `${wsProto}://${host}:6060`;
+
+    // Service links (same host, dynamic ports)
+    const links = {
+      svc1_link: `${location.protocol}//${host}:9001`,        // Etherpad
+      svc2_link: `${location.protocol}//${host}:8081`,        // FileBrowser
+      svc3_link: `${location.protocol}//${host}:8082`,        // Kolibri
+      svc4_link: `${location.protocol}//${host}:8080`,        // UniFi
+      // Hack.Chat client with default room `pnk`, pointing to your WS target:
+      svc5_link: `https://hack.chat/?pnk&ws=${encodeURIComponent(wsTarget)}`
+    };
+
+    Object.entries(links).forEach(([key, href]) => {
+      const el = document.querySelector(`a[data-key="${key}"]`);
+      if (el) {
+        el.href = href;
+        el.target = '_blank';
+        el.rel = 'noopener';
+      }
     });
-  </script>
-  <h2>Service Logs</h2>
-<select id="serviceSelect">
-  <option value="filebrowser">FileBrowser</option>
-  <option value="etherpad">Etherpad</option>
-  <option value="kolibri">Kolibri</option>
-  <option value="unifi-controller">UniFi Controller</option>
-  <option value="hackchat-httpd">HackChat HTTP</option>
-  <option value="hackchat-websocket">HackChat WebSocket</option>
-</select>
-<button onclick="loadLogs()">Load Logs</button>
-<pre id="logOutput" style="background:black; color:lime; padding:10px;"></pre>
-
+  });
+</script>
 <script>
 async function loadLogs() {
   const service = document.getElementById("serviceSelect").value;
-  const res = await fetch(`http://<127.0.0.1>:6061/logs/${service}`);
+  // Same-origin path to avoid CORS headaches:
+  const res = await fetch(`/logs/${encodeURIComponent(service)}`);
   document.getElementById("logOutput").textContent = await res.text();
 }
 </script>
+
 </body>
 </html>
