@@ -351,17 +351,40 @@ UNIT
 install_openwebrx() {
   log "Installing OpenWebRX (browser SDR)…"
   apt-get update
-  if ! apt-get install -y openwebrx rtl-sdr sox csdr; then
-    echo "Could not install openwebrx from apt. Aborting this step."; return 1
+
+  # 0) Try distro packages (works on some images)
+  if apt-get install -y openwebrx rtl-sdr sox; then
+    :
+  else
+    # 1) Detect OS codename
+    . /etc/os-release || true
+    CODENAME="${VERSION_CODENAME:-bookworm}"
+
+    if [[ "$CODENAME" == "bookworm" ]]; then
+      log "openwebrx not in default repos on Bookworm; enabling OpenWebRX+ repo…"
+      curl -fsSL https://luarvique.github.io/ppa/openwebrx-plus.gpg \
+        | gpg --dearmor -o /etc/apt/trusted.gpg.d/openwebrx-plus.gpg
+      echo 'deb [signed-by=/etc/apt/trusted.gpg.d/openwebrx-plus.gpg] https://luarvique.github.io/ppa/bookworm ./' \
+        > /etc/apt/sources.list.d/openwebrx-plus.list
+      apt-get update
+      apt-get install -y openwebrx rtl-sdr sox
+    else
+      log "Adding official OpenWebRX repo for ${CODENAME}…"
+      wget -O /usr/share/keyrings/openwebrx.gpg https://repo.openwebrx.de/openwebrx.gpg
+      echo "deb [signed-by=/usr/share/keyrings/openwebrx.gpg] https://repo.openwebrx.de/debian/ ${CODENAME} main" \
+        > /etc/apt/sources.list.d/openwebrx.list
+      apt-get update
+      apt-get install -y openwebrx rtl-sdr sox
+    fi
   fi
 
-  # Detect service name shipped by the package
+  # Detect unit name shipped by the package and enable it
   if systemctl list-unit-files | grep -q '^openwebrx\.service'; then
     OPENWEBRX_UNIT="openwebrx"
   elif systemctl list-unit-files | grep -q '^openwebrx-plus\.service'; then
     OPENWEBRX_UNIT="openwebrx-plus"
   else
-    # Fallback systemd unit (runs /usr/bin/openwebrx)
+    # Fallback unit if none provided
     OPENWEBRX_UNIT="openwebrx"
     cat >/etc/systemd/system/openwebrx.service <<'UNIT'
 [Unit]
@@ -383,16 +406,15 @@ UNIT
     systemctl daemon-reload
   fi
 
-  # Enable & start
   systemctl enable --now "$OPENWEBRX_UNIT"
 
   # USB access for RTL-SDR user
   usermod -aG plugdev "${PI_USER}" || true
 
-  # Lighttpd proxy is set up in setup_lighttpd_proxy()
+  # Lighttpd proxy already created by setup_lighttpd_proxy()
   lighttpd -tt -f /etc/lighttpd/lighttpd.conf && systemctl reload lighttpd
 
-  log "OpenWebRX running. Visit: http://<pi-ip>/radio (port ${OPENWEBRX_PORT})"
+  log "OpenWebRX running. Visit: http://<pi-ip>/radio (port 8073)"
 }
 
 install_logs_api() {
