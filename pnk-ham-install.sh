@@ -8,7 +8,8 @@ set -euo pipefail
 #  - Dashboard patch (status panel + fixed links)
 #  - Optional: --logs-api (adds /status + /logs/* via Lighttpd)
 #  - Optional: --sdrpp (SDR++ server, built as non-root) + systemd
-#  - Optional: --openwebrx (browser SDR waterfall) proxied at /radio
+#  - Optional: --openwebrx (browser SDR waterfall) proxied at /radio (compose-managed)
+#  - Optional: --rtl-tcp[=PORT] (share RTL-SDR via TCP, default 1234)
 #  - Flags: --patch-dashboard-only (HTML only), --no-docker (skip Docker)
 ###############################################################################
 
@@ -30,9 +31,14 @@ LOGSAPI_UNIT="pnk-logs-api"
 SDRPP_UNIT="sdrpp-server"
 SDRPP_PORT="5259"
 
-# OpenWebRX (optional)
-OPENWEBRX_UNIT=""
+# OpenWebRX (compose-managed)
+OPENWEBRX_UNIT=""                # label for Logs API only
 OPENWEBRX_PORT="8073"
+OPENWEBRX_DATA="${INSTALL_DIR}/matrix-pnk/openwebrx"
+
+# rtl_tcp (optional)
+RTL_TCP_UNIT="rtl_tcp"
+RTL_TCP_PORT="${RTL_TCP_PORT:-1234}"
 
 PI_USER="${PI_USER:-${SUDO_USER:-pi}}"
 
@@ -40,25 +46,27 @@ ACTION=""
 WITH_LOGS_API="false"
 WITH_SDRPP="false"
 WITH_OPENWEBRX="false"
+WITH_RTL_TCP="false"
 PATCH_DASH_ONLY="false"
 SKIP_DOCKER="false"
 
 usage() {
   cat <<USAGE
 Usage:
-  sudo $0 --install [--logs-api] [--sdrpp] [--openwebrx] [--no-docker] [--patch-dashboard-only]
-  sudo $0 --update  [--logs-api] [--sdrpp] [--openwebrx] [--no-docker] [--patch-dashboard-only]
+  sudo $0 --install [--logs-api] [--sdrpp] [--openwebrx] [--rtl-tcp[=PORT]] [--no-docker] [--patch-dashboard-only]
+  sudo $0 --update  [--logs-api] [--sdrpp] [--openwebrx] [--rtl-tcp[=PORT]] [--no-docker] [--patch-dashboard-only]
   sudo $0 --uninstall
 
 Flags:
   --logs-api              Install/refresh the PNK Logs API (status + logs + live tail)
   --sdrpp                 Install SDR++ server mode (headless) on port ${SDRPP_PORT}
-  --openwebrx             Install OpenWebRX (browser SDR UI) and proxy at /radio
+  --openwebrx             Prep OpenWebRX (compose-managed) and proxy at /radio
+  --rtl-tcp[=PORT]        Install rtl_tcp IQ server (default port ${RTL_TCP_PORT})
   --no-docker             Skip Docker install and docker compose actions
   --patch-dashboard-only  Only patch /var/www/html/index.html (no services touched)
 
 Env overrides:
-  INSTALL_DIR=/home/pi/PNK-HAMradio   PI_USER=pi
+  INSTALL_DIR=${INSTALL_DIR}   PI_USER=${PI_USER}
 USAGE
 }
 
@@ -69,6 +77,8 @@ while [[ $# -gt 0 ]]; do
     --logs-api) WITH_LOGS_API="true"; shift;;
     --sdrpp) WITH_SDRPP="true"; shift;;
     --openwebrx) WITH_OPENWEBRX="true"; shift;;
+    --rtl-tcp) WITH_RTL_TCP="true"; shift;;
+    --rtl-tcp=*) WITH_RTL_TCP="true"; RTL_TCP_PORT="${1#*=}"; shift;;
     --no-docker) SKIP_DOCKER="true"; shift;;
     --patch-dashboard-only) PATCH_DASH_ONLY="true"; shift;;
     -h|--help) usage; exit 0;;
@@ -129,10 +139,10 @@ patch_dashboard_once() {
     cp "$INSTALL_DIR/index.html" "$WWW_INDEX"
   fi
 
-  # Inject status panel + link fixer only if not present
+  # Inject status panel + link fixer only if not present (use temp file for safety)
   if ! grep -q "PNK PATCH v2: Status via /status" "$WWW_INDEX" 2>/dev/null; then
-    # Build the HTML/JS blob safely (no shell interpretation)
-    add_html="$(cat <<'HTML'
+    local patch="/tmp/pnk_patch.html"
+    cat > "$patch" <<'HTML'
 <!-- ===== PNK PATCH v2: Status via /status + HackChat link ===== -->
 <section class="goals" style="margin:2rem 0">
   <h2>🩺 Service Status</h2>
@@ -198,19 +208,22 @@ patch_dashboard_once() {
 </script>
 <!-- ===== /PNK PATCH v2 ===== -->
 HTML
-)"
 
-    # the injection just before </body>
-    awk -v add="$add_html" '
-      BEGIN { done=0 }
-      /<\/body>/ && !done { sub(/<\/body>/, add "\n</body>"); done=1 }
+    awk -v addfile="$patch" '
+      BEGIN {
+        add="";
+        while ((getline line < addfile) > 0) { add = add line ORS }
+        close(addfile);
+        done=0;
+      }
+      /<\/body>/ && !done { sub(/<\/body>/, add "</body>"); done=1 }
       { print }
     ' "$WWW_INDEX" > /tmp/index.html.patched
 
     mv /tmp/index.html.patched "$WWW_INDEX"
+    rm -f "$patch"
   fi
 }
-
 
 setup_lighttpd_proxy() {
   log "Lighttpd: enable proxy + wstunnel and proxy /chat-ws & /radio…"
@@ -291,8 +304,6 @@ UNIT
 
 install_sdrpp_server() {
   log "Installing SDR++ (server mode)…"
-
-  # 1) Root: build/runtime deps + USB groups
   apt-get update
   apt-get install -y \
     git cmake build-essential pkg-config \
@@ -300,7 +311,6 @@ install_sdrpp_server() {
     libglfw3-dev libvolk2-dev
   usermod -aG plugdev "${PI_USER}" || true
 
-  # Optional: prevent DVB kernel driver from grabbing RTL-SDR dongles
   if ! grep -q 'dvb_usb_rtl28xxu' /etc/modprobe.d/blacklist-rtl.conf 2>/dev/null; then
     cat >/etc/modprobe.d/blacklist-rtl.conf <<'EOF'
 blacklist dvb_usb_rtl28xxu
@@ -309,7 +319,6 @@ blacklist rtl2830
 EOF
   fi
 
-  # 2) Non-root: clone & build SDR++ in the user's home
   sudo -u "${PI_USER}" -H bash -lc '
     set -e
     mkdir -p "$HOME/src"
@@ -324,10 +333,8 @@ EOF
     cmake --build build -j"$(nproc)"
   '
 
-  # 3) Root: install built binaries to /usr/local
   cmake --install "/home/${PI_USER}/src/SDRPlusPlus/build"
 
-  # 4) systemd unit
   cat >/etc/systemd/system/${SDRPP_UNIT}.service <<UNIT
 [Unit]
 Description=SDR++ Server (headless)
@@ -355,7 +362,63 @@ UNIT
   log "SDR++ installed. Service: ${SDRPP_UNIT} on port ${SDRPP_PORT}"
 }
 
-# --- APT unjam helper for ham package conflicts (wsjtx/js8call/hpsdrconnector) ---
+# --- rtl_tcp (optional) -------------------------------------------------------
+install_rtl_tcp() {
+  log "Installing rtl_tcp IQ server on port ${RTL_TCP_PORT}…"
+  apt-get update
+  apt-get install -y rtl-sdr
+
+  if ! grep -q 'dvb_usb_rtl28xxu' /etc/modprobe.d/blacklist-rtl.conf 2>/dev/null; then
+    cat >/etc/modprobe.d/blacklist-rtl.conf <<'EOF'
+blacklist dvb_usb_rtl28xxu
+blacklist rtl2832
+blacklist rtl2830
+EOF
+  fi
+
+  cat >/etc/default/rtl_tcp <<EOF
+ADDR=0.0.0.0
+PORT=${RTL_TCP_PORT}
+DEVICE=0
+SAMPLE_RATE=2048000
+GAIN=20
+EOF
+
+  cat >/etc/systemd/system/${RTL_TCP_UNIT}.service <<'UNIT'
+[Unit]
+Description=rtl_tcp IQ server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+EnvironmentFile=/etc/default/rtl_tcp
+ExecStart=/usr/bin/rtl_tcp -a ${ADDR} -p ${PORT} -d ${DEVICE} -s ${SAMPLE_RATE} -g ${GAIN}
+Restart=on-failure
+RestartSec=2
+NoNewPrivileges=true
+ProtectSystem=full
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+UNIT
+
+  systemctl daemon-reload
+  systemctl enable --now ${RTL_TCP_UNIT}.service
+
+  # heads-up if OpenWebRX is using USB passthrough concurrently
+  if docker ps --format '{{.Names}}' | grep -qx 'openwebrx'; then
+    if docker inspect openwebrx --format '{{json .HostConfig.Devices}}' 2>/dev/null | grep -q '/dev/bus/usb'; then
+      echo "⚠️  OpenWebRX (USB passthrough) and rtl_tcp compete for the dongle."
+      echo "   Either stop rtl_tcp, or remove 'devices:' and use an rtl_tcp receiver in OpenWebRX."
+    fi
+  fi
+
+  log "rtl_tcp running. Clients can connect to tcp://<pi-ip>:${RTL_TCP_PORT}"
+}
+
+# --- APT unjam helper for ham package conflicts (wsjtx/js8call/hpsdrconnector) -
 apt_unjam_ham() {
   dpkg --configure -a || true
   apt-get -y -f install || true
@@ -375,50 +438,32 @@ apt_unjam_ham() {
 }
 
 install_openwebrx() {
-  log "Installing OpenWebRX (browser SDR)…"
+  log "Preparing OpenWebRX (docker-compose managed)…"
+  [[ "$SKIP_DOCKER" == "true" ]] && { echo "OpenWebRX requires Docker. Remove --no-docker."; exit 1; }
 
-  # Preflight: clear any dpkg/apt conflicts from ham packages
-  apt_unjam_ham
+  # stop any previous native/systemd attempts
+  systemctl disable --now openwebrx openwebrx-plus openwebrx-docker 2>/dev/null || true
+  docker rm -f openwebrx 2>/dev/null || true
 
-  apt-get update
-  local FALLBACK=0
-
-  # Try native packages first (some distros have them; Pi OS often does not)
-  if apt-cache policy openwebrx 2>/dev/null | grep -q 'Candidate:'; then
-    if apt-get install -y openwebrx rtl-sdr sox csdr; then
-      OPENWEBRX_UNIT="openwebrx"
-    else
-      echo "Native openwebrx package failed; falling back to OpenWebRX+ installer…"
-      FALLBACK=1
-    fi
-  else
-    FALLBACK=1
-  fi
-
-  if [[ "$FALLBACK" -eq 1 ]]; then
-    # Make sure base deps are present
-    apt-get install -y git python3 python3-pip rtl-sdr sox
-
-    # Use maintained OpenWebRX+ installer (works well on Raspberry Pi)
-    local tmp="/tmp/openwebrx-install.sh"
-    curl -fsSL https://raw.githubusercontent.com/luarvique/luarvique.github.io/master/openwebrx-install.sh -o "$tmp"
-    bash "$tmp" <<'EOF'
-y
+  # ensure persistent path under the repo (matches compose: ./matrix-pnk/openwebrx)
+  mkdir -p "${OPENWEBRX_DATA}"
+  chown -R "${PI_USER}:docker" "${OPENWEBRX_DATA}"
+  if ! grep -q 'dvb_usb_rtl28xxu' /etc/modprobe.d/blacklist-rtl.conf 2>/dev/null; then
+    cat >/etc/modprobe.d/blacklist-rtl.conf <<'EOF'
+blacklist dvb_usb_rtl28xxu
+blacklist rtl2832
+blacklist rtl2830
 EOF
-    OPENWEBRX_UNIT="openwebrx"
   fi
-
-  # Enable & start service
-  systemctl daemon-reload
-  systemctl enable --now "${OPENWEBRX_UNIT}"
-
-  # USB access for RTL-SDR user
   usermod -aG plugdev "${PI_USER}" || true
 
-  # Ensure Lighttpd proxy exists (/radio -> 127.0.0.1:8073)
+  # keep the /radio reverse proxy
   setup_lighttpd_proxy
 
-  log "OpenWebRX running. Visit: http://<pi-ip>/radio"
+  # label for Logs API (HTTP check will indicate health)
+  OPENWEBRX_UNIT="docker-openwebrx"
+
+  log "OpenWebRX data dir is ready at ${OPENWEBRX_DATA}. It will be started by docker compose."
 }
 
 install_logs_api() {
@@ -539,7 +584,7 @@ srv.listen(cfg.port||6061,'127.0.0.1',()=>console.log(`PNK Logs API on 127.0.0.1
 JS
   chmod +x "${LOGSAPI_DIR}/server.js"
 
-  # Build optional inserts for SDR++ and OpenWebRX
+  # Build optional inserts for SDR++, OpenWebRX, rtl_tcp
   local extra_unit=''
   local extra_tcp=''
   if [[ "$WITH_SDRPP" == "true" ]]; then
@@ -555,6 +600,13 @@ JS
     extra_http=',\n    "openwebrx": { "url": "http://127.0.0.1:8073/", "timeoutMs": 5000 }'
   fi
 
+  local extra_unit3=''
+  local extra_tcp2=''
+  if [[ "$WITH_RTL_TCP" == "true" ]]; then
+    extra_unit3=',\n    "rtl_tcp": "'"${RTL_TCP_UNIT}"'"'
+    extra_tcp2=',\n    "rtl_tcp": { "host": "127.0.0.1", "port": '"${RTL_TCP_PORT}"', "timeoutMs": 1500 }'
+  fi
+
   # config.json
   cat > "${LOGSAPI_DIR}/config.json" <<JSON
 {
@@ -566,7 +618,7 @@ JS
     "etherpad": "etherpad",
     "filebrowser": "filebrowser",
     "kolibri": "kolibri",
-    "unifi-controller": "unifi"${extra_unit}${extra_unit2}
+    "unifi-controller": "unifi"${extra_unit}${extra_unit2}${extra_unit3}
   },
   "httpChecks": {
     "etherpad": { "url": "http://127.0.0.1:9001/", "timeoutMs": 3000 },
@@ -575,7 +627,7 @@ JS
     "unifi-controller": { "url": "https://127.0.0.1:8443/", "insecure": true, "timeoutMs": 5000 }${extra_http}
   },
   "tcpChecks": {
-    "hackchat-websocket": { "host": "127.0.0.1", "port": 6060, "timeoutMs": 1500 }${extra_tcp}
+    "hackchat-websocket": { "host": "127.0.0.1", "port": 6060, "timeoutMs": 1500 }${extra_tcp}${extra_tcp2}
   }
 }
 JSON
@@ -664,20 +716,27 @@ case "$ACTION" in
     patch_dashboard_once
     setup_lighttpd_proxy
     install_hackchat
+    [[ "$WITH_RTL_TCP" == "true" ]] && install_rtl_tcp
     [[ "$WITH_SDRPP" == "true" ]] && install_sdrpp_server
     [[ "$WITH_OPENWEBRX" == "true" ]] && install_openwebrx
     [[ "$WITH_LOGS_API" == "true" ]] && install_logs_api
     start_compose_stack
     echo -e "\n✅ Done! Open:  http://<pi-ip>/"
     echo "   HackChat WS: ws(s)://<pi-host>/chat-ws"
+    [[ "$WITH_RTL_TCP" == "true" ]] && echo "   rtl_tcp:     tcp://<pi-ip>:${RTL_TCP_PORT}"
     [[ "$WITH_SDRPP" == "true" ]] && echo "   SDR++:       Connect via SDR++ client → ${SDRPP_PORT} (Source: \"SDR++ Server\")"
-    [[ "$WITH_OPENWEBRX" == "true" ]] && echo "   OpenWebRX:   http://<pi-ip>/radio"
+    [[ "$WITH_OPENWEBRX" == "true" ]] && echo "   OpenWebRX:   http://<pi-ip>/radio   (data: ${OPENWEBRX_DATA})"
     [[ "$WITH_LOGS_API" == "true" ]] && echo "   Status JSON: http://<pi-ip>/status    Logs: http://<pi-ip>/logs/<service>"
     ;;
   uninstall)
     systemctl disable --now "$HC_UNIT" 2>/dev/null || true
     rm -f "/etc/systemd/system/${HC_UNIT}.service"
     rm -rf "$HC_DIR"
+
+    if systemctl list-unit-files | grep -q "^${RTL_TCP_UNIT}\.service"; then
+      systemctl disable --now "${RTL_TCP_UNIT}" || true
+      rm -f "/etc/systemd/system/${RTL_TCP_UNIT}.service"
+    fi
 
     if systemctl list-unit-files | grep -q "^${LOGSAPI_UNIT}\.service"; then
       systemctl disable --now "$LOGSAPI_UNIT" || true
@@ -698,7 +757,6 @@ case "$ACTION" in
     fi
 
     systemctl daemon-reload
-    echo "Uninstalled HackChat and (if present) Logs API + SDR++ + OpenWebRX (proxies remain)."
+    echo "Uninstalled HackChat and (if present) rtl_tcp + Logs API + SDR++ + OpenWebRX (proxies remain)."
     ;;
 esac
-
