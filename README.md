@@ -177,7 +177,7 @@ HackChat only:
 7. Credits & Related Projects
 
 Hack.Chat — https://github.com/hack-chat/main
-    inimal WebSocket chat server + static client.
+    Minimal WebSocket chat server + static client.
 
 73Linux (km4ack) — https://github.com/km4ack/73Linux
     HAM-radio toolchain installer for Debian-based systems.
