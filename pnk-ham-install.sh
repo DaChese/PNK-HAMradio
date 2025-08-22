@@ -350,72 +350,51 @@ UNIT
 
 install_openwebrx() {
   log "Installing OpenWebRX (browser SDR)…"
+
   apt-get update
-
-  # 0) Try distro packages (works on some images)
-  if apt-get install -y openwebrx rtl-sdr sox; then
-    :
-  else
-    # 1) Detect OS codename
-    . /etc/os-release || true
-    CODENAME="${VERSION_CODENAME:-bookworm}"
-
-    if [[ "$CODENAME" == "bookworm" ]]; then
-      log "openwebrx not in default repos on Bookworm; enabling OpenWebRX+ repo…"
-      curl -fsSL https://luarvique.github.io/ppa/openwebrx-plus.gpg \
-        | gpg --dearmor -o /etc/apt/trusted.gpg.d/openwebrx-plus.gpg
-      echo 'deb [signed-by=/etc/apt/trusted.gpg.d/openwebrx-plus.gpg] https://luarvique.github.io/ppa/bookworm ./' \
-        > /etc/apt/sources.list.d/openwebrx-plus.list
-      apt-get update
-      apt-get install -y openwebrx rtl-sdr sox
+  # Try native packages first (some distros have them; Pi OS usually doesn't)
+  if apt-cache policy openwebrx 2>/dev/null | grep -q 'Candidate:'; then
+    if apt-get install -y openwebrx rtl-sdr sox csdr; then
+      OPENWEBRX_UNIT="openwebrx"
     else
-      log "Adding official OpenWebRX repo for ${CODENAME}…"
-      wget -O /usr/share/keyrings/openwebrx.gpg https://repo.openwebrx.de/openwebrx.gpg
-      echo "deb [signed-by=/usr/share/keyrings/openwebrx.gpg] https://repo.openwebrx.de/debian/ ${CODENAME} main" \
-        > /etc/apt/sources.list.d/openwebrx.list
-      apt-get update
-      apt-get install -y openwebrx rtl-sdr sox
+      echo "Native openwebrx package failed; falling back to OpenWebRX+ installer…"
+      FALLBACK=1
     fi
-  fi
-
-  # Detect unit name shipped by the package and enable it
-  if systemctl list-unit-files | grep -q '^openwebrx\.service'; then
-    OPENWEBRX_UNIT="openwebrx"
-  elif systemctl list-unit-files | grep -q '^openwebrx-plus\.service'; then
-    OPENWEBRX_UNIT="openwebrx-plus"
   else
-    # Fallback unit if none provided
-    OPENWEBRX_UNIT="openwebrx"
-    cat >/etc/systemd/system/openwebrx.service <<'UNIT'
-[Unit]
-Description=OpenWebRX
-After=network-online.target
-Wants=network-online.target
-
-[Service]
-Type=simple
-User=pi
-Group=pi
-ExecStart=/usr/bin/openwebrx
-Restart=on-failure
-NoNewPrivileges=true
-
-[Install]
-WantedBy=multi-user.target
-UNIT
-    systemctl daemon-reload
+    FALLBACK=1
   fi
 
-  systemctl enable --now "$OPENWEBRX_UNIT"
+  if [[ "${FALLBACK:-0}" -eq 1 ]]; then
+    # Clean any broken state from previous attempts
+    dpkg --configure -a || true
+    apt-get -y -f install || true
+
+    # Install minimal build/runtime deps
+    apt-get install -y git python3 python3-pip rtl-sdr sox
+
+    # Use the maintained OpenWebRX+ installer (works on Raspberry Pi)
+    tmp="/tmp/openwebrx-install.sh"
+    curl -fsSL https://raw.githubusercontent.com/luarvique/luarvique.github.io/master/openwebrx-install.sh -o "$tmp"
+    bash "$tmp" <<'EOF'
+y
+EOF
+    # The script creates a systemd service named "openwebrx"
+    OPENWEBRX_UNIT="openwebrx"
+  fi
+
+  # Enable & start the service
+  systemctl daemon-reload
+  systemctl enable --now "${OPENWEBRX_UNIT}"
 
   # USB access for RTL-SDR user
   usermod -aG plugdev "${PI_USER}" || true
 
-  # Lighttpd proxy already created by setup_lighttpd_proxy()
-  lighttpd -tt -f /etc/lighttpd/lighttpd.conf && systemctl reload lighttpd
+  # Ensure Lighttpd proxy exists (/radio -> 127.0.0.1:8073)
+  setup_lighttpd_proxy
 
-  log "OpenWebRX running. Visit: http://<pi-ip>/radio (port 8073)"
+  log "OpenWebRX running. Visit: http://<pi-ip>/radio"
 }
+
 
 install_logs_api() {
   [[ "$WITH_LOGS_API" == "true" ]] || return 0
