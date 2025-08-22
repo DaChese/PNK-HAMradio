@@ -649,7 +649,6 @@ case "$ACTION" in
     apt_unjam_ham
 
     ensure_pkgs
-    ...
 
     # If patch-only, just patch HTML and bail out early
     if [[ "$PATCH_DASH_ONLY" == "true" ]]; then
