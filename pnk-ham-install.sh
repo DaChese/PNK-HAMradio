@@ -131,7 +131,8 @@ patch_dashboard_once() {
 
   # Inject status panel + link fixer only if not present
   if ! grep -q "PNK PATCH v2: Status via /status" "$WWW_INDEX" 2>/dev/null; then
-    awk -v add='
+    # Build the HTML/JS blob safely (no shell interpretation)
+    add_html="$(cat <<'HTML'
 <!-- ===== PNK PATCH v2: Status via /status + HackChat link ===== -->
 <section class="goals" style="margin:2rem 0">
   <h2>🩺 Service Status</h2>
@@ -196,14 +197,20 @@ patch_dashboard_once() {
 })();
 </script>
 <!-- ===== /PNK PATCH v2 ===== -->
-' '
-    BEGIN{done=0}
-    /<\/body>/ && !done { gsub(/<\/body>/, add "\n</body>"); done=1 }
-    { print }
-' "$WWW_INDEX" > /tmp/index.html.patched
+HTML
+)"
+
+    # the injection just before </body>
+    awk -v add="$add_html" '
+      BEGIN { done=0 }
+      /<\/body>/ && !done { sub(/<\/body>/, add "\n</body>"); done=1 }
+      { print }
+    ' "$WWW_INDEX" > /tmp/index.html.patched
+
     mv /tmp/index.html.patched "$WWW_INDEX"
   fi
 }
+
 
 setup_lighttpd_proxy() {
   log "Lighttpd: enable proxy + wstunnel and proxy /chat-ws & /radio…"
