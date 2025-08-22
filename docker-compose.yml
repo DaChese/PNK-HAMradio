@@ -59,8 +59,6 @@ services:
     container_name: openwebrx
     restart: unless-stopped
     network_mode: "host"
-    ports:
-      - "8073:8073"
     devices:
       - "/dev/bus/usb:/dev/bus/usb"    # remove this if you switch to rtl_tcp-only
     volumes:
