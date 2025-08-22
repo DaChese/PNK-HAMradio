@@ -58,7 +58,8 @@ services:
     image: jketterl/openwebrx:stable   # or :latest
     container_name: openwebrx
     restart: unless-stopped
-    network_mode: "host"
+    ports:
+    - "127.0.0.1:8073:8073"
     devices:
       - "/dev/bus/usb:/dev/bus/usb"    # remove this if you switch to rtl_tcp-only
     volumes:
