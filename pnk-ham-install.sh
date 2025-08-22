@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ###############################################################################
-#  PNK-HAMradio installer/updater (Pi OS 64-bit)
+#  PNK-HAMradio installer/updater (Pi OS 64-bit / Debian Bookworm)
 #  - Docker stack (Etherpad/FileBrowser/Kolibri/UniFi)
 #  - HackChat bare-metal + Lighttpd /chat-ws proxy
 #  - Dashboard patch (status panel + fixed links)
@@ -348,11 +348,35 @@ UNIT
   log "SDR++ installed. Service: ${SDRPP_UNIT} on port ${SDRPP_PORT}"
 }
 
+# --- APT unjam helper for ham package conflicts (wsjtx/js8call/hpsdrconnector) ---
+apt_unjam_ham() {
+  dpkg --configure -a || true
+  apt-get -y -f install || true
+
+  for p in wsjtx wsjtx-data js8call hpsdrconnector; do
+    if dpkg -l 2>/dev/null | awk '{print $2}' | grep -qx "$p"; then
+      apt-get -y purge "$p" || true
+    fi
+  done
+
+  rm -f /usr/share/pixmaps/wsjtx_icon.png 2>/dev/null || true
+
+  apt-get -y -f install || true
+  apt-get -y autoremove || true
+  apt-get clean || true
+  apt-get update
+}
+
 install_openwebrx() {
   log "Installing OpenWebRX (browser SDR)…"
 
+  # Preflight: clear any dpkg/apt conflicts from ham packages
+  apt_unjam_ham
+
   apt-get update
-  # Try native packages first (some distros have them; Pi OS usually doesn't)
+  local FALLBACK=0
+
+  # Try native packages first (some distros have them; Pi OS often does not)
   if apt-cache policy openwebrx 2>/dev/null | grep -q 'Candidate:'; then
     if apt-get install -y openwebrx rtl-sdr sox csdr; then
       OPENWEBRX_UNIT="openwebrx"
@@ -364,25 +388,20 @@ install_openwebrx() {
     FALLBACK=1
   fi
 
-  if [[ "${FALLBACK:-0}" -eq 1 ]]; then
-    # Clean any broken state from previous attempts
-    dpkg --configure -a || true
-    apt-get -y -f install || true
-
-    # Install minimal build/runtime deps
+  if [[ "$FALLBACK" -eq 1 ]]; then
+    # Make sure base deps are present
     apt-get install -y git python3 python3-pip rtl-sdr sox
 
-    # Use the maintained OpenWebRX+ installer (works on Raspberry Pi)
-    tmp="/tmp/openwebrx-install.sh"
+    # Use maintained OpenWebRX+ installer (works well on Raspberry Pi)
+    local tmp="/tmp/openwebrx-install.sh"
     curl -fsSL https://raw.githubusercontent.com/luarvique/luarvique.github.io/master/openwebrx-install.sh -o "$tmp"
     bash "$tmp" <<'EOF'
 y
 EOF
-    # The script creates a systemd service named "openwebrx"
     OPENWEBRX_UNIT="openwebrx"
   fi
 
-  # Enable & start the service
+  # Enable & start service
   systemctl daemon-reload
   systemctl enable --now "${OPENWEBRX_UNIT}"
 
@@ -394,7 +413,6 @@ EOF
 
   log "OpenWebRX running. Visit: http://<pi-ip>/radio"
 }
-
 
 install_logs_api() {
   [[ "$WITH_LOGS_API" == "true" ]] || return 0
@@ -673,3 +691,4 @@ case "$ACTION" in
     echo "Uninstalled HackChat and (if present) Logs API + SDR++ + OpenWebRX (proxies remain)."
     ;;
 esac
+
