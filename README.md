@@ -84,7 +84,7 @@ FileBrowser	http://<pi-ip>:8081/	File manager
 Kolibri	http://<pi-ip>:8082/	Offline learning
 UniFi UI	https://<pi-ip>:8443/	UI is 8443; adoption/inform uses port 8080
 HackChat (client)	https://hack.chat/?pnk&ws=wss://<pi-host>/chat-ws	Dashboard “Open Chat” points here
-HackChat (WS)	ws(s)://<pi-host>/chat-ws → 127.0.0.1:6060	Proxied by Lighttpd
+HackChat (WS)	ws(s)://<pi-host>/chat-ws → pi-ipaddress:6060	Proxied by Lighttpd
 Status JSON opt.	http://<pi-ip>/status	Aggregated systemd + HTTP/TCP checks
 Logs API opt.	http://<pi-ip>/logs/<service>?lines=200	Live tail via SSE at /logs/<service>/stream
 
@@ -176,19 +176,13 @@ HackChat only:
 
 7. Credits & Related Projects
 
-    Hack.Chat — https://github.com/hack-chat/main
-
-
-Minimal WebSocket chat server + static client.
+Hack.Chat — https://github.com/hack-chat/main
+    Minimal WebSocket chat server + static client.
 
 73Linux (km4ack) — https://github.com/km4ack/73Linux
-
-
-HAM-radio toolchain installer for Debian-based systems.
+    HAM-radio toolchain installer for Debian-based systems.
 
 SDR++ (TekMaker/SDRplus) — https://github.com/TekMaker/SDRplus
-
-
     Modern SDR client; tested with RTL-SDR.
 
-This project supports offline-ready, resilient community networking with Raspberry Pi. Contributions welcome!
+This project supports offline-ready, resilient community networking with Raspberry Pi. Contributions are welcomed!
