@@ -226,27 +226,20 @@ HTML
 }
 
 setup_lighttpd_proxy() {
-  log "Lighttpd: enable proxy + wstunnel and proxy /chat-ws & /radio…"
+  log "Lighttpd: writing proxy config for /chat-ws and /radio…"
   lighttpd-enable-mod proxy >/dev/null 2>&1 || true
   lighttpd-enable-mod wstunnel >/dev/null 2>&1 || true
 
   local conf="/etc/lighttpd/conf-available/99-pnk-proxy.conf"
-  touch "$conf"
+  cat > "$conf" <<'CONF'
+# === PNK proxy config (generated) ===
 
-  # /chat-ws for HackChat
-  if ! grep -q '^\$HTTP\["url"\] =~ "\^/chat-ws"' "$conf"; then
-    cat >> "$conf" <<'CONF'
-# PNK HackChat WebSocket
-$HTTP["url"] =~ "^/chat-ws" {
+# HackChat WS at /chat-ws -> 127.0.0.1:6060
+$HTTP["url"] =~ "^/chat-ws($|/)" {
   wstunnel.server = ( "" => ( ( "host" => "127.0.0.1", "port" => 6060 ) ) )
 }
-CONF
-  fi
 
-  # /radio HTTP proxy for OpenWebRX (strip prefix)
-  if ! grep -q '^\$HTTP\["url"\] =~ "\^/radio\(\$\|/\)"' "$conf"; then
-    cat >> "$conf" <<'CONF'
-# PNK OpenWebRX (HTTP) at /radio -> http://127.0.0.1:8073/
+# OpenWebRX HTTP at /radio -> 127.0.0.1:8073
 $HTTP["url"] =~ "^/radio($|/)" {
   url.rewrite-once = (
     "^/radio$"      => "/",
@@ -254,18 +247,12 @@ $HTTP["url"] =~ "^/radio($|/)" {
   )
   proxy.server = ( "" => ( ( "host" => "127.0.0.1", "port" => 8073 ) ) )
 }
-CONF
-  fi
 
-  # /radio/ws WebSocket tunnel (if backend uses WS)
-  if ! grep -q '^\$HTTP\["url"\] =~ "\^/radio/ws"' "$conf"; then
-    cat >> "$conf" <<'CONF'
-# PNK OpenWebRX (WebSocket)
+# OpenWebRX WebSocket at /radio/ws -> 127.0.0.1:8073
 $HTTP["url"] =~ "^/radio/ws" {
   wstunnel.server = ( "" => ( ( "host" => "127.0.0.1", "port" => 8073 ) ) )
 }
 CONF
-  fi
 
   ln -sf "$conf" "/etc/lighttpd/conf-enabled/99-pnk-proxy.conf"
   lighttpd -tt -f /etc/lighttpd/lighttpd.conf
