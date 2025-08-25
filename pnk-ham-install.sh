@@ -243,12 +243,26 @@ $HTTP["url"] =~ "^/chat-ws" {
 CONF
   fi
 
-  # /radio for OpenWebRX
-  if ! grep -q '^\$HTTP\["url"\] =~ "\^/radio"' "$conf"; then
+  # /radio HTTP proxy for OpenWebRX (strip prefix)
+  if ! grep -q '^\$HTTP\["url"\] =~ "\^/radio\(\$\|/\)"' "$conf"; then
     cat >> "$conf" <<'CONF'
-# PNK OpenWebRX proxy
-$HTTP["url"] =~ "^/radio" {
+# PNK OpenWebRX (HTTP) at /radio -> http://127.0.0.1:8073/
+$HTTP["url"] =~ "^/radio($|/)" {
+  url.rewrite-once = (
+    "^/radio$"      => "/",
+    "^/radio/(.*)$" => "/$1"
+  )
   proxy.server = ( "" => ( ( "host" => "127.0.0.1", "port" => 8073 ) ) )
+}
+CONF
+  fi
+
+  # /radio/ws WebSocket tunnel (if backend uses WS)
+  if ! grep -q '^\$HTTP\["url"\] =~ "\^/radio/ws"' "$conf"; then
+    cat >> "$conf" <<'CONF'
+# PNK OpenWebRX (WebSocket)
+$HTTP["url"] =~ "^/radio/ws" {
+  wstunnel.server = ( "" => ( ( "host" => "127.0.0.1", "port" => 8073 ) ) )
 }
 CONF
   fi
