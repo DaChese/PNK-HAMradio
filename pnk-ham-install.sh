@@ -411,7 +411,7 @@ UNIT
   # heads-up if OpenWebRX is using USB passthrough concurrently
   if docker ps --format '{{.Names}}' | grep -qx 'openwebrx'; then
     if docker inspect openwebrx --format '{{json .HostConfig.Devices}}' 2>/dev/null | grep -q '/dev/bus/usb'; then
-      echo "⚠️  OpenWebRX (USB passthrough) and rtl_tcp compete for the dongle."
+      echo " OpenWebRX (USB passthrough) and rtl_tcp compete for the dongle."
       echo "   Either stop rtl_tcp, or remove 'devices:' and use an rtl_tcp receiver in OpenWebRX."
     fi
   fi
@@ -707,7 +707,7 @@ case "$ACTION" in
     if [[ "$PATCH_DASH_ONLY" == "true" ]]; then
       log "Running in --patch-dashboard-only mode (no services will be changed)…"
       patch_dashboard_once
-      echo "✅ Dashboard patched. Browse: http://<pi-ip>/"
+      echo " Dashboard patched. Browse: http://<pi-ip>/"
       exit 0
     fi
 
@@ -722,7 +722,7 @@ case "$ACTION" in
     [[ "$WITH_OPENWEBRX" == "true" ]] && install_openwebrx
     [[ "$WITH_LOGS_API" == "true" ]] && install_logs_api
     start_compose_stack
-    echo -e "\n✅ Done! Open:  http://<pi-ip>/"
+    echo -e "\n  Done! Open:  http://<pi-ip>/"
     echo "   HackChat WS: ws(s)://<pi-host>/chat-ws"
     [[ "$WITH_RTL_TCP" == "true" ]] && echo "   rtl_tcp:     tcp://<pi-ip>:${RTL_TCP_PORT}"
     [[ "$WITH_SDRPP" == "true" ]] && echo "   SDR++:       Connect via SDR++ client → ${SDRPP_PORT} (Source: \"SDR++ Server\")"
