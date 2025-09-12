@@ -19,8 +19,8 @@ UNIFI_URL="${UNIFI_URL:-https://127.0.0.1:8443/}"         # UniFi UI is on 8443
 
 # OpenWebRX (bare-metal) health checks
 WAIT_OWRX="${WAIT_OWRX:-true}"
-OWRX_BACKEND_URL="${OWRX_BACKEND_URL:-http://127.0.0.1:8073/}"   # backend service
-OWRX_PROXY_URL="${OWRX_PROXY_URL:-http://127.0.0.1/radio/}"      # Lighttpd proxy
+OWRX_BACKEND_URL="${OWRX_BACKEND_URL:-http://127.0.0.1:8073/sdr/}"   # was http://127.0.0.1:8073/
+OWRX_PROXY_URL="${OWRX_PROXY_URL:-http://127.0.0.1/radio/}"
 
 STATUS_URL="${STATUS_URL:-http://127.0.0.1/status}"              # Logs API (optional)
 

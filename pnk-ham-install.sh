@@ -228,45 +228,45 @@ HTML
 }
 
 setup_lighttpd_proxy() {
-  log "Lighttpd: enable proxy + wstunnel + rewrite; proxy /chat-ws & /radio…"
+  log "Lighttpd: enable proxy/wstunnel/rewrite and proxy /chat-ws & /radio …"
 
-  # make sure modules are present & enabled
-  apt-get install -y lighttpd-mod-proxy lighttpd-mod-wstunnel
-  lighttpd-enable-mod proxy   >/dev/null 2>&1 || true
-  lighttpd-enable-mod wstunnel>/dev/null 2>&1 || true
+  # Ensure modules
+  lighttpd-enable-mod proxy  >/dev/null 2>&1 || true
+  lighttpd-enable-mod wstunnel >/dev/null 2>&1 || true
   lighttpd-enable-mod rewrite >/dev/null 2>&1 || true
 
   local conf="/etc/lighttpd/conf-available/99-pnk-proxy.conf"
-  cat > "$conf" <<'CONF'
-# === PNK proxy rules ===
 
-# HackChat WebSocket
+  # Write a clean, idempotent config
+  cat > "$conf" <<'CONF'
+# --- PNK proxy + WS bridges ---
+
+# HackChat WebSocket at /chat-ws -> 127.0.0.1:6060
 $HTTP["url"] =~ "^/chat-ws" {
   wstunnel.server = ( "" => ( ( "host" => "127.0.0.1", "port" => 6060 ) ) )
 }
 
-# OpenWebRX HTTP at /radio -> 127.0.0.1:8073
+# OpenWebRX UI at /radio -> http://127.0.0.1:8073/sdr/
 $HTTP["url"] =~ "^/radio($|/)" {
   url.rewrite-once = (
-    "^/radio$"      => "/",
+    "^/radio$"      => "/sdr/",
+    "^/radio/$"     => "/sdr/",
     "^/radio/(.*)$" => "/$1"
   )
   proxy.server = ( "" => ( ( "host" => "127.0.0.1", "port" => 8073 ) ) )
 }
 
-# OpenWebRX WebSocket (some builds use /ws)
+# OpenWebRX WebSocket (if backend uses /ws)
 $HTTP["url"] =~ "^/radio/ws" {
   wstunnel.server = ( "" => ( ( "host" => "127.0.0.1", "port" => 8073 ) ) )
 }
 CONF
 
   ln -sf "$conf" "/etc/lighttpd/conf-enabled/99-pnk-proxy.conf"
-
-  # test & reload
   lighttpd -tt -f /etc/lighttpd/lighttpd.conf
-  systemctl enable --now lighttpd
   systemctl reload lighttpd
 }
+
 
 
 install_hackchat() {
@@ -448,19 +448,21 @@ apt_unjam_ham() {
   apt-get update
 }
 
+#  - Optional: --openwebrx (bare-metal, proxied at /radio)
 install_openwebrx() {
-  log "Installing OpenWebRX bare-metal (service on :8073)…"
+  log "Installing OpenWebRX (bare-metal service on :8073)…"
 
-  # unblock dpkg if needed
-  dpkg --configure -a || true
-  apt-get -y -f install || true
+  [[ "$SKIP_DOCKER" == "true" ]] || true
+  # Stop/remove any dockerized OWRX to avoid port conflicts
+  docker rm -f openwebrx 2>/dev/null || true
 
-  # deps + USB access for RTL-SDR
+  # Dependencies + USB access
   apt-get update
-  apt-get install -y git python3 python3-pip rtl-sdr sox
+  apt-get install -y git python3 python3-pip python3-venv rtl-sdr sox
+
   usermod -aG plugdev "${PI_USER}" || true
 
-  # prevent DVB driver from grabbing the dongle
+  # Prevent DVB kernel driver from grabbing RTL-SDR
   if ! grep -q 'dvb_usb_rtl28xxu' /etc/modprobe.d/blacklist-rtl.conf 2>/dev/null; then
     cat >/etc/modprobe.d/blacklist-rtl.conf <<'EOF'
 blacklist dvb_usb_rtl28xxu
@@ -469,25 +471,21 @@ blacklist rtl2830
 EOF
   fi
 
-  # remove any containerized instance
-  docker rm -f openwebrx 2>/dev/null || true
-
-  # run upstream installer (OpenWebRX+)
-  curl -fsSL https://raw.githubusercontent.com/luarvique/luarvique.github.io/master/openwebrx-install.sh -o /tmp/openwebrx-install.sh
-  bash /tmp/openwebrx-install.sh <<'EOF'
+  # Official OpenWebRX+ installer
+  local tmp="/tmp/openwebrx-install.sh"
+  curl -fsSL https://raw.githubusercontent.com/luarvique/luarvique.github.io/master/openwebrx-install.sh -o "$tmp"
+  bash "$tmp" <<'EOF'
 y
 EOF
 
   systemctl enable --now openwebrx
 
-  # keep Lighttpd proxy fresh
+  # Keep the /radio reverse proxy (rewrites /radio -> /sdr/)
   setup_lighttpd_proxy
 
-  # let Logs API know (HTTP health check flips it green)
-  OPENWEBRX_UNIT="openwebrx"
-
-  log "OpenWebRX running. Browse http://<pi-ip>/radio  (backend http://127.0.0.1:8073/)"
+  log "OpenWebRX installed. Backend: http://127.0.0.1:8073/sdr/  Proxy: http://<pi-ip>/radio/"
 }
+
 
 install_logs_api() {
   [[ "$WITH_LOGS_API" == "true" ]] || return 0
@@ -620,8 +618,10 @@ JS
   if [[ "$WITH_OPENWEBRX" == "true" || -n "${OPENWEBRX_UNIT:-}" ]]; then
     [[ -z "${OPENWEBRX_UNIT:-}" ]] && OPENWEBRX_UNIT="openwebrx"
     extra_unit2=',\n    "openwebrx": "'"${OPENWEBRX_UNIT}"'"'
-    extra_http=',\n    "openwebrx": { "url": "http://127.0.0.1:8073/", "timeoutMs": 5000 }'
+    # NOTE the /sdr/ path (backend returns 200/302 here; / may 404)
+    extra_http=',\n    "openwebrx": { "url": "http://127.0.0.1:8073/sdr/", "timeoutMs": 5000 }'
   fi
+
 
   local extra_unit3=''
   local extra_tcp2=''
