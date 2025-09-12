@@ -177,7 +177,7 @@ patch_dashboard_once() {
     svc3_link: `${proto}//${host}:8082`,      // Kolibri
     svc4_link: `https://${host}:8443`,        // UniFi UI
     svc5_link: `https://hack.chat/?pnk&ws=${encodeURIComponent(HC_WS)}`,
-    svc6_link: `/radio`                       // OpenWebRX via proxy
+    svc6_link: `/radio/`                       // OpenWebRX via proxy
   };
 
   Object.entries(links).forEach(([k, href]) => {
@@ -231,13 +231,11 @@ setup_lighttpd_proxy() {
   log "Lighttpd: enable proxy/wstunnel/rewrite and proxy /chat-ws & /radio …"
 
   # Ensure modules
-  lighttpd-enable-mod proxy  >/dev/null 2>&1 || true
+  lighttpd-enable-mod proxy    >/dev/null 2>&1 || true
   lighttpd-enable-mod wstunnel >/dev/null 2>&1 || true
-  lighttpd-enable-mod rewrite >/dev/null 2>&1 || true
+  lighttpd-enable-mod rewrite  >/dev/null 2>&1 || true
 
   local conf="/etc/lighttpd/conf-available/99-pnk-proxy.conf"
-
-  # Write a clean, idempotent config
   cat > "$conf" <<'CONF'
 # --- PNK proxy + WS bridges ---
 
@@ -246,17 +244,17 @@ $HTTP["url"] =~ "^/chat-ws" {
   wstunnel.server = ( "" => ( ( "host" => "127.0.0.1", "port" => 6060 ) ) )
 }
 
-# OpenWebRX UI at /radio -> http://127.0.0.1:8073/sdr/
+# OpenWebRX UI at /radio -> http://127.0.0.1:8073/
 $HTTP["url"] =~ "^/radio($|/)" {
   url.rewrite-once = (
-    "^/radio$"      => "/sdr/",
-    "^/radio/$"     => "/sdr/",
+    "^/radio$"      => "/",
+    "^/radio/$"     => "/",
     "^/radio/(.*)$" => "/$1"
   )
   proxy.server = ( "" => ( ( "host" => "127.0.0.1", "port" => 8073 ) ) )
 }
 
-# OpenWebRX WebSocket (if backend uses /ws)
+# OpenWebRX WebSocket (backend usually on /ws)
 $HTTP["url"] =~ "^/radio/ws" {
   wstunnel.server = ( "" => ( ( "host" => "127.0.0.1", "port" => 8073 ) ) )
 }
@@ -266,8 +264,6 @@ CONF
   lighttpd -tt -f /etc/lighttpd/lighttpd.conf
   systemctl reload lighttpd
 }
-
-
 
 install_hackchat() {
   log "Install/Update HackChat (bare-metal)…"
@@ -621,7 +617,6 @@ JS
     # NOTE the /sdr/ path (backend returns 200/302 here; / may 404)
     extra_http=',\n    "openwebrx": { "url": "http://127.0.0.1:8073/sdr/", "timeoutMs": 5000 }'
   fi
-
 
   local extra_unit3=''
   local extra_tcp2=''
