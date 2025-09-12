@@ -1,6 +1,6 @@
 # PNK-HAMradio
 
-> **Status:** Work-in-progress. Expect rough edges
+> **Status:** Work-in-progress. Expect rough edges (currently working on getting the logs working and openwebrx radio to work via websocket)
 
 Turn a Raspberry Pi into a Portable Network Kit (PNK) **and** HAM-radio platform.  
 Ships with a lightweight web dashboard plus offline-friendly services (Etherpad, FileBrowser, Kolibri, UniFi Controller) and a minimal local chat (HackChat).
