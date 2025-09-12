@@ -93,8 +93,10 @@ log(){ echo -e "\n==> $*\n"; }
 
 ensure_pkgs() {
   log "Installing system packages…"
-  apt update
-  apt install -y git curl lighttpd python3-pip ca-certificates
+  apt-get update
+  apt-get install -y \
+    git curl ca-certificates \
+    lighttpd lighttpd-mod-proxy lighttpd-mod-wstunnel
 }
 
 ensure_node() {
@@ -226,16 +228,20 @@ HTML
 }
 
 setup_lighttpd_proxy() {
-  log "Lighttpd: writing proxy config for /chat-ws and /radio…"
-  lighttpd-enable-mod proxy >/dev/null 2>&1 || true
-  lighttpd-enable-mod wstunnel >/dev/null 2>&1 || true
+  log "Lighttpd: enable proxy + wstunnel + rewrite; proxy /chat-ws & /radio…"
+
+  # make sure modules are present & enabled
+  apt-get install -y lighttpd-mod-proxy lighttpd-mod-wstunnel
+  lighttpd-enable-mod proxy   >/dev/null 2>&1 || true
+  lighttpd-enable-mod wstunnel>/dev/null 2>&1 || true
+  lighttpd-enable-mod rewrite >/dev/null 2>&1 || true
 
   local conf="/etc/lighttpd/conf-available/99-pnk-proxy.conf"
   cat > "$conf" <<'CONF'
-# === PNK proxy config (generated) ===
+# === PNK proxy rules ===
 
-# HackChat WS at /chat-ws -> 127.0.0.1:6060
-$HTTP["url"] =~ "^/chat-ws($|/)" {
+# HackChat WebSocket
+$HTTP["url"] =~ "^/chat-ws" {
   wstunnel.server = ( "" => ( ( "host" => "127.0.0.1", "port" => 6060 ) ) )
 }
 
@@ -248,16 +254,20 @@ $HTTP["url"] =~ "^/radio($|/)" {
   proxy.server = ( "" => ( ( "host" => "127.0.0.1", "port" => 8073 ) ) )
 }
 
-# OpenWebRX WebSocket at /radio/ws -> 127.0.0.1:8073
+# OpenWebRX WebSocket (some builds use /ws)
 $HTTP["url"] =~ "^/radio/ws" {
   wstunnel.server = ( "" => ( ( "host" => "127.0.0.1", "port" => 8073 ) ) )
 }
 CONF
 
   ln -sf "$conf" "/etc/lighttpd/conf-enabled/99-pnk-proxy.conf"
+
+  # test & reload
   lighttpd -tt -f /etc/lighttpd/lighttpd.conf
+  systemctl enable --now lighttpd
   systemctl reload lighttpd
 }
+
 
 install_hackchat() {
   log "Install/Update HackChat (bare-metal)…"
@@ -439,16 +449,18 @@ apt_unjam_ham() {
 }
 
 install_openwebrx() {
-  log "Preparing OpenWebRX (docker-compose managed)…"
-  [[ "$SKIP_DOCKER" == "true" ]] && { echo "OpenWebRX requires Docker. Remove --no-docker."; exit 1; }
+  log "Installing OpenWebRX bare-metal (service on :8073)…"
 
-  # stop any previous native/systemd attempts
-  systemctl disable --now openwebrx openwebrx-plus openwebrx-docker 2>/dev/null || true
-  docker rm -f openwebrx 2>/dev/null || true
+  # unblock dpkg if needed
+  dpkg --configure -a || true
+  apt-get -y -f install || true
 
-  # ensure persistent path under the repo (matches compose: ./matrix-pnk/openwebrx)
-  mkdir -p "${OPENWEBRX_DATA}"
-  chown -R "${PI_USER}:docker" "${OPENWEBRX_DATA}"
+  # deps + USB access for RTL-SDR
+  apt-get update
+  apt-get install -y git python3 python3-pip rtl-sdr sox
+  usermod -aG plugdev "${PI_USER}" || true
+
+  # prevent DVB driver from grabbing the dongle
   if ! grep -q 'dvb_usb_rtl28xxu' /etc/modprobe.d/blacklist-rtl.conf 2>/dev/null; then
     cat >/etc/modprobe.d/blacklist-rtl.conf <<'EOF'
 blacklist dvb_usb_rtl28xxu
@@ -456,15 +468,25 @@ blacklist rtl2832
 blacklist rtl2830
 EOF
   fi
-  usermod -aG plugdev "${PI_USER}" || true
 
-  # keep the /radio reverse proxy
+  # remove any containerized instance
+  docker rm -f openwebrx 2>/dev/null || true
+
+  # run upstream installer (OpenWebRX+)
+  curl -fsSL https://raw.githubusercontent.com/luarvique/luarvique.github.io/master/openwebrx-install.sh -o /tmp/openwebrx-install.sh
+  bash /tmp/openwebrx-install.sh <<'EOF'
+y
+EOF
+
+  systemctl enable --now openwebrx
+
+  # keep Lighttpd proxy fresh
   setup_lighttpd_proxy
 
-  # label for Logs API (HTTP check will indicate health)
-  OPENWEBRX_UNIT="docker-openwebrx"
+  # let Logs API know (HTTP health check flips it green)
+  OPENWEBRX_UNIT="openwebrx"
 
-  log "OpenWebRX data dir is ready at ${OPENWEBRX_DATA}. It will be started by docker compose."
+  log "OpenWebRX running. Browse http://<pi-ip>/radio  (backend http://127.0.0.1:8073/)"
 }
 
 install_logs_api() {

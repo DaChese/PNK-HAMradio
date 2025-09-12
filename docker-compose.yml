@@ -1,17 +1,18 @@
 
 services:
-  etherpad:
-    image: etherpad/etherpad:latest
-    platform: linux/arm64
-    container_name: etherpad
-    user: "5000:5000"     
-    environment:
-      - NODE_ENV=production
-    ports:
-      - "9001:9001"
-    volumes:
-      - ./matrix-pnk/etherpad/var:/opt/etherpad-lite/var
-    restart: unless-stopped
+etherpad:
+  image: etherpad/etherpad:1.9.7 
+  container_name: etherpad
+  restart: unless-stopped
+  ports:
+    - "9001:9001"
+  environment:
+    - TITLE=PNK Etherpad
+    - TRUST_PROXY=true
+    - DB_TYPE=dirty         # for small/offline use
+    - ADMIN_PASSWORD=${EP_ADMIN_PASSWORD:-pnk}
+  volumes:
+    - ep-data:/opt/etherpad-lite/var
 
 
   filebrowser:
@@ -54,20 +55,9 @@ services:
       - ./matrix-pnk/unifi/config:/config
       - ./matrix-pnk/unifi/data:/var/lib/unifi
 
-  openwebrx:
-    image: jketterl/openwebrx:stable   # or :latest
-    container_name: openwebrx
-    restart: unless-stopped
-    ports:
-    - "127.0.0.1:8073:8073"
-    devices:
-      - "/dev/bus/usb:/dev/bus/usb"    # remove this if you switch to rtl_tcp-only
-    volumes:
-      - ./matrix-pnk/openwebrx:/var/lib/openwebrx
-    environment:
-      - TZ=Etc/UTC
-    logging:
-      driver: "journald"
+
+volumes:
+  ep-data:
 
 
 
